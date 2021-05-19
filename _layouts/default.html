@@ -1,0 +1,62 @@
+{% include header.html %}
+
+<table>
+  <thead style="border: none">
+    <tr>
+      <td class="table-wrap">
+        <div class="header-space">&nbsp;</div>
+        <div class="container">
+          <h3 class="post-title">
+            {{page.title}}
+            <span id="post-info" class="print-only">
+              {% if page.categories %}
+              <i class="material-icons tooltipped" style="margin-right: 5px; margin-left: 10px;" data-delay="30"
+                data-tooltip="Categories">sort</i>
+              {% for cat in page.categories %}
+              {% capture test %}{{cat | slice: 0}}{% endcapture %}
+              {% capture testup %}{{cat | slice: 0 | upcase}}{% endcapture %}
+              <a href="{{site.baseurl}}/categories#{{cat | slugify}}{% if test == testup %}_cap{% endif %}"
+                target="_blank">
+                <div class="chip {{cat}}">{{cat}}</div>
+              </a>
+              {% endfor %}
+              {% endif %}
+
+              {% if page.tags %}
+              <i class="material-icons tooltipped" style="margin-right: 5px; margin-left: 10px;" data-delay="30"
+                data-tooltip="Tags">label</i>
+              {% for tag in page.tags %}
+              {% capture test %}{{tag | slice: 0}}{% endcapture %}
+              {% capture testup %}{{tag | slice: 0 | upcase}}{% endcapture %}
+              <a href="{{site.baseurl}}/tags#{{tag | slugify}}{% if test == testup %}_cap{% endif %}" target="_blank">
+                <div class="chip">{{tag}}</div>
+              </a>
+              {% endfor %}
+              {% endif %}
+
+            </span>
+          </h3>
+          <div class="divider print-only"></div>
+        </div>
+      </td>
+    </tr>
+  </thead>
+  <tbody style="border: none">
+    <tr>
+      <td class="table-wrap">
+        <div class="container">
+          {{ content }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td class="table-wrap">
+        <div class="footer-space">&nbsp;</div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+{% include footer.html %}
