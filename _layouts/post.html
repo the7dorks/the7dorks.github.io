@@ -9,12 +9,20 @@ js: ["post.js"]
       <div class="collapsible-header">
         <span>
           <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Date">date_range</i>
-          {{page.date | date: "%d/%m/%Y %H:%M"}}
+          {{page.date | date: "%m/%d/%Y"}}
           <i id="indicate" class="right material-icons tooltipped" data-position="left" data-delay="30"
             data-tooltip="Show extra info">info</i>
         </span>
       </div>
       <div class="collapsible-body">
+        <span>
+          {% if page.author %}
+          <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Categories">create</i>
+          <a href="{{site.baseurl}}/about" target="_blank">
+            <div class="chip">{{page.author}}</div>
+          </a>
+          {% endif %}
+        </span>
         <span>
           <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Categories">sort</i>
           {% for cat in page.categories %}
@@ -25,6 +33,7 @@ js: ["post.js"]
           </a>
           {% endfor %}
         </span>
+        {% if page.tags[0] %}
         <span>
           <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Tags">label</i>
           {% for tag in page.tags %}
@@ -35,6 +44,7 @@ js: ["post.js"]
           </a>
           {% endfor %}
         </span>
+        {% endif %}
       </div>
     </li>
   </ul>

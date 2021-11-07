@@ -84,7 +84,13 @@ footer.page-footer
 
 // Misc
 blockquote
-  border-left-color: teal
+  background: rgba(106, 27, 154, .15)
+  border-left-color: rgba(106, 27, 154, 1)
+  padding-left: 15px
+  page-break-inside: avoid
+
+mark
+  background: rgba(106, 27, 154, .15)
 
 main
   ul
@@ -93,29 +99,86 @@ main
 
       li
         list-style-type: disc
+    ul
+      list-style-type: circle
 
 .table-wrap
   padding: 0px
-  border: 0px
+  border: none
 
 #print-timestamp
   display: none
 
-ul.list2
-  columns: 2
+ul
+  .list2
+    columns: 2
 
 .filler
   visibility: hidden
 
-.Programming
-  border-color: #0000ffaa
+.Analyze,
+.Research,
+.Design,
+.Create,
+.Test,
+.Reflect,
+.Management
   border-style: solid
   box-sizing: content-box
 
-code
-  background-color: lightgrey
-  padding: 0px 2px
-  font-size: 92%
+.Analyze
+  border-color: red
+  background-color: rgba(255,0,0,0.2)
+
+.Research
+  border-color: orange
+  background-color: rgba(255,165,0,0.2)
+
+.Design
+  border-color: yellow
+  background-color: rgba(255,255,0,0.2)
+
+.Create
+  border-color: green
+  background-color: rgba(0,128,0,0.2)
+
+.Test
+  border-color: blue
+  background-color: rgba(0,0,255,0.2)
+
+.Reflect
+  border-color: indigo
+  background-color: rgba(75,0,130,0.2)
+
+.Management
+  border-color: violet
+  background-color: rgba(238,130,238,0.2)
+
+p
+  code
+    background-color: lightgrey
+    padding: 0px 2px
+    font-size: 92%
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  font-weight: 500
+
+h6
+  font-size: 1.2rem
+
+table, th, td
+  border: 1px solid
+
+td
+  vertical-align: top
+
+th
+  text-align: center
 
 @media only screen and (max-width: 992px)
   header,

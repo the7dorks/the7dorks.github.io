@@ -10,9 +10,10 @@ css: ["index.css"]
         <span id="post-title" class="card-title">{{post.title}}</span>
         <p id="post-date">
           <i class="material-icons">date_range</i>
-          {{post.date | date: "%d/%m/%Y %H:%M"}}
+          {{post.date | date: "%m/%d/%Y"}}
         </p>
-        <p id="post-content">{{post.excerpt | remove: '<p>' | remove: '</p>'}}</p>
+        <p id="post-content">{{post.excerpt | remove: '
+        <p>' | remove: '</p>'}}</p>
       </div>
       <div class="card-action">
         <a href="{{post.url | prepend: site.baseurl}}">
@@ -28,26 +29,26 @@ css: ["index.css"]
         {% if paginator.previous_page %}
         {% if paginator.previous_page == 1 %}
         <a href="{{site.baseurl}}/">
-        {% else %}
-        <a href="{{site.baseurl}}/page{{paginator.previous_page}}">
-        {% endif %}
-        {% else %}
-        <a href="#!">
-        {% endif %}
-          <i class="material-icons">chevron_left</i>
-        </a>
+          {% else %}
+          <a href="{{site.baseurl}}/page{{paginator.previous_page}}">
+            {% endif %}
+            {% else %}
+            <a href="#!">
+              {% endif %}
+              <i class="material-icons">chevron_left</i>
+            </a>
       </li>
       {% if paginator.page == 1 %}
-      <li class="active teal">
+      <li class="active purple darken-3">
         <a href="#!">1</a>
-      {% else %}
+        {% else %}
       <li class="waves-effect">
         <a href="{{site.baseurl}}/">1</a>
-      {% endif %}
+        {% endif %}
       </li>
       {% for count in (2..paginator.total_pages) %}
       {% if count == paginator.page %}
-      <li class="active teal"><a href="#!">{{count}}</a></li>
+      <li class="active purple darken-3"><a href="#!">{{count}}</a></li>
       {% else %}
       <li class="waves-effect"><a href="{{site.baseurl}}/page{{count}}">{{count}}</a></li>
       {% endif %}
@@ -55,11 +56,11 @@ css: ["index.css"]
       <li class="{% unless paginator.next_page %}disabled{% else %}waves-effect{% endunless %}">
         {% if paginator.next_page %}
         <a href="{{site.baseurl}}/page{{paginator.next_page}}">
-        {% else %}
-        <a href="#!">
-        {% endif %}
-          <i class="material-icons">chevron_right</i>
-        </a>
+          {% else %}
+          <a href="#!">
+            {% endif %}
+            <i class="material-icons">chevron_right</i>
+          </a>
       </li>
     </ul>
   </div>
