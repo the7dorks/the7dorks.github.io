@@ -3,7 +3,7 @@ layout: post
 title: "Research: Pneumatics | Brainstorming: Fleshing Out Mobile Goal Lift Robot"
 date: 2021-05-26
 author: "Porter Shawver"
-categories:
+categories: Research Brainstorming
 tags:
 ---
 ##### Research
