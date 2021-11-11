@@ -1,5 +1,5 @@
 /**
- * SensorWrappers.cpp
+ * wrappers.cpp
  *
  * This file contains the code for wrapping the optical and distance sensors to make organization
  * better.
@@ -9,7 +9,7 @@
 /* ----------------------------------------------------------- */
 /*                    DistanceSensorWrapper                    */
 /* ----------------------------------------------------------- */
-DistanceSensorWrapper::DistanceSensorWrapper(pros::Distance & isensor) : msensor(isensor) {}
+DistanceSensorWrapper::DistanceSensorWrapper(pros::Distance &isensor) : msensor(isensor) {}
 
 int DistanceSensorWrapper::getDistance() { return msensor.get(); }
 double DistanceSensorWrapper::getVelocity() { return msensor.get_object_velocity(); }
@@ -19,7 +19,7 @@ int DistanceSensorWrapper::getSize() { return msensor.get_object_size(); }
 /* ----------------------------------------------------------- */
 /*                     OpticalSensorWrapper                    */
 /* ----------------------------------------------------------- */
-OpticalSensorWrapper::OpticalSensorWrapper(pros::Optical & isensor) : msensor(isensor) {}
+OpticalSensorWrapper::OpticalSensorWrapper(pros::Optical &isensor) : msensor(isensor) {}
 
 double OpticalSensorWrapper::getHue() { return msensor.get_hue(); }
 double OpticalSensorWrapper::getSaturation() { return msensor.get_saturation(); }
@@ -30,3 +30,31 @@ int OpticalSensorWrapper::getPWM() { return msensor.get_led_pwm(); }
 pros::c::optical_direction_e_t OpticalSensorWrapper::getGesture() { return msensor.get_gesture(); }
 void OpticalSensorWrapper::enableGestures() { msensor.enable_gesture(); }
 void OpticalSensorWrapper::disableGestures() { msensor.disable_gesture(); }
+
+/* ----------------------------------------------------------- */
+/*                       SolenoidWrapper                       */
+/* ----------------------------------------------------------- */
+SolenoidWrapper::SolenoidWrapper(pros::ADIDigitalOut &isolenoid, bool iisEngaged)
+    : msolenoid(isolenoid), misEngaged(iisEngaged)
+{
+    msolenoid.set_value(misEngaged);
+} // constructor to set defaults
+
+bool SolenoidWrapper::toggle()
+{
+    misEngaged = !misEngaged;
+    msolenoid.set_value(misEngaged);
+    return misEngaged;
+}
+
+bool SolenoidWrapper::toggle(const bool iengaged)
+{
+    misEngaged = iengaged;
+    msolenoid.set_value(misEngaged);
+    return misEngaged;
+}
+
+bool SolenoidWrapper::isEngaged()
+{
+    return misEngaged;
+}

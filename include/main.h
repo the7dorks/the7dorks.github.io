@@ -58,7 +58,7 @@ using namespace okapi;
 #include "movement/paths/ProfileStep.hpp"
 #include "movement/paths/Trajectory.hpp"
 
-#include "util/SensorWrappers.hpp"
+#include "util/wrappers.hpp"
 
 #include "gui/odomDebug.hpp"
 #include "util/CustomOdometry.hpp"
@@ -73,6 +73,7 @@ using namespace okapi;
 
 #include "stateMachines/VStateMachine.hpp"
 #include "stateMachines/DrivetrainStateMachine.hpp"
+#include "stateMachines/LiftStateMachine.hpp"
 
 #include "Auton.hpp"
 

@@ -9,6 +9,7 @@
 #include "main.h" // gives access to dependancies from other files
 
 #define DT_STATES DrivetrainStateMachine::MStates
+#define LIFT_STATES LiftStateMachine::MStates
 
 #define makeFunc(i) [&]() i
 #define cutDrive(i)                                          \
@@ -27,23 +28,28 @@ namespace def
     extern Motor mtr_dt_right_back;
     extern Motor mtr_dt_left_back;
     /* ----------------------------------------------------------- */
-    extern Motor mtr_it_left;
-    extern Motor mtr_it_right;
+    extern Motor mtr_lift_left;
+    extern Motor mtr_lift_right;
     /* ----------------------------------------------------------- */
-    extern Motor mtr_ix;
-    /* ----------------------------------------------------------- */
-    extern Motor mtr_fw;
+    extern Motor mtr_mg_left;
+    extern Motor mtr_mg_right;
+
+    /* ------------------------ Pneumatics ----------------------- */
+    extern pros::ADIDigitalOut sol_claw_front;
 
     /* ------------------------- Sensors ------------------------- */
     extern ADIEncoder track_encoder_forward;
     extern ADIEncoder track_encoder_side;
     extern pros::Imu imu_top;
     extern pros::Imu imu_bottom;
+    extern RotationSensor rotation_lift;
 
     /* ----------------------------------------------------------- */
     /*                           Controls                          */
     /* ----------------------------------------------------------- */
     extern Controller controller;
+    extern ControllerButton btn_lift_down;
+    extern ControllerButton btn_lift_up;
 
     /* ----------------------------------------------------------- */
     /*                          Constants                          */
@@ -76,4 +82,6 @@ namespace def
     const double SET_DT_POW_STRAIGHT = 2; // powers of the curves of the drivetrain control adjustments
     const double SET_DT_POW_STRAFE = 5;
     const double SET_DT_POW_TURN = 3;
+    const double SET_LIFT_TOP_DEG = 100;
+    const double SET_LIFT_RANGE_DEG = 3;
 } // namespace def

@@ -59,8 +59,8 @@ void odomSetState(OdomDebug::state_t istate); // sets the state of odometry base
 void odomResetAll();                          // resets everything having to do with odometry (for "Reset" button)
 
 /* ---------------------- Task Functions --------------------- */
-void sm_dt_task_func(); // state machine drivetrain task to be run independently
-
+void sm_dt_task_func();   // state machine drivetrain task to be run independently
+void sm_lift_task_func(); // state machine life task to be run independently
 void display_task_func(); // display task to be run independently
 
 /* -------------------------- Macros ------------------------- */

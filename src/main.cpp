@@ -10,6 +10,8 @@
 
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
+pros::Task sm_dt_task(sm_dt_task_func);
+pros::Task sm_lift_task(sm_lift_task_func);
 pros::Task display_task(display_task_func);
 
 /**
@@ -82,13 +84,22 @@ void autonomous()
  */
 void opcontrol()
 {
-
+    ControllerButton close = ControllerDigital::A;
+    ControllerButton open = ControllerDigital::B;
     // there is no need for a loop in opcontrol(), because there are already other tasks running
     // that control all of the movement
     Auton::suspendAsyncTask();
 
-    // while (true)
-    // {
-    //     pros::delay(20);
-    // }
+    while (true)
+    {
+        if (open.changedToPressed())
+        {
+            def::sm_lift.disengageClaw();
+        }
+        else if (close.changedToPressed())
+        {
+            def::sm_lift.engageClaw();
+        }
+        pros::delay(20);
+    }
 }

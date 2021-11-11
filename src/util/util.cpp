@@ -156,6 +156,16 @@ void sm_dt_task_func() // state machine drivetrain task to be run independently
     }
 }
 
+void sm_lift_task_func() // state maching lift task to be run independently
+{
+    while (true)
+    {
+        def::sm_lift.controlState();
+        def::sm_lift.update();
+        pros::delay(20);
+    }
+}
+
 void display_task_func() // display task to be run independently
 {
     while (true)

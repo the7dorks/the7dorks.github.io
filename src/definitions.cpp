@@ -15,20 +15,32 @@ namespace def
 
     /* -------------------------- Motors ------------------------- */
     Motor mtr_dt_left_front(1);
-    Motor mtr_dt_right_front(2);
+    Motor mtr_dt_right_front(11);
     Motor mtr_dt_right_back(3);
     Motor mtr_dt_left_back(4);
+
+    Motor mtr_lift_left(9);
+    Motor mtr_lift_right(6);
+
+    Motor mtr_mg_left(7);
+    Motor mtr_mg_right(8);
+
+    /* ------------------------ Pneumatics ----------------------- */
+    pros::ADIDigitalOut sol_claw_front('H');
 
     /* ------------------------- Sensors ------------------------- */
     ADIEncoder track_encoder_forward('A', 'B', false);
     ADIEncoder track_encoder_side('C', 'D', true);
-    pros::Imu imu_top(9);
+    pros::Imu imu_top(5);
     pros::Imu imu_bottom(10);
+    RotationSensor rotation_lift(2, true);
 
     /* ----------------------------------------------------------- */
     /*                           Controls                          */
     /* ----------------------------------------------------------- */
     Controller controller = Controller();
+    ControllerButton btn_lift_down = ControllerDigital::L2;
+    ControllerButton btn_lift_up = ControllerDigital::L1;
 
     /* -------------------------------------------- */
     //ControllerButton btn_bc_in = ControllerDigital::R1;
@@ -47,4 +59,5 @@ namespace def
     CustomOdometry customOdom = CustomOdometry(); // object that calculates position
 
     DrivetrainStateMachine sm_dt = DrivetrainStateMachine(); // state machine to control the drivetrain
+    LiftStateMachine sm_lift = LiftStateMachine();           // state machine to control the lift
 } // namespace def
