@@ -12,6 +12,7 @@ DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
 pros::Task sm_dt_task(sm_dt_task_func);
 pros::Task sm_lift_task(sm_lift_task_func);
+pros::Task sm_mg_task(sm_lift_task_func);
 pros::Task display_task(display_task_func);
 
 /**

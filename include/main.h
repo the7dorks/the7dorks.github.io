@@ -74,6 +74,7 @@ using namespace okapi;
 #include "stateMachines/VStateMachine.hpp"
 #include "stateMachines/DrivetrainStateMachine.hpp"
 #include "stateMachines/LiftStateMachine.hpp"
+#include "stateMachines/MogoStateMachine.hpp"
 
 #include "Auton.hpp"
 

@@ -12,14 +12,10 @@
 #include "main.h" // gives access to LiftStateMachine and other dependencies
 
 /* ----------------------------------------------------------- */
-/*                     Private Information                     */
-/* ----------------------------------------------------------- */
-
-/* ----------------------------------------------------------- */
 /*                      Public Information                     */
 /* ----------------------------------------------------------- */
 LiftStateMachine::LiftStateMachine()
-    : mstate(LIFT_STATES::off), mlastState(LIFT_STATES::off), mclaw(def::sol_claw_front), mbtnDown(def::btn_lift_down), mbtnUp(def::btn_lift_up), mmtrLeft(def::mtr_lift_left), mrotation(def::rotation_lift)
+    : mmtr(def::mtr_lift_left), mclaw(def::sol_claw_front), mrotation(def::rotation_lift), mdistance(def::distance_lift_claw), mstate(LIFT_STATES::off), mlastState(LIFT_STATES::off), moverrideDistance(false), mengageClaw(mclaw.isEngaged()), mbtnToggle(def::btn_lift_toggle), mbtnUp(def::btn_lift_up), mbtnDown(def::btn_lift_down), mbtnPneumaticToggle(def::btn_lift_pneumatic_toggle)
 {
 } // constructor to set defaults
 
@@ -53,61 +49,113 @@ void LiftStateMachine::disengageClaw()
 
 void LiftStateMachine::controlState() // update the state based on controller input
 {
-    if (mbtnUp.changedToPressed())
+    if (mbtnToggle.changedToPressed())
     {
-        if (mrotation.get() > def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG && mrotation.get() < def::SET_LIFT_TOP_DEG + def::SET_LIFT_RANGE_DEG) // if the lift is in the target range for the top
+        if (mstate == LIFT_STATES::top || mrotation.get() > def::SET_LIFT_TOP_DEG / 2) // if the lift is at the top, or closer to the top
         {
-            setState(LIFT_STATES::top); // hold
+            setState(LIFT_STATES::bottom);
         }
-        else
+        else // if the lift is closer to the bottom
         {
-            setState(LIFT_STATES::up); // go up
+            setState(LIFT_STATES::top);
         }
     }
-    else if (mbtnDown.changedToPressed())
+    else if (mbtnUp.isPressed())
     {
-        if (mrotation.get() > -def::SET_LIFT_RANGE_DEG && mrotation.get() < def::SET_LIFT_RANGE_DEG) // if the lift is in the target range for the top
-        {
-            setState(LIFT_STATES::bottom); // hold
-        }
-        else
-        {
-            setState(LIFT_STATES::down); // go down
-        }
+        setState(LIFT_STATES::up);
+    }
+    else if (mbtnDown.isPressed())
+    {
+        setState(LIFT_STATES::down);
+    }
+    else if (mstate != LIFT_STATES::top && mstate != LIFT_STATES::bottom) // if the lift isn't set to a position, hold
+    {
+        setState(LIFT_STATES::hold);
     }
 
-    if (getState() == LIFT_STATES::up && mrotation.get() > def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG)
+    if (mbtnPneumaticToggle.changedToPressed()) // if pneumatics are manually toggled
     {
-        setState(LIFT_STATES::top);
+        moverrideDistance = true; // give manual control rights
+        mclaw.toggle();           // toggle
     }
-    else if (getState() == LIFT_STATES::down && mrotation.get() < def::SET_LIFT_RANGE_DEG)
+
+    if (moverrideDistance && mclaw.isEngaged() == mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM) // if sensor is overridden but agrees with manual instruction
     {
-        setState(LIFT_STATES::bottom);
+        moverrideDistance = false; // reengage sensor
+    }
+
+    if (!moverrideDistance) // if the sensor isn't disabled
+    {
+        if (mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM) // if something is close enough to the distance sensor
+        {
+            mclaw.toggle(true);
+        }
+        else
+        {
+            mclaw.toggle(false);
+        }
     }
 }
 
 void LiftStateMachine::update() // move the robot based on the state
 {
-    if (stateChanged())
+    switch (mstate)
     {
-        switch (mstate)
+    case LIFT_STATES::off:
+        if (stateChanged())
         {
-        case LIFT_STATES::off:
-            mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::coast);
-            mmtrLeft.moveVoltage(0);
-            break;
-        case LIFT_STATES::up:
-            mmtrLeft.moveVoltage(12000);
-            break;
-        case LIFT_STATES::down:
-            mmtrLeft.moveVoltage(-12000);
-            break;
-        case LIFT_STATES::top:
-            mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
-            break;
-        case LIFT_STATES::bottom:
-            mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
-            break;
+            mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
+            mmtr.moveVoltage(0);
         }
+        break;
+    case LIFT_STATES::hold:
+        if (stateChanged())
+        {
+            mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
+            mmtr.moveVoltage(0);
+        }
+        break;
+    case LIFT_STATES::up:
+        if (stateChanged())
+        {
+            mmtr.moveVoltage(12000);
+        }
+        break;
+    case LIFT_STATES::down:
+        if (stateChanged())
+        {
+            mmtr.moveVoltage(-12000);
+        }
+        break;
+    case LIFT_STATES::top:
+        mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
+        if (mrotation.get() < def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG) // if the lift is below the minimum height
+        {
+            mmtr.moveVoltage(12000);
+        }
+        else if (mrotation.get() > def::SET_LIFT_TOP_DEG + def::SET_LIFT_RANGE_DEG) // if the lift is above the maximum height
+        {
+            mmtr.moveVoltage(-12000);
+        }
+        else // if the lift is in range, don't move
+        {
+            mmtr.moveVoltage(0);
+        }
+        break;
+    case LIFT_STATES::bottom:
+        mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
+        if (mrotation.get() < -def::SET_LIFT_RANGE_DEG) // if the lift is below the minimum height
+        {
+            mmtr.moveVoltage(12000);
+        }
+        else if (mrotation.get() > def::SET_LIFT_RANGE_DEG) // if the lift is above the maximum height
+        {
+            mmtr.moveVoltage(-12000);
+        }
+        else // if the lift is in range, don't move
+        {
+            mmtr.moveVoltage(0);
+        }
+        break;
     }
 }

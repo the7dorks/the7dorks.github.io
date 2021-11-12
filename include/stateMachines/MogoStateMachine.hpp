@@ -1,20 +1,20 @@
 /**
- * LiftStateMachine.hpp
+ * MogoStateMachine.hpp
  *
- * This file contains the declaration of the LiftStateMachine class.
- * LiftStateMachine is a state machine that inherits from VStateMachine.
+ * This file contains the declaration of the MogoStateMachine class.
+ * MogoStateMachine is a state machine that inherits from VStateMachine.
  * It has an enumeration of different possible states to make it easy for
- * the user to controll the drivetrain.
+ * the user to controll the mogo lift.
  *
  * To use the state machine in auton, make sure you disable/reenable
  * the normal state machine tasks and run the specified action.
  */
 #pragma once                                  // makes sure the file is only included once
 #include "main.h"                             // gives access to dependancies from other files
-class LiftStateMachine : public VStateMachine // state machine to represent the drivetrain
+class MogoStateMachine : public VStateMachine // state machine to represent the drivetrain
 {
 public:
-    LiftStateMachine(); // constructor to set defaults
+    MogoStateMachine(); // constructor to set defaults
     enum class MStates  // enumeration to organize possible states
     {
         off,    // not doing anything
@@ -35,25 +35,21 @@ public:
     void update() override;       // move the robot based on the state
 
 private:
-    /* ------------------------- Devices ------------------------- */
-    Motor &mmtr;
-    SolenoidWrapper mclaw;
-    RotationSensor &mrotation;
-    DistanceSensorWrapper mdistance;
-
     /* -------------------------- State -------------------------- */
     MStates mstate, mlastState;
-    bool moverrideDistance;
-    bool mengageClaw;
 
     /* ------------------------- Controls ------------------------ */
-    ControllerButton &mbtnToggle;          // botton to toggle the lift being up/down
-    ControllerButton &mbtnUp;              // button to raise the lift
-    ControllerButton &mbtnDown;            // button to lower the lift
-    ControllerButton &mbtnPneumaticToggle; // button to toggle the claw actuated/not
+    ControllerButton &mbtnToggle; // botton to toggle the lift being up/down
+    ControllerButton &mbtnUp;     // button to raise the lift
+    ControllerButton &mbtnDown;   // button to lower the lift
+    ControllerButton &mbtnRelax;  // button that rests the lift
+
+    /* ------------------------- Devices ------------------------- */
+    Motor &mmtr;
+    RotationSensor &mrotation;
 };
 
 namespace def
 {
-    extern LiftStateMachine sm_lift; // declares the sm_dt object as extern, to make sure it only gets constructed once
+    extern MogoStateMachine sm_mg; // declares the sm_dt object as extern, to make sure it only gets constructed once
 } // namespace def

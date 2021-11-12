@@ -61,6 +61,7 @@ void odomResetAll();                          // resets everything having to do 
 /* ---------------------- Task Functions --------------------- */
 void sm_dt_task_func();   // state machine drivetrain task to be run independently
 void sm_lift_task_func(); // state machine life task to be run independently
+void sm_mg_task_func();   // state machine life task to be run independently
 void display_task_func(); // display task to be run independently
 
 /* -------------------------- Macros ------------------------- */
