@@ -22,7 +22,7 @@ namespace def
     Motor mtr_lift_left(9);
     Motor mtr_lift_right(6);
 
-    Motor mtr_mg_left(7);
+    Motor mtr_mg_left(9);
     Motor mtr_mg_right(8);
 
     /* ------------------------ Pneumatics ----------------------- */

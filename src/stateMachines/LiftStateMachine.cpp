@@ -68,11 +68,11 @@ void LiftStateMachine::controlState() // update the state based on controller in
     {
         if (mrotation.get() > -def::SET_LIFT_RANGE_DEG && mrotation.get() < def::SET_LIFT_RANGE_DEG) // if the lift is in the target range for the top
         {
-            setState(LIFT_STATES::top); // hold
+            setState(LIFT_STATES::bottom); // hold
         }
         else
         {
-            setState(LIFT_STATES::up); // go up
+            setState(LIFT_STATES::down); // go down
         }
     }
 
@@ -88,13 +88,11 @@ void LiftStateMachine::controlState() // update the state based on controller in
 
 void LiftStateMachine::update() // move the robot based on the state
 {
-    printf("in update");
     if (stateChanged())
     {
         switch (mstate)
         {
         case LIFT_STATES::off:
-
             mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::coast);
             mmtrLeft.moveVoltage(0);
             break;
