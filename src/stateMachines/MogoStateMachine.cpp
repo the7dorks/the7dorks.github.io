@@ -12,7 +12,7 @@
 /*                      Public Information                     */
 /* ----------------------------------------------------------- */
 MogoStateMachine::MogoStateMachine()
-    : mstate(MG_STATES::off), mlastState(MG_STATES::off), mbtnToggle(def::btn_mg_toggle), mbtnUp(def::btn_mg_up), mbtnDown(def::btn_mg_down), mbtnRelax(def::btn_mg_relax), mmtr(def::mtr_mg_left), mrotation(def::rotation_mg)
+    : mstate(MG_STATES::off), mlastState(MG_STATES::off), /*mbtnToggle(def::btn_mg_toggle),*/ mbtnUp(def::btn_mg_up), mbtnDown(def::btn_mg_down), mbtnRelax(def::btn_mg_relax), mmtrLeft(def::mtr_mg_left), mmtrRight(def::mtr_mg_right), mrotation(def::rotation_mg)
 {
 } // constructor to set defaults
 
@@ -36,18 +36,7 @@ bool MogoStateMachine::stateChanged()
 
 void MogoStateMachine::controlState() // update the state based on controller input
 {
-    if (mbtnToggle.changedToPressed())
-    {
-        if (mstate == MG_STATES::top || mrotation.get() > def::SET_MG_TOP_DEG / 2) // if the lift is at the top, or closer to the top
-        {
-            setState(MG_STATES::bottom);
-        }
-        else // if the lift is closer to the bottom
-        {
-            setState(MG_STATES::top);
-        }
-    }
-    else if (mbtnUp.isPressed())
+    if (mbtnUp.isPressed())
     {
         setState(MG_STATES::up);
     }
@@ -55,11 +44,7 @@ void MogoStateMachine::controlState() // update the state based on controller in
     {
         setState(MG_STATES::down);
     }
-    else if (mbtnRelax.changedToPressed())
-    {
-        setState(MG_STATES::off);
-    }
-    else if (mstate != MG_STATES::top && mstate != MG_STATES::bottom && mstate != MG_STATES::off) // if the lift isn't set to a position, hold
+    else
     {
         setState(MG_STATES::hold);
     }
@@ -67,62 +52,87 @@ void MogoStateMachine::controlState() // update the state based on controller in
 
 void MogoStateMachine::update() // move the robot based on the state
 {
+    printf("in update");
     switch (mstate)
     {
     case MG_STATES::off:
         if (stateChanged())
         {
-            mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
-            mmtr.moveVoltage(0);
+            mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::coast);
+            mmtrRight.setBrakeMode(AbstractMotor::brakeMode::coast);
+            mmtrLeft.moveVoltage(0);
+            mmtrRight.moveVoltage(0);
         }
         break;
     case MG_STATES::hold:
         if (stateChanged())
         {
-            mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
-            mmtr.moveVoltage(0);
+            mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
+            mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
+            mmtrLeft.moveVoltage(0);
+            mmtrRight.moveVoltage(0);
         }
         break;
     case MG_STATES::up:
         if (stateChanged())
         {
-            mmtr.moveVoltage(12000);
+            mmtrLeft.moveVoltage(12000);
+            mmtrRight.moveVoltage(12000);
         }
         break;
     case MG_STATES::down:
         if (stateChanged())
         {
-            mmtr.moveVoltage(-12000);
+            mmtrLeft.moveVoltage(-12000);
+            mmtrRight.moveVoltage(-12000);
         }
         break;
     case MG_STATES::top:
-        mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
-        if (mrotation.get() < def::SET_MG_TOP_DEG - def::SET_MG_RANGE_DEG) // if the lift is below the minimum height
+        mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
+        mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
+        if (mmtrLeft.getPosition() < def::SET_MG_TOP_DEG - def::SET_MG_RANGE_DEG || mmtrLeft.getPosition() > def::SET_MG_TOP_DEG + def::SET_MG_RANGE_DEG) // if the lift is out of the target range
         {
-            mmtr.moveVoltage(12000);
-        }
-        else if (mrotation.get() > def::SET_MG_TOP_DEG + def::SET_MG_RANGE_DEG) // if the lift is above the maximum height
-        {
-            mmtr.moveVoltage(-12000);
+            double voltage = (def::SET_MG_TOP_DEG - mmtrLeft.getPosition()) * 1200; // CHANGE CONSTANT
+            util::chop<double>(-12000, 12000, voltage);
+            mmtrLeft.moveVoltage(voltage);
+            mmtrRight.moveVoltage(voltage);
         }
         else // if the lift is in range, don't move
         {
-            mmtr.moveVoltage(0);
+            mmtrLeft.moveVoltage(0);
+            mmtrRight.moveVoltage(0);
         }
         break;
     case MG_STATES::bottom:
-        mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
-        if (mrotation.get() < -def::SET_MG_RANGE_DEG) // if the lift is below the minimum height
+        mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
+        mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
+        if (mmtrLeft.getPosition() < def::SET_MG_BOTTOM_DEG - def::SET_MG_RANGE_DEG || mmtrLeft.getPosition() > def::SET_MG_BOTTOM_DEG + def::SET_MG_RANGE_DEG) // if the lift is out of the target range
         {
-            mmtr.moveVoltage(12000);
-        }
-        else if (mrotation.get() > def::SET_MG_RANGE_DEG) // if the lift is above the maximum height
-        {
-            mmtr.moveVoltage(-12000);
+            double voltage = (def::SET_MG_BOTTOM_DEG - mmtrLeft.getPosition()) * 1200; // CHANGE CONSTANT
+            util::chop<double>(-12000, 12000, voltage);
+            mmtrLeft.moveVoltage(voltage);
+            mmtrRight.moveVoltage(voltage);
         }
         else // if the lift is in range, don't move
         {
-            mmtr.moveVoltage(0);
+            mmtrLeft.moveVoltage(0);
+            mmtrRight.moveVoltage(0);
+        }
+        break;
+    case MG_STATES::oneMogo:
+        mmtrLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
+        mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
+        if (mmtrLeft.getPosition() < def::SET_MG_ONEMOGO_DEG - def::SET_MG_RANGE_DEG || mmtrLeft.getPosition() > def::SET_MG_ONEMOGO_DEG + def::SET_MG_RANGE_DEG) // if the lift is out of the target range
+        {
+            double voltage = (def::SET_MG_ONEMOGO_DEG - mmtrLeft.getPosition()) * 1200; // CHANGE CONSTANT
+            util::chop<double>(-12000, 12000, voltage);
+            mmtrLeft.moveVoltage(voltage);
+            mmtrRight.moveVoltage(voltage);
+        }
+        else // if the lift is in range, don't move
+        {
+            mmtrLeft.moveVoltage(0);
+            mmtrRight.moveVoltage(0);
         }
         break;
     }

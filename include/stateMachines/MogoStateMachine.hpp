@@ -23,6 +23,7 @@ public:
         down,   // moves the lift down
         top,    // moves the arm to the top and holds
         bottom, // moves the lift to the bottom and holds
+        oneMogo // holding one mobile goal
     };
     MStates getState();
     void setState(const MStates istate);
@@ -39,13 +40,14 @@ private:
     MStates mstate, mlastState;
 
     /* ------------------------- Controls ------------------------ */
-    ControllerButton &mbtnToggle; // botton to toggle the lift being up/down
-    ControllerButton &mbtnUp;     // button to raise the lift
-    ControllerButton &mbtnDown;   // button to lower the lift
-    ControllerButton &mbtnRelax;  // button that rests the lift
+    // ControllerButton &mbtnToggle; // botton to toggle the lift being up/down
+    ControllerButton &mbtnUp;    // button to raise the lift
+    ControllerButton &mbtnDown;  // button to lower the lift
+    ControllerButton &mbtnRelax; // button that rests the lift
 
     /* ------------------------- Devices ------------------------- */
-    Motor &mmtr;
+    Motor mmtrLeft;
+    Motor mmtrRight;
     RotationSensor &mrotation;
 };
 

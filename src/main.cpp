@@ -12,7 +12,7 @@ DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
 pros::Task sm_dt_task(sm_dt_task_func);
 pros::Task sm_lift_task(sm_lift_task_func);
-pros::Task sm_mg_task(sm_lift_task_func);
+pros::Task sm_mg_task(sm_mg_task_func);
 pros::Task display_task(display_task_func);
 
 /**
@@ -23,8 +23,8 @@ pros::Task display_task(display_task_func);
  */
 void initialize()
 {
-    def::imu_top.reset();
-    def::imu_bottom.reset();
+    def::imu1.reset();
+    def::imu2.reset();
 
     Auton::suspendAsyncTask();
     Auton::readSettings();            // read sd card to remeber the auton selected when the brain was run last

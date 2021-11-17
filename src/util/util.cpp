@@ -98,7 +98,7 @@ std::string ExtendedPoint::string() // returns the point in string form for test
 /* ----------------------------------------------------------- */
 void waitForImu() // blocks the execution of the code until the imu is done calibrating
 {
-    while (def::imu_top.is_calibrating() || def::imu_bottom.is_calibrating())
+    while (def::imu1.is_calibrating() || def::imu2.is_calibrating())
         pros::delay(100);
 }
 bool waitUntil(std::function<bool()> icondition, QTime itimeout, std::function<void()> iaction)
@@ -137,8 +137,8 @@ void odomSetState(OdomDebug::state_t istate) // sets the state of odometry based
 void odomResetAll() // resets everything having to do with odometry (for "Reset" button)
 {
     CustomOdometry::setState({0_ft, 0_ft, 0_deg}); // sets the robot's positinon to 0
-    def::imu_top.reset();                          // resets the imu
-    def::imu_bottom.reset();                       // resets the imu
+    def::imu1.reset();                             // resets the imu
+    def::imu2.reset();                             // resets the imu
     // resets the ecoders
     def::track_encoder_forward.reset();
     def::track_encoder_side.reset();

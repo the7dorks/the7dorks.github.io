@@ -79,22 +79,23 @@ void LiftStateMachine::controlState() // update the state based on controller in
         mclaw.toggle();           // toggle
     }
 
-    if (moverrideDistance && mclaw.isEngaged() == (mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if sensor is overridden but agrees with manual instruction
-    {
-        moverrideDistance = false; // reengage sensor
-    }
+    // sensor toggler
+    // if (moverrideDistance && mclaw.isEngaged() == (mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if sensor is overridden but agrees with manual instruction
+    // {
+    //     moverrideDistance = false; // reengage sensor
+    // }
 
-    if (!moverrideDistance) // if the sensor isn't disabled
-    {
-        if ((mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if something is close enough to the distance sensor
-        {
-            mclaw.toggle(true);
-        }
-        else
-        {
-            mclaw.toggle(false);
-        }
-    }
+    // if (!moverrideDistance) // if the sensor isn't disabled
+    // {
+    //     if ((mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if something is close enough to the distance sensor
+    //     {
+    //         mclaw.toggle(true);
+    //     }
+    //     else
+    //     {
+    //         mclaw.toggle(false);
+    //     }
+    // }
 }
 
 void LiftStateMachine::update() // move the robot based on the state

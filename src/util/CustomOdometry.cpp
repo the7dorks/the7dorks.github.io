@@ -24,8 +24,8 @@ const double &CustomOdometry::mcircIn =
 /* -------------------- Sensor References -------------------- */
 ADIEncoder &CustomOdometry::meF = def::track_encoder_forward; // left tracking wheel encoder
 ADIEncoder &CustomOdometry::meS = def::track_encoder_side;    // right tracking wheel encoder
-pros::Imu &CustomOdometry::mimu1 = def::imu_bottom;           // inertial sensors
-pros::Imu &CustomOdometry::mimu2 = def::imu_top;
+pros::Imu &CustomOdometry::mimu1 = def::imu2;                 // inertial sensors
+pros::Imu &CustomOdometry::mimu2 = def::imu1;
 
 /* --------------------- Starting Values --------------------- */
 OdomState CustomOdometry::mstateInitial = {0_in, 0_in, 0_rad}; // position of the robot

@@ -22,8 +22,8 @@ namespace def
     Motor mtr_lift_left(-10);
     Motor mtr_lift_right(6);
 
-    Motor mtr_mg_left(9);
-    Motor mtr_mg_right(8);
+    Motor mtr_mg_left(18);
+    Motor mtr_mg_right(-12);
 
     /* ------------------------ Pneumatics ----------------------- */
     pros::ADIDigitalOut sol_claw_front('H');
@@ -31,8 +31,8 @@ namespace def
     /* ------------------------- Sensors ------------------------- */
     ADIEncoder track_encoder_forward('A', 'B', false);
     ADIEncoder track_encoder_side('C', 'D', true);
-    pros::Imu imu_top(5);
-    pros::Imu imu_bottom(17);
+    pros::Imu imu1(5);
+    pros::Imu imu2(13);
     RotationSensor rotation_lift(2, true);
     RotationSensor rotation_mg(15, true);
     pros::Distance distance_lift_claw(16);
@@ -42,15 +42,15 @@ namespace def
     /* ----------------------------------------------------------- */
     Controller controller = Controller();
 
-    ControllerButton btn_lift_toggle = ControllerDigital::R1;
-    ControllerButton btn_lift_up = ControllerDigital::X;
-    ControllerButton btn_lift_down = ControllerDigital::B;
-    ControllerButton btn_lift_pneumatic_toggle = ControllerDigital::R2;
+    ControllerButton btn_lift_toggle = ControllerDigital::Y;
+    ControllerButton btn_lift_up = ControllerDigital::R1;
+    ControllerButton btn_lift_down = ControllerDigital::R2;
+    ControllerButton btn_lift_pneumatic_toggle = ControllerDigital::A;
 
-    ControllerButton btn_mg_toggle = ControllerDigital::L1;
-    ControllerButton btn_mg_up = ControllerDigital::up;
-    ControllerButton btn_mg_down = ControllerDigital::down;
-    ControllerButton btn_mg_relax = ControllerDigital::L2;
+    // ControllerButton btn_mg_toggle = ControllerDigital::L1;
+    ControllerButton btn_mg_up = ControllerDigital::L1;
+    ControllerButton btn_mg_down = ControllerDigital::L2;
+    ControllerButton btn_mg_relax = ControllerDigital::left;
 
     /* -------------------------------------------- */
     /*                   Constants                  */

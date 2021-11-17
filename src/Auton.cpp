@@ -59,8 +59,7 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
     Auton::readSettings();
 
     waitForImu();
-    CustomOdometry::setStateInitial({0_in, 0_in, -def::imu_top.get_rotation() * degree});
-    
+    CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
 }
 
 void Auton::startAsyncTaskWithSettings(std::function<bool()> iasyncCondition, std::function<void()> iasyncAction)
@@ -81,6 +80,7 @@ void Auton::async_task_func(void *)
         pros::delay(20);
     }
 }
-std::function<bool()> Auton::masyncCondition = []() { return false; };
+std::function<bool()> Auton::masyncCondition = []()
+{ return false; };
 std::function<void()> Auton::masyncAction;
 pros::Task Auton::masync_task(Auton::async_task_func);

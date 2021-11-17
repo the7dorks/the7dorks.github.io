@@ -41,8 +41,8 @@ namespace def
     /* ------------------------- Sensors ------------------------- */
     extern ADIEncoder track_encoder_forward;
     extern ADIEncoder track_encoder_side;
-    extern pros::Imu imu_top;
-    extern pros::Imu imu_bottom;
+    extern pros::Imu imu1;
+    extern pros::Imu imu2;
     extern RotationSensor rotation_lift;
     extern RotationSensor rotation_mg;
     extern pros::Distance distance_lift_claw;
@@ -57,7 +57,7 @@ namespace def
     extern ControllerButton btn_lift_down;
     extern ControllerButton btn_lift_pneumatic_toggle;
 
-    extern ControllerButton btn_mg_toggle;
+    //extern ControllerButton btn_mg_toggle;
     extern ControllerButton btn_mg_up;
     extern ControllerButton btn_mg_down;
     extern ControllerButton btn_mg_relax;
@@ -98,6 +98,9 @@ namespace def
     const double SET_LIFT_RANGE_DEG = 1;
     const double SET_LIFT_DISTANCE_MIN_MM = 20;
 
+    const double SET_MG_START_DEG = 10;
     const double SET_MG_TOP_DEG = 100;
+    const double SET_MG_BOTTOM_DEG = 100;
+    const double SET_MG_ONEMOGO_DEG = 1000;
     const double SET_MG_RANGE_DEG = 3;
 } // namespace def
