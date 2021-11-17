@@ -95,7 +95,7 @@ namespace def
     const double SET_DT_POW_TURN = 3;
 
     const double SET_LIFT_TOP_DEG = 100;
-    const double SET_LIFT_RANGE_DEG = 3;
+    const double SET_LIFT_RANGE_DEG = 1;
     const double SET_LIFT_DISTANCE_MIN_MM = 20;
 
     const double SET_MG_TOP_DEG = 100;

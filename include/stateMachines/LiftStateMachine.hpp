@@ -51,6 +51,9 @@ private:
     ControllerButton &mbtnUp;              // button to raise the lift
     ControllerButton &mbtnDown;            // button to lower the lift
     ControllerButton &mbtnPneumaticToggle; // button to toggle the claw actuated/not
+
+    /* -------------------------- Other -------------------------- */
+    double getRotation(); // return the corrected angle of the lift
 };
 
 namespace def

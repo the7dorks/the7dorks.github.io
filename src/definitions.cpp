@@ -14,12 +14,12 @@ namespace def
     /* ----------------------------------------------------------- */
 
     /* -------------------------- Motors ------------------------- */
-    Motor mtr_dt_left_front(1);
-    Motor mtr_dt_right_front(11);
+    Motor mtr_dt_left_front(-7);
+    Motor mtr_dt_right_front(4);
     Motor mtr_dt_right_back(3);
-    Motor mtr_dt_left_back(4);
+    Motor mtr_dt_left_back(-17);
 
-    Motor mtr_lift_left(9);
+    Motor mtr_lift_left(-10);
     Motor mtr_lift_right(6);
 
     Motor mtr_mg_left(9);
@@ -32,7 +32,7 @@ namespace def
     ADIEncoder track_encoder_forward('A', 'B', false);
     ADIEncoder track_encoder_side('C', 'D', true);
     pros::Imu imu_top(5);
-    pros::Imu imu_bottom(10);
+    pros::Imu imu_bottom(17);
     RotationSensor rotation_lift(2, true);
     RotationSensor rotation_mg(15, true);
     pros::Distance distance_lift_claw(16);

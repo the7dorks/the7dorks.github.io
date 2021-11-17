@@ -150,6 +150,7 @@ void sm_dt_task_func() // state machine drivetrain task to be run independently
 {
     while (true)
     {
+        printf("in dt\n");
         def::sm_dt.controlState(); // update the state from controller input
         def::sm_dt.update();       // moves the robot based on the state
         pros::delay(20);
@@ -160,6 +161,7 @@ void sm_lift_task_func() // state machine lift task to be run independently
 {
     while (true)
     {
+        //printf("in lift\n");
         def::sm_lift.controlState();
         def::sm_lift.update();
         pros::delay(20);
@@ -183,6 +185,7 @@ void display_task_func() // display task to be run independently
         def::display.setOdomData(); // update the odometry information
 
         // room for any other miscellaneous debugging
+        def::display.setMiscData(1, std::to_string(def::rotation_lift.get()) + "\nstate: " + std::to_string((int)def::sm_lift.getState()));
 
         // sets the chart to show motor velocites (in RPM) when in the range 150-250
         def::display.setChartData(0, def::mtr_dt_left_front.getActualVelocity() - 150);

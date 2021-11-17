@@ -15,7 +15,7 @@
 /*                      Public Information                     */
 /* ----------------------------------------------------------- */
 LiftStateMachine::LiftStateMachine()
-    : mmtr(def::mtr_lift_left), mclaw(def::sol_claw_front), mrotation(def::rotation_lift), mdistance(def::distance_lift_claw), mstate(LIFT_STATES::off), mlastState(LIFT_STATES::off), moverrideDistance(false), mengageClaw(mclaw.isEngaged()), mbtnToggle(def::btn_lift_toggle), mbtnUp(def::btn_lift_up), mbtnDown(def::btn_lift_down), mbtnPneumaticToggle(def::btn_lift_pneumatic_toggle)
+    : mmtr(def::mtr_lift_left), mclaw(def::sol_claw_front), mrotation(def::rotation_lift), mdistance(def::distance_lift_claw), mstate(LIFT_STATES::bottom), mlastState(LIFT_STATES::bottom), moverrideDistance(false), mengageClaw(mclaw.isEngaged()), mbtnToggle(def::btn_lift_toggle), mbtnUp(def::btn_lift_up), mbtnDown(def::btn_lift_down), mbtnPneumaticToggle(def::btn_lift_pneumatic_toggle)
 {
 } // constructor to set defaults
 
@@ -51,7 +51,7 @@ void LiftStateMachine::controlState() // update the state based on controller in
 {
     if (mbtnToggle.changedToPressed())
     {
-        if (mstate == LIFT_STATES::top || mrotation.get() > def::SET_LIFT_TOP_DEG / 2) // if the lift is at the top, or closer to the top
+        if (mstate == LIFT_STATES::top || getRotation() > def::SET_LIFT_TOP_DEG / 2) // if the lift is at the top, or closer to the top
         {
             setState(LIFT_STATES::bottom);
         }
@@ -79,14 +79,14 @@ void LiftStateMachine::controlState() // update the state based on controller in
         mclaw.toggle();           // toggle
     }
 
-    if (moverrideDistance && mclaw.isEngaged() == mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM) // if sensor is overridden but agrees with manual instruction
+    if (moverrideDistance && mclaw.isEngaged() == (mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if sensor is overridden but agrees with manual instruction
     {
         moverrideDistance = false; // reengage sensor
     }
 
     if (!moverrideDistance) // if the sensor isn't disabled
     {
-        if (mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM) // if something is close enough to the distance sensor
+        if ((mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0)) // if something is close enough to the distance sensor
         {
             mclaw.toggle(true);
         }
@@ -129,13 +129,11 @@ void LiftStateMachine::update() // move the robot based on the state
         break;
     case LIFT_STATES::top:
         mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
-        if (mrotation.get() < def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG) // if the lift is below the minimum height
+        if (getRotation() < def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG || getRotation() > def::SET_LIFT_TOP_DEG + def::SET_LIFT_RANGE_DEG) // if the lift is out of the target range
         {
-            mmtr.moveVoltage(12000);
-        }
-        else if (mrotation.get() > def::SET_LIFT_TOP_DEG + def::SET_LIFT_RANGE_DEG) // if the lift is above the maximum height
-        {
-            mmtr.moveVoltage(-12000);
+            double voltage = (def::SET_LIFT_TOP_DEG - getRotation()) * 1200;
+            util::chop<double>(-12000, 12000, voltage);
+            mmtr.moveVoltage(voltage);
         }
         else // if the lift is in range, don't move
         {
@@ -144,13 +142,11 @@ void LiftStateMachine::update() // move the robot based on the state
         break;
     case LIFT_STATES::bottom:
         mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
-        if (mrotation.get() < -def::SET_LIFT_RANGE_DEG) // if the lift is below the minimum height
+        if (getRotation() < -def::SET_LIFT_RANGE_DEG || getRotation() > def::SET_LIFT_RANGE_DEG) // if the lift is outside the target range
         {
-            mmtr.moveVoltage(12000);
-        }
-        else if (mrotation.get() > def::SET_LIFT_RANGE_DEG) // if the lift is above the maximum height
-        {
-            mmtr.moveVoltage(-12000);
+            double voltage = -getRotation() * 1200;
+            util::chop<double>(-12000, 0, voltage);
+            mmtr.moveVoltage(voltage);
         }
         else // if the lift is in range, don't move
         {
@@ -158,4 +154,13 @@ void LiftStateMachine::update() // move the robot based on the state
         }
         break;
     }
+}
+
+/* ----------------------------------------------------------- */
+/*                     Private Information                     */
+/* ----------------------------------------------------------- */
+double LiftStateMachine::getRotation()
+{
+    double temp = mrotation.get() < -10 ? mrotation.get() + 360 : mrotation.get();
+    return mrotation.get() < -10 ? mrotation.get() + 360 : mrotation.get();
 }

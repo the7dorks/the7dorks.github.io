@@ -56,6 +56,7 @@ void DrivetrainStateMachine::controlState() // update the state based on control
 
 void DrivetrainStateMachine::update() // move the robot based on the state
 {
+    printf("in update");
     switch (mstate)
     {
     case DT_STATES::off:

@@ -85,22 +85,22 @@ void autonomous()
  */
 void opcontrol()
 {
-    ControllerButton close = ControllerDigital::A;
-    ControllerButton open = ControllerDigital::B;
+    // ControllerButton close = ControllerDigital::A;
+    // ControllerButton open = ControllerDigital::B;
     // there is no need for a loop in opcontrol(), because there are already other tasks running
     // that control all of the movement
     Auton::suspendAsyncTask();
-
-    while (true)
-    {
-        if (open.changedToPressed())
-        {
-            def::sm_lift.disengageClaw();
-        }
-        else if (close.changedToPressed())
-        {
-            def::sm_lift.engageClaw();
-        }
-        pros::delay(20);
-    }
+    def::sm_dt.setState(DT_STATES::manual);
+    // while (true)
+    // {
+    // if (open.changedToPressed())
+    // {
+    // def::sm_lift.disengageClaw();
+    // }
+    // else if (close.changedToPressed())
+    // {
+    // def::sm_lift.engageClaw();
+    // }
+    // pros::delay(20);
+    // }
 }
