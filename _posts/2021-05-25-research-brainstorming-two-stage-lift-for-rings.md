@@ -3,7 +3,7 @@ layout: post
 title: "Research | Brainstorming: Two Stage Lift For Rings"
 date: 2021-05-25
 author: "Porter Shawver"
-categories: Research Brainstorming
+categories: Research Design
 tags: Robot-0.2.2 Robot-0.2.3
 ---
 ##### Research
