@@ -3,7 +3,7 @@ layout: post
 title: "Brainstorming: Do We Need Rings? Mobile Goal Hoarders"
 date: 2021-05-23
 author: "Porter Shawver"
-categories: Brainstorming Research
+categories: Design Research
 tags: Robot-0.0.0 Robot-0.0.1 Robot-0.1.0 Robot-0.1.1 Robot-0.1.2 Robot-0.1.3 Robot-0.2.0 Robot-0.2.1
 ---
 > To meet Design Goal #1 (Design Brief: Set Team Goals, 5/23/2021), we want our first robot to be simple, so it is easy to build, repair, and improve on.
