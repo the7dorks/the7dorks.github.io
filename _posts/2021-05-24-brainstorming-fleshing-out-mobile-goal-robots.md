@@ -3,7 +3,7 @@ layout: post
 title: "Brainstorming: Fleshing Out Mobile Goal Robots"
 date: 2021-05-24
 author: "Porter Shawver"
-categories: Brainstorming
+categories: Design
 tags: Robot-0.1.1 Robot-0.1.3
 ---
 ##### Robot-0.1 Improvements
