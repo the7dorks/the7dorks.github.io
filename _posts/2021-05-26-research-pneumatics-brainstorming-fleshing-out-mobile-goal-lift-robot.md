@@ -12,6 +12,10 @@ We know that pneumatics are a source of extra power that we think we should use,
 
 <img class="responsive-img" src="/assets/pics/research/pneumatics-components-video.png">
 <img class="responsive-img" src="/assets/pics/research/pneumatics-programming-video.png">
+<pre class"print-only">
+
+
+</pre>
 
 The programming video was fairly outdated and not very helpful, so we consulted the PROS documentation, which showed that we only need one function for controlling pneumatics:
 
