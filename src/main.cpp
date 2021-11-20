@@ -85,22 +85,28 @@ void autonomous()
  */
 void opcontrol()
 {
-    // ControllerButton close = ControllerDigital::A;
-    // ControllerButton open = ControllerDigital::B;
+    ControllerButton up = ControllerDigital::up;
+    ControllerButton down = ControllerDigital::down;
+    ControllerButton left = ControllerDigital::left;
+    ControllerButton right = ControllerDigital::right;
     // there is no need for a loop in opcontrol(), because there are already other tasks running
     // that control all of the movement
     Auton::suspendAsyncTask();
     def::sm_dt.setState(DT_STATES::manual);
-    // while (true)
-    // {
-    // if (open.changedToPressed())
-    // {
-    // def::sm_lift.disengageClaw();
-    // }
-    // else if (close.changedToPressed())
-    // {
-    // def::sm_lift.engageClaw();
-    // }
-    // pros::delay(20);
-    // }
+    while (true)
+    {
+        if (up.changedToPressed())
+        {
+            def::sm_dt.doAutonMotion(makeFunc({
+                Drivetrain::tankToPoint({0_ft, 2_ft, 0_deg}, {}, 1, false, 0, 6_in, PID(0.1, 0.0, 0.0, 0.0, 0.5, 0.5, 300_ms), PID(0, 0, 0, 0, 0, 0, 0_ms), Slew(1, 1), Slew(1, 1));
+            }));
+        }
+        else if (right.changedToPressed())
+        {
+            def::sm_dt.doAutonMotion(makeFunc({
+                Drivetrain::turnToAngle(90_deg, {}, PID(0.1, 0.0, 0.0, 0.0, 0.5, 0.5, 300_ms));
+            }));
+        }
+        pros::delay(20);
+    }
 }

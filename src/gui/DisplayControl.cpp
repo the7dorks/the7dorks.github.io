@@ -214,7 +214,7 @@ void DisplayControl::setOdomData() // sets the information on the OdomDebug wind
                                    // calculated odom data
 {
     modom.setData({CustomOdometry::getX(), CustomOdometry::getY(), CustomOdometry::getTheta()},
-                  {def::track_encoder_forward.get(), def::track_encoder_side.get(), 0.0});
+                  {def::track_encoder_forward.get(), 0.0, def::track_encoder_side.get()});
 }
 void DisplayControl::setAutonDropdowns() // update the auton dropdown to match the sd card
 {

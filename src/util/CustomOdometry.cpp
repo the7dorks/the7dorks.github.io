@@ -101,8 +101,8 @@ CustomOdometry::mathStep(const std::valarray<double>
     double polarT =
         atan2(vectorLy, vectorLx) - avgT; // calculates polar cordinate, theta, and rotates
 
-    double dx = sin(polarT) * polarR; // converts new polar coordinates back to cartesian
-    double dy = cos(polarT) * polarR;
+    double dx = cos(polarT) * polarR; // converts new polar coordinates back to cartesian
+    double dy = sin(polarT) * polarR;
 
     if (isnan(dx)) // makes sure the cartesian coordinates exist
         dx = 0;

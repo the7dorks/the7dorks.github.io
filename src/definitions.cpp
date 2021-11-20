@@ -29,8 +29,8 @@ namespace def
     pros::ADIDigitalOut sol_claw_front('H');
 
     /* ------------------------- Sensors ------------------------- */
-    ADIEncoder track_encoder_forward('A', 'B', false);
-    ADIEncoder track_encoder_side('C', 'D', true);
+    ADIEncoder track_encoder_forward('C', 'D', false);
+    ADIEncoder track_encoder_side('E', 'F', false);
     pros::Imu imu1(5);
     pros::Imu imu2(13);
     RotationSensor rotation_lift(2, true);
