@@ -30,6 +30,7 @@ public:
 
     void engageClaw();
     void disengageClaw();
+    bool goalInRange();
 
     void controlState() override; // update the state based on controller input
     void update() override;       // move the robot based on the state

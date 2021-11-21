@@ -47,6 +47,11 @@ void LiftStateMachine::disengageClaw()
     mclaw.toggle(false);
 }
 
+bool LiftStateMachine::goalInRange()
+{
+    return mdistance.getDistance() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.getDistance() > 0;
+}
+
 void LiftStateMachine::controlState() // update the state based on controller input
 {
     if (mbtnToggle.changedToPressed())

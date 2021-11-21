@@ -94,20 +94,5 @@ void opcontrol()
     // that control all of the movement
     Auton::suspendAsyncTask();
     def::sm_dt.setState(DT_STATES::manual);
-    while (true)
-    {
-        if (up.changedToPressed())
-        {
-            def::sm_dt.doAutonMotion(makeFunc({
-                Drivetrain::tankToPoint({2_ft, 0_ft, 0_deg}, {}, 1, false, 0, 6_in, PID(0.2, 0.0, 0.7, 0.0, 0.25, 0.01, 1_ms), PID(0, 0, 0, 0, 0, 0, 0_ms), Slew(1, 1), Slew(1, 1));
-            }));
-        }
-        else if (right.changedToPressed())
-        {
-            def::sm_dt.doAutonMotion(makeFunc({
-                Drivetrain::turnToAngle(90_deg, {}, PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms));
-            }));
-        }
-        pros::delay(20);
-    }
+    def::sm_mg.mcontrolEnabled = true;
 }

@@ -96,7 +96,7 @@ void MogoStateMachine::update() // move the robot based on the state
         mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
         if (mmtrLeft.getPosition() < def::SET_MG_TOP_DEG - def::SET_MG_RANGE_DEG || mmtrLeft.getPosition() > def::SET_MG_TOP_DEG + def::SET_MG_RANGE_DEG) // if the lift is out of the target range
         {
-            double voltage = (def::SET_MG_TOP_DEG - mmtrLeft.getPosition()) * 1200; // CHANGE CONSTANT
+            double voltage = (def::SET_MG_TOP_DEG - mmtrLeft.getPosition()) * 100; // CHANGE CONSTANT
             util::chop<double>(-12000, 12000, voltage);
             mmtrLeft.moveVoltage(voltage);
             mmtrRight.moveVoltage(voltage);
@@ -128,7 +128,7 @@ void MogoStateMachine::update() // move the robot based on the state
         mmtrRight.setBrakeMode(AbstractMotor::brakeMode::hold);
         if (mmtrLeft.getPosition() < def::SET_MG_ONEMOGO_DEG - def::SET_MG_RANGE_DEG || mmtrLeft.getPosition() > def::SET_MG_ONEMOGO_DEG + def::SET_MG_RANGE_DEG) // if the lift is out of the target range
         {
-            double voltage = (def::SET_MG_ONEMOGO_DEG - mmtrLeft.getPosition()) * 1200; // CHANGE CONSTANT
+            double voltage = (def::SET_MG_ONEMOGO_DEG - mmtrLeft.getPosition()) * 100; // CHANGE CONSTANT
             util::chop<double>(-12000, 12000, voltage);
             mmtrLeft.moveVoltage(voltage);
             mmtrRight.moveVoltage(voltage);
