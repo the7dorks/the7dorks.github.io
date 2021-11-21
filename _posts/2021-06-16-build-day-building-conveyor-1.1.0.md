@@ -18,7 +18,8 @@ Moving the sprocket did not take long, however, we realized the flaps on each st
 ###### Patch (Conveyor-1.1.1)
 To account for this, we decided to synchronize the rotation of the chain so that each flap would pass through the gaps between flaps on the other. To do this, we needed to make sure each all of the flaps on both lengths of chain were the same distance apart. We chose eight links between each flap because the chain around the intakes is 32 links long, and 32 is easily divisible by eight. On the conveyor, there were 74 links, and because we could not reduce the length of chain, we increased it to 80 by adding a vertical half-cut c-channel to tension out the extra distance:
 
-<img class="responsive-img" width="600" src="/assets/pics/building/robot-1/conveyor-1.1.1.jpg">
+<img class="responsive-img no-print" width="600" src="/assets/pics/building/robot-1/conveyor-1.1.1.jpg">
+<img class="responsive-img print-only" width="300" src="/assets/pics/building/robot-1/conveyor-1.1.1.jpg">
 
 ###### Test
 <mark>The Rings no longer get jammed on the bottom sprocket of the conveyor.</mark> Sometimes, they get momentarily caught on various edges throughout the intake/conveyor system.
