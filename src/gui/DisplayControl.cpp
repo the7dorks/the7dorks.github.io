@@ -143,16 +143,11 @@ DisplayControl::DisplayControl() : modom(mtabview_odom, LV_COLOR_PURPLE)
      * When making autons, you must add the text this dropdown, a new
      * enum value in Auton.hpp, and a new case in the switch in Auton.cpp.
      */
-    lv_ddlist_set_options(mtabview_auton_dropdown, "Deploy\n"
-                                                   "Home Row Close\n"
-                                                   "Home Row Med\n"
-                                                   "Home Row Far\n"
-                                                   "Two HR\n"
-                                                   "Center\n"
-                                                   "Two Edge\n"
-                                                   "Square\n"
-                                                   "ThreeSquare\n"
-                                                   "LRT\n"
+    lv_ddlist_set_options(mtabview_auton_dropdown, "None\n"
+                                                   "AWP\n"
+                                                   "AWP+1 Neutral\n"
+                                                   "One Neutral\n"
+                                                   "Two Neutral\n"
                                                    "Prog\n"); // auton types in selection dropdown
     lv_ddlist_set_options(mtabview_auton_dropdown_side, "Right\n"
                                                         "Left\n"); // color selector

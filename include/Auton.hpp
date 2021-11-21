@@ -14,6 +14,12 @@ public:
   // to this enum, and a new case is the switch in Auton.cpp
   enum class Autons // all possible autons
   {
+    none,
+    awp,
+    awp1N,
+    oneNeutral,
+    twoNeutral,
+    prog
   } static auton; // selected auton
 
   enum class Sides

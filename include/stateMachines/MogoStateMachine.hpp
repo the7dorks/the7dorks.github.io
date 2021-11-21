@@ -35,6 +35,8 @@ public:
     void controlState() override; // update the state based on controller input
     void update() override;       // move the robot based on the state
 
+    bool mcontrolEnabled;
+
 private:
     /* -------------------------- State -------------------------- */
     MStates mstate, mlastState;

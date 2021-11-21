@@ -10,7 +10,6 @@
 
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
-pros::Task sm_dt_task(sm_dt_task_func);
 pros::Task sm_lift_task(sm_lift_task_func);
 pros::Task sm_mg_task(sm_mg_task_func);
 pros::Task display_task(display_task_func);
@@ -85,6 +84,8 @@ void autonomous()
  */
 void opcontrol()
 {
+    pros::Task sm_dt_task(sm_dt_task_func);
+
     ControllerButton up = ControllerDigital::up;
     ControllerButton down = ControllerDigital::down;
     ControllerButton left = ControllerDigital::left;
@@ -98,13 +99,13 @@ void opcontrol()
         if (up.changedToPressed())
         {
             def::sm_dt.doAutonMotion(makeFunc({
-                Drivetrain::tankToPoint({0_ft, 2_ft, 0_deg}, {}, 1, false, 0, 6_in, PID(0.1, 0.0, 0.0, 0.0, 0.5, 0.5, 300_ms), PID(0, 0, 0, 0, 0, 0, 0_ms), Slew(1, 1), Slew(1, 1));
+                Drivetrain::tankToPoint({2_ft, 0_ft, 0_deg}, {}, 1, false, 0, 6_in, PID(0.2, 0.0, 0.7, 0.0, 0.25, 0.01, 1_ms), PID(0, 0, 0, 0, 0, 0, 0_ms), Slew(1, 1), Slew(1, 1));
             }));
         }
         else if (right.changedToPressed())
         {
             def::sm_dt.doAutonMotion(makeFunc({
-                Drivetrain::turnToAngle(90_deg, {}, PID(0.1, 0.0, 0.0, 0.0, 0.5, 0.5, 300_ms));
+                Drivetrain::turnToAngle(90_deg, {}, PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms));
             }));
         }
         pros::delay(20);

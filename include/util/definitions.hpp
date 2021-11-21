@@ -98,9 +98,9 @@ namespace def
     const double SET_LIFT_RANGE_DEG = 1;
     const double SET_LIFT_DISTANCE_MIN_MM = 20;
 
-    const double SET_MG_START_DEG = 10;
-    const double SET_MG_TOP_DEG = 100;
-    const double SET_MG_BOTTOM_DEG = 100;
-    const double SET_MG_ONEMOGO_DEG = 1000;
+    const double SET_MG_START_DEG = 0;
+    const double SET_MG_TOP_DEG = 0;
+    const double SET_MG_BOTTOM_DEG = -2156;
+    const double SET_MG_ONEMOGO_DEG = -763;
     const double SET_MG_RANGE_DEG = 3;
 } // namespace def

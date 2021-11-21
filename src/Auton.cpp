@@ -60,6 +60,42 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
 
     waitForImu();
     CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
+    def::sm_mg.mcontrolEnabled = false;
+    // awp
+
+    switch (auton)
+    {
+    case Autons::none:
+        break;
+    case Autons::awp:
+        // Drivetrain::turnToAngle(-30_deg, cutDrive(10));
+        Drivetrain::tankToPoint({18_in, 0_in, 0_deg}, cutDrive(12));
+        Drivetrain::straightToPoint({15_in, 25_in, 0_deg});
+        Drivetrain::turnToAngle(90_deg);
+        Drivetrain::tankToPoint({16_in, -83_in, 0_deg});
+        Drivetrain::turnToAngle(0_deg);
+        Drivetrain::tankToPoint({0_in, -93_in, 0_deg});
+        def::sm_mg.setState(MG_STATES::bottom);
+        Drivetrain::turnToAngle(-83_deg);
+        Drivetrain::tankToPoint({-8_in, -74_in, 0_deg}, cutDrive(4));
+        def::sm_mg.setState(MG_STATES::top);
+        def::sm_lift.setState(LIFT_STATES::top);
+        pros::delay(1000);
+        def::sm_mg.setState(MG_STATES::bottom);
+        def::sm_lift.setState(LIFT_STATES::bottom);
+        pros::delay(1000);
+
+        // Drivetrain::turnToAngle(100_deg, cutDrive(10));
+        break;
+    case Autons::awp1N:
+        break;
+    case Autons::oneNeutral:
+        break;
+    case Autons::twoNeutral:
+        break;
+    case Autons::prog:
+        break;
+    }
 }
 
 void Auton::startAsyncTaskWithSettings(std::function<bool()> iasyncCondition, std::function<void()> iasyncAction)
