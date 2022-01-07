@@ -87,7 +87,7 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
         def::sm_mg.setState(MG_STATES::bottom);
         def::sm_lift.setState(LIFT_STATES::bottom);
         pros::delay(1000);
-        Drivetrain::tankToPoint({0_in, -18_in, 0_deg});
+        Drivetrain::tankToPoint({0_in, -108_in, 0_deg});
 
         // Drivetrain::turnToAngle(100_deg, cutDrive(10));
         break;
@@ -110,10 +110,20 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
         startAsyncTaskWithSettings([&]()
                                    { return def::sm_lift.goalInRange(); },
                                    makeFunc({ def::sm_lift.engageClaw(); }));
-        Drivetrain::tankToPoint({50_in, 0_in, 0_deg});
+        Drivetrain::tankToPoint({50_in, 0_in, 0_deg}, cutDrive(7), 0.7);
         Drivetrain::tankToPoint({5_in, 0_in, 0_deg});
+
+        // CustomOdometry::setStateInitial({0_in, 0_in, 180_deg - def::imu1.get_rotation() * degree});
+        // def::sm_mg.setState(MG_STATES::bottom);
+        // Drivetrain::tankToPoint({33_in, 0_in, 0_deg}, cutDrive(7), 1);
+        // def::sm_mg.setState(MG_STATES::top);
+        // pros::delay(300);
+        // Drivetrain::tankToPoint({5_in, 0_in, 0_deg});
         break;
     case Autons::twoNeutral:
+        def::sm_lift.engageClaw();
+        pros::delay(1000);
+        def::sm_lift.disengageClaw();
         break;
     case Autons::prog:
         Drivetrain::tankToPoint({8_ft, 0_in, 0_deg});

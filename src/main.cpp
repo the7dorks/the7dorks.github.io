@@ -10,6 +10,7 @@
 
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
+pros::Task sm_dt_task(sm_dt_task_func);
 pros::Task sm_lift_task(sm_lift_task_func);
 pros::Task sm_mg_task(sm_mg_task_func);
 pros::Task display_task(display_task_func);
@@ -66,6 +67,7 @@ void competition_initialize() {}
  */
 void autonomous()
 {
+    sm_dt_task.suspend();
     Auton::runAuton(); // uses the auton class to run the slected auton
 }
 
@@ -84,8 +86,7 @@ void autonomous()
  */
 void opcontrol()
 {
-    pros::Task sm_dt_task(sm_dt_task_func);
-
+    sm_dt_task.resume();
     ControllerButton up = ControllerDigital::up;
     ControllerButton down = ControllerDigital::down;
     ControllerButton left = ControllerDigital::left;
