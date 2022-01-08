@@ -14,43 +14,45 @@ namespace def
     /* ----------------------------------------------------------- */
 
     /* -------------------------- Motors ------------------------- */
-    Motor mtr_dt_left_front(-7);
-    Motor mtr_dt_right_front(4);
-    Motor mtr_dt_right_back(3);
-    Motor mtr_dt_left_back(-17);
+    Motor mtr_dt_left_front(0);
+    Motor mtr_dt_right_front(0);
+    Motor mtr_dt_right_mid(0);
+    Motor mtr_dt_right_back(0);
+    Motor mtr_dt_left_back(0);
+    Motor mtr_dt_left_mid(0);
 
-    Motor mtr_lift_left(-10);
-    Motor mtr_lift_right(6);
+    Motor mtr_lift(0);
 
-    Motor mtr_mg_left(18);
-    Motor mtr_mg_right(-12);
+    Motor mtr_intake(0);
 
     /* ------------------------ Pneumatics ----------------------- */
-    pros::ADIDigitalOut sol_claw_front('H');
+    pros::ADIDigitalOut sol_claw('0');
+    pros::ADIDigitalOut sol_holder('0');
 
     /* ------------------------- Sensors ------------------------- */
-    ADIEncoder track_encoder_forward('C', 'D', false);
-    ADIEncoder track_encoder_side('E', 'F', false);
-    pros::Imu imu1(5);
-    pros::Imu imu2(13);
-    RotationSensor rotation_lift(2, true);
-    RotationSensor rotation_mg(15, true);
-    pros::Distance distance_lift_claw(16);
+    ADIEncoder track_encoder_forward('0', '0', false);
+    ADIEncoder track_encoder_side('0', '0', false);
+    pros::Imu imu1(0);
+    pros::Imu imu2(0);
+
+    RotationSensor rotation_lift(0, true);
+    DistanceSensor distance_claw(0);
 
     /* ----------------------------------------------------------- */
     /*                           Controls                          */
     /* ----------------------------------------------------------- */
     Controller controller = Controller();
 
-    ControllerButton btn_lift_toggle = ControllerDigital::Y;
-    ControllerButton btn_lift_up = ControllerDigital::R1;
-    ControllerButton btn_lift_down = ControllerDigital::R2;
-    ControllerButton btn_lift_pneumatic_toggle = ControllerDigital::A;
+    ControllerButton btn_lift_toggle = ControllerDigital::up;
+    ControllerButton btn_lift_up = ControllerDigital::L1;
+    ControllerButton btn_lift_down = ControllerDigital::L2;
+    ControllerButton btn_claw_toggle = ControllerDigital::X;
 
-    // ControllerButton btn_mg_toggle = ControllerDigital::L1;
-    ControllerButton btn_mg_up = ControllerDigital::L1;
-    ControllerButton btn_mg_down = ControllerDigital::L2;
-    ControllerButton btn_mg_relax = ControllerDigital::left;
+    ControllerButton btn_holder_toggle = ControllerDigital::B;
+
+    ControllerButton btn_intake_toggle = ControllerDigital::left;
+    ControllerButton btn_intake_in = ControllerDigital::R1;
+    ControllerButton btn_intake_out = ControllerDigital::R2;
 
     /* -------------------------------------------- */
     /*                   Constants                  */
@@ -66,6 +68,38 @@ namespace def
     CustomOdometry customOdom = CustomOdometry(); // object that calculates position
 
     DrivetrainStateMachine sm_dt = DrivetrainStateMachine(); // state machine to control the drivetrain
-    LiftStateMachine sm_lift = LiftStateMachine();           // state machine to control the lift
-    MogoStateMachine sm_mg = MogoStateMachine();             // state machine to control the mogo lift
 } // namespace def
+
+/*
+Controls
+  
+  L2                R1
+  L1                R2
+  
+    ^             X
+  <   >         Y   A
+    v             B
+  
+UP      lift toggle (ground level / platform level)
+DOWN    
+LEFT    intake toggle (in/off)
+RIGHT   
+
+A       
+B       toggle holder
+X       toggle claw
+Y       
+
+L1      lift up
+L2      lift down
+R1      intake in
+R2      intake intake out
+
+
+TODO
+ - put holder somewhere
+ - mutexes
+ - brainstorm sensors
+ - lift pid
+ - investigate gps
+*/

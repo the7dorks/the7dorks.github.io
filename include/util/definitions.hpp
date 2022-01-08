@@ -10,7 +10,8 @@
 
 #define DT_STATES DrivetrainStateMachine::MStates
 #define LIFT_STATES LiftStateMachine::MStates
-#define MG_STATES MogoStateMachine::MStates
+#define INTAKE_STATES IntakeStateMachine::MStates
+#define HOLDER_STATES HolderStateMachine::MStates
 
 #define makeFunc(i) [&]() i
 #define cutDrive(i)                                          \
@@ -26,26 +27,27 @@ namespace def
     /* -------------------------- Motors ------------------------- */
     extern Motor mtr_dt_left_front;
     extern Motor mtr_dt_right_front;
+    extern Motor mtr_dt_right_mid;
     extern Motor mtr_dt_right_back;
     extern Motor mtr_dt_left_back;
+    extern Motor mtr_dt_left_mid;
     /* ----------------------------------------------------------- */
-    extern Motor mtr_lift_left;
-    extern Motor mtr_lift_right;
+    extern Motor mtr_lift;
     /* ----------------------------------------------------------- */
-    extern Motor mtr_mg_left;
-    extern Motor mtr_mg_right;
+    extern Motor mtr_intake;
 
     /* ------------------------ Pneumatics ----------------------- */
-    extern pros::ADIDigitalOut sol_claw_front;
+    extern pros::ADIDigitalOut sol_claw;
+    extern pros::ADIDigitalOut sol_holder;
 
     /* ------------------------- Sensors ------------------------- */
     extern ADIEncoder track_encoder_forward;
     extern ADIEncoder track_encoder_side;
     extern pros::Imu imu1;
     extern pros::Imu imu2;
+
     extern RotationSensor rotation_lift;
-    extern RotationSensor rotation_mg;
-    extern pros::Distance distance_lift_claw;
+    extern DistanceSensor distance_claw;
 
     /* ----------------------------------------------------------- */
     /*                           Controls                          */
@@ -55,12 +57,13 @@ namespace def
     extern ControllerButton btn_lift_toggle;
     extern ControllerButton btn_lift_up;
     extern ControllerButton btn_lift_down;
-    extern ControllerButton btn_lift_pneumatic_toggle;
+    extern ControllerButton btn_claw_toggle;
 
-    //extern ControllerButton btn_mg_toggle;
-    extern ControllerButton btn_mg_up;
-    extern ControllerButton btn_mg_down;
-    extern ControllerButton btn_mg_relax;
+    extern ControllerButton btn_holder_toggle;
+
+    extern ControllerButton btn_intake_toggle;
+    extern ControllerButton btn_intake_in;
+    extern ControllerButton btn_intake_out;
 
     /* ----------------------------------------------------------- */
     /*                          Constants                          */

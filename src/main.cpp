@@ -1,7 +1,7 @@
 /**
  * main.cpp
  *
- * This file contains the orchestration of all the compenents. It
+ * This file contains the orchestration of all the components. It
  * starts all of the separate tasks that are needed for controlling
  * the robot, and has all the functions called by the competition
  * switch.
@@ -11,8 +11,9 @@
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
 pros::Task sm_dt_task(sm_dt_task_func);
-pros::Task sm_lift_task(sm_lift_task_func);
-pros::Task sm_mg_task(sm_mg_task_func);
+pros::Task sm_lift_task(LiftStateMachine::run);
+pros::Task sm_intake_task(IntakeStateMachine::run);
+pros::Task sm_holder_task(HolderStateMachine::run);
 pros::Task display_task(display_task_func);
 
 /**
@@ -27,13 +28,15 @@ void initialize()
     def::imu2.reset();
 
     Auton::suspendAsyncTask();
-    Auton::readSettings();            // read sd card to remeber the auton selected when the brain was run last
+    Auton::readSettings();            // read sd card to remember the auton selected when the brain was run last
     def::display.setAutonDropdowns(); // update auton dropdown to match the sd card
 
     def::mtr_dt_left_front.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
     def::mtr_dt_right_front.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
+    def::mtr_dt_right_mid.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
     def::mtr_dt_right_back.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
     def::mtr_dt_left_back.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
+    def::mtr_dt_left_mid.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
 }
 
 /**
@@ -68,7 +71,7 @@ void competition_initialize() {}
 void autonomous()
 {
     sm_dt_task.suspend();
-    Auton::runAuton(); // uses the auton class to run the slected auton
+    Auton::runAuton(); // uses the auton class to run the selected auton
 }
 
 /**
@@ -93,7 +96,10 @@ void opcontrol()
     ControllerButton right = ControllerDigital::right;
     // there is no need for a loop in opcontrol(), because there are already other tasks running
     // that control all of the movement
+
     Auton::suspendAsyncTask();
     def::sm_dt.setState(DT_STATES::manual);
-    def::sm_mg.mcontrolEnabled = true;
+    LiftStateMachine::enableControl();
+    IntakeStateMachine::enableControl();
+    HolderStateMachine::enableControl();
 }
