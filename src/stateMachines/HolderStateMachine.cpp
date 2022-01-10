@@ -61,10 +61,13 @@ void HolderStateMachine::update()
 
 void HolderStateMachine::run()
 {
-    if (mcontrolEnabled)
-        controlState();
-    update();
-    pros::delay(20);
+    while (true)
+    {
+        if (mcontrolEnabled)
+            controlState();
+        update();
+        pros::delay(20);
+    }
 }
 
 /* ----------------------------------------------------------- */

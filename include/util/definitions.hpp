@@ -97,13 +97,9 @@ namespace def
     const double SET_DT_POW_STRAFE = 5;
     const double SET_DT_POW_TURN = 3;
 
-    const double SET_LIFT_TOP_DEG = 100;
-    const double SET_LIFT_RANGE_DEG = 1;
+    const double SET_LIFT_BOTOM_DEG = 22.8;
+    const double SET_LIFT_RINGS_DEG = 32;
+    const double SET_LIFT_TOP_DEG = 97;
     const double SET_LIFT_DISTANCE_MIN_MM = 20;
 
-    const double SET_MG_START_DEG = 0;
-    const double SET_MG_TOP_DEG = 0;
-    const double SET_MG_BOTTOM_DEG = -2156;
-    const double SET_MG_ONEMOGO_DEG = -763;
-    const double SET_MG_RANGE_DEG = 3;
 } // namespace def

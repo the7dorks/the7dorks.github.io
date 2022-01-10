@@ -78,17 +78,20 @@ void IntakeStateMachine::update() // move the robot based on the state
 
 void IntakeStateMachine::run()
 {
-    if (mcontrolEnabled)
-        controlState();
-    update();
-    pros::delay(20);
+    while (true)
+    {
+        if (mcontrolEnabled)
+            controlState();
+        update();
+        pros::delay(20);
+    }
 }
 
 /* ----------------------------------------------------------- */
 /*                     Private Information                     */
 /* ----------------------------------------------------------- */
 /* ------------------------- Devices ------------------------- */
-Motor &IntakeStateMachine::mmtr = def::mtr_lift;
+Motor &IntakeStateMachine::mmtr = def::mtr_intake;
 
 /* -------------------------- State -------------------------- */
 INTAKE_STATES IntakeStateMachine::mstate = INTAKE_STATES::off;

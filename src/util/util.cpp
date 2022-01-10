@@ -150,7 +150,6 @@ void sm_dt_task_func() // state machine drivetrain task to be run independently
 {
     while (true)
     {
-        printf("in dt\n");
         def::sm_dt.controlState(); // update the state from controller input
         def::sm_dt.update();       // moves the robot based on the state
         pros::delay(20);

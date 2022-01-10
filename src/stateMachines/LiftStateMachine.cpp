@@ -57,17 +57,27 @@ void LiftStateMachine::disableControl()
     mcontrolEnabled = false;
 }
 
+void LiftStateMachine::enablePID()
+{
+    mpidEnabled = true;
+}
+
+void LiftStateMachine::disablePID()
+{
+    mpidEnabled = false;
+}
+
 void LiftStateMachine::controlState() // update the state based on controller input
 {
     if (mbtnToggle.changedToPressed())
     {
-        if (mstate == LIFT_STATES::top || getRotation() > def::SET_LIFT_TOP_DEG / 2) // if the lift is at the top, or closer to the top
+        if (mstate == LIFT_STATES::rings)
         {
             setState(LIFT_STATES::bottom);
         }
-        else // if the lift is closer to the bottom
+        else
         {
-            setState(LIFT_STATES::top);
+            setState(LIFT_STATES::rings);
         }
     }
     else if (mbtnUp.isPressed())
@@ -78,7 +88,7 @@ void LiftStateMachine::controlState() // update the state based on controller in
     {
         setState(LIFT_STATES::down);
     }
-    else if (mstate != LIFT_STATES::top && mstate != LIFT_STATES::bottom) // if the lift isn't set to a position, hold
+    else if (mstate != LIFT_STATES::top && mstate != LIFT_STATES::bottom && mstate != LIFT_STATES::rings) // if the lift isn't set to a position, hold
     {
         setState(LIFT_STATES::hold);
     }
@@ -110,69 +120,62 @@ void LiftStateMachine::controlState() // update the state based on controller in
 
 void LiftStateMachine::update() // move the robot based on the state
 {
-    switch (mstate)
+    if (stateChanged())
     {
-    case LIFT_STATES::off:
-        if (stateChanged())
+        std::cout << "new state###########################################" << (int)mstate << std::endl;
+        switch (mstate)
         {
-            mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
+        case LIFT_STATES::off:
+            disablePID();
             mmtr.moveVoltage(0);
-        }
-        break;
-    case LIFT_STATES::hold:
-        if (stateChanged())
-        {
-            mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
-            mmtr.moveVoltage(0);
-        }
-        break;
-    case LIFT_STATES::up:
-        if (stateChanged())
-        {
+            break;
+        case LIFT_STATES::hold:
+            setLiftAngle(mrotation.get() + mrotation.getVelocity());
+            break;
+        case LIFT_STATES::up:
+            disablePID();
             mmtr.moveVoltage(12000);
-        }
-        break;
-    case LIFT_STATES::down:
-        if (stateChanged())
-        {
+            break;
+        case LIFT_STATES::down:
+            disablePID();
             mmtr.moveVoltage(-12000);
+            break;
+        case LIFT_STATES::top:
+            setLiftAngle(def::SET_LIFT_TOP_DEG);
+            break;
+        case LIFT_STATES::bottom:
+            setLiftAngle(def::SET_LIFT_BOTOM_DEG);
+            break;
+        case LIFT_STATES::rings:
+            setLiftAngle(def::SET_LIFT_RINGS_DEG);
+            break;
         }
-        break;
-    case LIFT_STATES::top:
-        mmtr.setBrakeMode(AbstractMotor::brakeMode::hold);
-        if (getRotation() < def::SET_LIFT_TOP_DEG - def::SET_LIFT_RANGE_DEG || getRotation() > def::SET_LIFT_TOP_DEG + def::SET_LIFT_RANGE_DEG) // if the lift is out of the target range
-        {
-            double voltage = (def::SET_LIFT_TOP_DEG - getRotation()) * 1200;
-            util::chop<double>(-12000, 12000, voltage);
-            mmtr.moveVoltage(voltage);
-        }
-        else // if the lift is in range, don't move
-        {
-            mmtr.moveVoltage(0);
-        }
-        break;
-    case LIFT_STATES::bottom:
-        mmtr.setBrakeMode(AbstractMotor::brakeMode::coast);
-        if (getRotation() < -def::SET_LIFT_RANGE_DEG || getRotation() > def::SET_LIFT_RANGE_DEG) // if the lift is outside the target range
-        {
-            double voltage = -getRotation() * 1200;
-            util::chop<double>(-12000, 0, voltage);
-            mmtr.moveVoltage(voltage);
-        }
-        else // if the lift is in range, don't move
-        {
-            mmtr.moveVoltage(0);
-        }
-        break;
     }
+
+    if (mpidEnabled)
+    {
+        double pidResult = mpid.iterate(mpidTarget - mrotation.get());
+        util::chop<double>(-1, 1, pidResult);
+        std::cout << pidResult << "   " << mrotation.controllerGet() << "    " << mpidTarget << std::endl;
+        mmtr.moveVoltage(12000 * pidResult);
+    }
+}
+
+void LiftStateMachine::setLiftAngle(const double itarget)
+{
+    enablePID();
+    mpidTarget = itarget;
 }
 
 void LiftStateMachine::run()
 {
-    if (mcontrolEnabled)
-        controlState();
-    update();
-    pros::delay(20);
+    while (true)
+    {
+        if (mcontrolEnabled)
+            controlState();
+        update();
+        pros::delay(20);
+    }
 }
 
 /* ----------------------------------------------------------- */
@@ -190,6 +193,8 @@ LIFT_STATES LiftStateMachine::mlastState = LIFT_STATES::bottom;
 bool LiftStateMachine::moverrideDistance = false;
 bool LiftStateMachine::mengageClaw = mclaw.isEngaged();
 bool LiftStateMachine::mcontrolEnabled = false;
+bool LiftStateMachine::mpidEnabled = false;
+double LiftStateMachine::mpidTarget = def::SET_LIFT_BOTOM_DEG;
 
 /* ------------------------- Controls ------------------------ */
 ControllerButton &LiftStateMachine::mbtnToggle = def::btn_lift_toggle;
@@ -198,8 +203,4 @@ ControllerButton &LiftStateMachine::mbtnDown = def::btn_lift_down;
 ControllerButton &LiftStateMachine::mbtnClawToggle = def::btn_claw_toggle;
 
 /* -------------------------- Other -------------------------- */
-double LiftStateMachine::getRotation()
-{
-    double temp = mrotation.get() < -10 ? mrotation.get() + 360 : mrotation.get();
-    return mrotation.get() < -10 ? mrotation.get() + 360 : mrotation.get();
-}
+PID LiftStateMachine::mpid = PID(0.11, 0.0, 0.13, 0.0, 0.0, 0.0, 500_ms);

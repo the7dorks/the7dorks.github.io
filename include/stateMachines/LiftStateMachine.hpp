@@ -22,6 +22,7 @@ public:
         down,   // moves the lift down
         top,    // moves the arm to the top and holds
         bottom, // moves the lift to the bottom and holds
+        rings   // moves the lift to be able to get rings
     };
     static MStates getState();
     static void setState(const MStates istate);
@@ -33,10 +34,13 @@ public:
 
     static void enableControl();
     static void disableControl();
+    static void enablePID();
+    static void disablePID();
 
-    static void controlState(); // update the state based on controller input
-    static void update();       // move the robot based on the state
-    static void run();          // control the state and update the robot to be run in separate task
+    static void controlState();                     // update the state based on controller input
+    static void update();                           // move the robot based on the state
+    static void setLiftAngle(const double itarget); // set the target PID angle for the lift
+    static void run();                              // control the state and update the robot to be run in separate task
 
 private:
     /* ------------------------- Devices ------------------------- */
@@ -50,6 +54,8 @@ private:
     static bool moverrideDistance;
     static bool mengageClaw;
     static bool mcontrolEnabled;
+    static bool mpidEnabled;
+    static double mpidTarget;
 
     /* ------------------------- Controls ------------------------ */
     static ControllerButton &mbtnToggle;     // botton to toggle the lift being up/down
@@ -58,5 +64,5 @@ private:
     static ControllerButton &mbtnClawToggle; // button to toggle the claw actuated/not
 
     /* -------------------------- Other -------------------------- */
-    static double getRotation(); // return the corrected angle of the lift
+    static PID mpid; // pid controller for moving the lift
 };
