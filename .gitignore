@@ -1,0 +1,5 @@
+*-X.md
+_site/
+.d/
+.vscode/
+bin/
