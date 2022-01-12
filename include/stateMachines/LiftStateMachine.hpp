@@ -64,5 +64,6 @@ private:
     static ControllerButton &mbtnClawToggle; // button to toggle the claw actuated/not
 
     /* -------------------------- Other -------------------------- */
-    static PID mpid; // pid controller for moving the lift
+    static PID mpid;                                 // pid controller for moving the lift
+    static double holdForceFromAngle(double iangle); // returns how much the motor needs to power just to hold the lift in place
 };

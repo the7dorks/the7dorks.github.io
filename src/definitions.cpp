@@ -14,26 +14,26 @@ namespace def
   /* ----------------------------------------------------------- */
 
   /* -------------------------- Motors ------------------------- */
-  Motor mtr_dt_left_front(0);
-  Motor mtr_dt_right_front(-12);
-  Motor mtr_dt_right_mid(13);
-  Motor mtr_dt_right_back(-11);
-  Motor mtr_dt_left_back(0);
-  Motor mtr_dt_left_mid(0);
+  Motor mtr_dt_left_front(9);
+  Motor mtr_dt_right_front(-13);
+  Motor mtr_dt_right_mid(14);
+  Motor mtr_dt_right_back(-12);
+  Motor mtr_dt_left_back(8);
+  Motor mtr_dt_left_mid(-10);
 
-  Motor mtr_lift(15);
+  Motor mtr_lift(17);
 
-  Motor mtr_intake(14);
+  Motor mtr_intake(16);
 
   /* ------------------------ Pneumatics ----------------------- */
   pros::ADIDigitalOut sol_claw('A');
   pros::ADIDigitalOut sol_holder({{4, 'H'}});
 
   /* ------------------------- Sensors ------------------------- */
-  ADIEncoder track_encoder_forward({4, 'A', 'B'}, false);
-  ADIEncoder track_encoder_side({4, 'C', 'D'}, false);
-  pros::Imu imu1(0);
-  pros::Imu imu2(0);
+  ADIEncoder track_encoder_forward({4, 'C', 'D'}, true);
+  ADIEncoder track_encoder_side({4, 'A', 'B'}, true);
+  pros::Imu imu1(6);
+  pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
   DistanceSensor distance_claw(0);

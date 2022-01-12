@@ -122,7 +122,6 @@ void LiftStateMachine::update() // move the robot based on the state
 {
     if (stateChanged())
     {
-        std::cout << "new state###########################################" << (int)mstate << std::endl;
         switch (mstate)
         {
         case LIFT_STATES::off:
@@ -130,7 +129,7 @@ void LiftStateMachine::update() // move the robot based on the state
             mmtr.moveVoltage(0);
             break;
         case LIFT_STATES::hold:
-            setLiftAngle(mrotation.get() + mrotation.getVelocity());
+            setLiftAngle(mrotation.get() + 10 * mrotation.getVelocity());
             break;
         case LIFT_STATES::up:
             disablePID();
@@ -156,7 +155,6 @@ void LiftStateMachine::update() // move the robot based on the state
     {
         double pidResult = mpid.iterate(mpidTarget - mrotation.get());
         util::chop<double>(-1, 1, pidResult);
-        std::cout << pidResult << "   " << mrotation.controllerGet() << "    " << mpidTarget << std::endl;
         mmtr.moveVoltage(12000 * pidResult);
     }
 }
@@ -204,3 +202,4 @@ ControllerButton &LiftStateMachine::mbtnClawToggle = def::btn_claw_toggle;
 
 /* -------------------------- Other -------------------------- */
 PID LiftStateMachine::mpid = PID(0.11, 0.0, 0.13, 0.0, 0.0, 0.0, 500_ms);
+double LiftStateMachine::holdForceFromAngle(double iangle) { return 0.0; }

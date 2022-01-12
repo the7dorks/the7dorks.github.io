@@ -167,9 +167,11 @@ void display_task_func() // display task to be run independently
 
         // sets the chart to show motor velocites (in RPM) when in the range 150-250
         def::display.setChartData(0, def::mtr_dt_left_front.getActualVelocity() - 150);
-        def::display.setChartData(1, def::mtr_dt_right_front.getActualVelocity() - 150);
-        def::display.setChartData(2, def::mtr_dt_right_back.getActualVelocity() - 150);
-        def::display.setChartData(3, def::mtr_dt_left_back.getActualVelocity() - 150);
+        def::display.setChartData(1, def::mtr_dt_left_mid.getActualVelocity() - 150);
+        def::display.setChartData(2, def::mtr_dt_left_back.getActualVelocity() - 150);
+        def::display.setChartData(3, def::mtr_dt_right_front.getActualVelocity() - 150);
+        def::display.setChartData(4, def::mtr_dt_right_mid.getActualVelocity() - 150);
+        def::display.setChartData(5, def::mtr_dt_right_back.getActualVelocity() - 150);
 
         pros::delay(20);
     }
@@ -263,7 +265,8 @@ double PID::iterate(double ierror) // goes through one iteration of the PID loop
     }
 
     mderivative = merror - mlastError; // calculate the derivative before lastError is overwritten
-    mlastError = merror;               // save the current error for the next cycle
+    std::cout << "derivative: " << mderivative << "     error: " << merror << std::endl;
+    mlastError = merror; // save the current error for the next cycle
 
     return merror *
                mkP +

@@ -90,9 +90,9 @@ void autonomous()
 void opcontrol()
 {
     sm_dt_task.resume();
-    ControllerButton up = ControllerDigital::up;
+    ControllerButton y = ControllerDigital::Y;
     ControllerButton down = ControllerDigital::down;
-    ControllerButton left = ControllerDigital::left;
+    ControllerButton a = ControllerDigital::A;
     ControllerButton right = ControllerDigital::right;
     // there is no need for a loop in opcontrol(), because there are already other tasks running
     // that control all of the movement
@@ -102,4 +102,33 @@ void opcontrol()
     LiftStateMachine::enableControl();
     IntakeStateMachine::enableControl();
     HolderStateMachine::enableControl();
+
+    while (true)
+    {
+        if (down.changedToPressed())
+        {
+            def::sm_dt.setState(DT_STATES::busy);
+            Drivetrain::straightForDistance(1.00_ft, {}, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), Slew(1, 1), PID(0, 0, 0, 0, 5, 5, 1_ms));
+            def::sm_dt.setState(DT_STATES::manual);
+        }
+        else if (right.changedToPressed())
+        {
+            def::sm_dt.setState(DT_STATES::busy);
+            Drivetrain::straightForDistance(-1.0_ft, {}, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), Slew(1, 1), PID(0, 0, 0, 0, 5, 5, 1_ms));
+            def::sm_dt.setState(DT_STATES::manual);
+        }
+        else if (y.changedToPressed())
+        {
+            def::sm_dt.setState(DT_STATES::busy);
+            Drivetrain::turnToAngle(90_deg, {}, PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms));
+            def::sm_dt.setState(DT_STATES::manual);
+        }
+        else if (a.changedToPressed())
+        {
+            def::sm_dt.setState(DT_STATES::busy);
+            Drivetrain::turnToAngle(0_deg, {}, PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms));
+            def::sm_dt.setState(DT_STATES::manual);
+        }
+        pros::delay(20);
+    }
 }

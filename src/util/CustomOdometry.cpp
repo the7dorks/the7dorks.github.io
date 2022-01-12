@@ -38,7 +38,7 @@ std::valarray<double> CustomOdometry::getSensorVals() // returns new sensor valu
     return {meF.get(), meS.get(),
             ((isinf(mimu1.get_rotation()) ? 0 : mimu1.get_rotation()) +
              (isinf(mimu2.get_rotation()) ? 0 : mimu2.get_rotation())) *
-                M_PI / 180 / 2};
+                M_PI / -360};
 }
 
 /* ----------------------------------------------------------- */

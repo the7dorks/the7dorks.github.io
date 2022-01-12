@@ -17,8 +17,10 @@
 /* --------------------- Motor References -------------------- */
 Motor &Drivetrain::mmtrLeftFront = def::mtr_dt_left_front;
 Motor &Drivetrain::mmtrRightFront = def::mtr_dt_right_front;
+Motor &Drivetrain::mmtrRightMid = def::mtr_dt_right_mid;
 Motor &Drivetrain::mmtrRightBack = def::mtr_dt_right_back;
 Motor &Drivetrain::mmtrLeftBack = def::mtr_dt_left_back;
+Motor &Drivetrain::mmtrLeftMid = def::mtr_dt_left_mid;
 
 /* ---------------------- Okapi Chassis ---------------------- */
 std::shared_ptr<ChassisController> Drivetrain::mchassis =
@@ -218,15 +220,19 @@ void Drivetrain::lock()
 {
     mmtrLeftFront.setBrakeMode(AbstractMotor::brakeMode::brake);
     mmtrRightFront.setBrakeMode(AbstractMotor::brakeMode::brake);
+    mmtrRightMid.setBrakeMode(AbstractMotor::brakeMode::brake);
     mmtrRightBack.setBrakeMode(AbstractMotor::brakeMode::brake);
     mmtrLeftBack.setBrakeMode(AbstractMotor::brakeMode::brake);
+    mmtrLeftMid.setBrakeMode(AbstractMotor::brakeMode::brake);
 }
 void Drivetrain::unlock()
 {
     mmtrLeftFront.setBrakeMode(AbstractMotor::brakeMode::coast);
     mmtrRightFront.setBrakeMode(AbstractMotor::brakeMode::coast);
+    mmtrRightMid.setBrakeMode(AbstractMotor::brakeMode::coast);
     mmtrRightBack.setBrakeMode(AbstractMotor::brakeMode::coast);
     mmtrLeftBack.setBrakeMode(AbstractMotor::brakeMode::coast);
+    mmtrLeftMid.setBrakeMode(AbstractMotor::brakeMode::coast);
 }
 
 void Drivetrain::moveIndependant(
@@ -247,8 +253,10 @@ void Drivetrain::moveIndependant(
     // moves all of the motors by voltage
     mmtrLeftFront.moveVoltage(12000 * ileft);
     mmtrRightFront.moveVoltage(12000 * iright);
+    mmtrRightMid.moveVoltage(12000 * iright);
     mmtrRightBack.moveVoltage(12000 * iright);
     mmtrLeftBack.moveVoltage(12000 * ileft);
+    mmtrLeftMid.moveVoltage(12000 * ileft);
 }
 void Drivetrain::moveTank(double ileft, double iright,
                           const bool idesaturate) // spins the left side and right side motors at
@@ -397,11 +405,11 @@ void Drivetrain::turnToAngle(QAngle iangle, std::vector<AsyncAction> iactions, P
             angleError,
             iactions); // executes the next action if availible, and removes it from the list
 
-        Drivetrain::moveArcade(0, ipid.iterate(angleError), false);
+        Drivetrain::moveArcade(0, -ipid.iterate(angleError), false);
         pros::delay(20);
     }
     Drivetrain::moveArcade(0, 0, false);
-    def::controller.rumble(".");
+    def::controller.rumble("-");
 }
 
 void Drivetrain::turnToPoint(ExtendedPoint itarget, std::vector<AsyncAction> iactions, PID ipid)
@@ -427,6 +435,8 @@ void Drivetrain::straightForDistance(QLength idistance, std::vector<AsyncAction>
                          mmtrLeftFront.getPosition() * def::DRIVE_DEG_TO_IN +
                          inStart; // calculates how far the robot needs to drive
 
+        std::cout << "error: " << inError << std::endl;
+
         Drivetrain::checkNextAsync(
             inError,
             iactions); // executes the next action if availible, and removes it from the list
@@ -438,7 +448,7 @@ void Drivetrain::straightForDistance(QLength idistance, std::vector<AsyncAction>
         pros::delay(20);
     }
     Drivetrain::moveArcade(0, 0, false);
-    def::controller.rumble(".");
+    def::controller.rumble("-");
 }
 
 /*
@@ -478,8 +488,8 @@ void Drivetrain::strafeToPoint(
 void Drivetrain::straightToPoint(
     ExtendedPoint itarget, std::vector<AsyncAction> iactions, QLength inoTurnRange,
     double iturnWeight, PID imagnitudePID, PID iturnPID, Slew imagnitudeSlew,
-    Slew iturnSlew) // drives to the point without strafing using set PID/Slew gains, and executing
-                    // the AsyncActions at the right times
+    Slew iturnSlew, bool inoReverse) // drives to the point without strafing using set PID/Slew gains, and executing
+                                     // the AsyncActions at the right times
 {
     const double noTurnRangeIn = inoTurnRange.convert(inch);
 
@@ -504,6 +514,13 @@ void Drivetrain::straightToPoint(
         double turn;
         if (inToPoint > noTurnRangeIn) // if the robot is far enough away from the target
         {
+            if (!inoReverse) // not tested (1/10/2022)
+            {
+                if (angleToPoint > 90_deg)
+                    angleToPoint -= 180_deg;
+                else if (angleToPoint < -90_deg)
+                    angleToPoint += 180_deg;
+            }
             turn = iturnSlew.iterate(iturnPID.iterate(
                 angleToPoint.convert(degree))); // calculates value from PID fed into Slew
             util::chop<double>(-mmaxSpeed, mmaxSpeed, turn);

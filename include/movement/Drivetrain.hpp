@@ -16,8 +16,10 @@ private:
     /* --------------------- Motor References -------------------- */
     static Motor &mmtrLeftFront;
     static Motor &mmtrRightFront;
+    static Motor &mmtrRightMid;
     static Motor &mmtrRightBack;
     static Motor &mmtrLeftBack;
+    static Motor &mmtrLeftMid;
 
     /* ------------------------- Chassis ------------------------- */
     static std::shared_ptr<ChassisController>
@@ -96,25 +98,25 @@ public:
     static void tankToPoint(
         ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, double imax = 1, bool ireversed = false,
         double iturnWeight = 0, QLength inoTurnRange = 6_in,
-        PID imagnitudePID = PID(0.2, 0.0, 0.7, 0.0, 0.5, 0.01, 1_ms),
-        PID iturnPID = PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms),
-        Slew imagnitudeSlew = Slew(0.04, 0.5),
+        PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms),
+        PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms),
+        Slew imagnitudeSlew = Slew(1, 1),
         Slew iturnSlew =
-            Slew(1000, 1000)); // drives in a stright line to the point without turning using set
-                               // PID/Slew gains, and executing the AsyncActions at the right times
+            Slew(1, 1)); // drives in a stright line to the point without turning using set
+                         // PID/Slew gains, and executing the AsyncActions at the right times
 
     static void
     turnToAngle(QAngle iangle, std::vector<AsyncAction> iactions = {},
-                PID ipid = PID(0.05, 0.01, 0.15, 2, 0.5, 0.01, 1_ms)); // turns to an angle using set PID gains, and
-                                                                       // executing the AsyncActions at the right times
+                PID ipid = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms)); // turns to an angle using set PID gains, and
+                                                                        // executing the AsyncActions at the right times
 
     static void turnToPoint(ExtendedPoint itarget, std::vector<AsyncAction> iactions = {},
-                            PID ipid = PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms)); // the same as turnToAngle but takes a point
+                            PID ipid = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms)); // the same as turnToAngle but takes a point
                                                                                     // instead of an angle as a target
 
     static void straightForDistance(QLength idistance, std::vector<AsyncAction> iactions = {},
-                                    PID imagnitudePID = PID(0.2, 0.0, 0.7, 0.0, 0.25, 0.01, 1_ms),
-                                    Slew imagnitudeSlew = Slew(0.05, 0.5), PID iturnPID = PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms)); //PID(0.03, 0.0, 0.1, 0.0, 0.5, 0.03, 10_ms));
+                                    PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms),
+                                    Slew imagnitudeSlew = Slew(1, 1), PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms)); //PID(0.03, 0.0, 0.1, 0.0, 0.5, 0.03, 10_ms));
 
     /*
     only for x drives
@@ -129,23 +131,17 @@ public:
     */
 
     static void straightToPoint(
-        ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, QLength inoTurnRange = 3_in,
-        double iturnWeight = 1.7, PID imagnitudePID = PID(0.2, 0.0, 0.7, 0.0, 0.5, 0.01, 1_ms),
-        PID iturnPID = PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms),
-        Slew imagnitudeSlew = Slew(1000, 1000),
-        Slew iturnSlew = Slew(1000,
-                              1000)); // drives to the point without strafing using set PID/Slew
-                                      // gains, and executing the AsyncActions at the right times
+        ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, QLength inoTurnRange = 3_in, double iturnWeight = 1.7, PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew imagnitudeSlew = Slew(1, 1), Slew iturnSlew = Slew(1, 1), bool inoReverse = false); // drives to the point without strafing using set PID/Slew gains, and executing the AsyncActions at the right times
 
     static void arcStraightToPoint(
         ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, double iweightModifier = 10,
-        QLength inoTurnRange = 3_in, PID imagnitudePID = PID(0.2, 0.0, 0.7, 0.0, 0.25, 0.01, 1_ms),
-        PID iturnPID = PID(0.05, 0.01, 0.15, 2, 0.25, 0.01, 1_ms),
-        Slew imagnitudeSlew = Slew(1000, 1000),
+        QLength inoTurnRange = 3_in, PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms),
+        PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms),
+        Slew imagnitudeSlew = Slew(1, 1),
         Slew iturnSlew = Slew(
-            1000,
-            1000)); // drive in an "arc" (doesn't follow a path, just approximates an arc) using set
-                    // PID/Slew gains, and executing the AsyncActions at the right times
+            1,
+            1)); // drive in an "arc" (doesn't follow a path, just approximates an arc) using set
+                 // PID/Slew gains, and executing the AsyncActions at the right times
 
     /* ------------------ Path Following Methods ----------------- /
     only for x drives
