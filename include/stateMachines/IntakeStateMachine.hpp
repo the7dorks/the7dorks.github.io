@@ -16,10 +16,11 @@ class IntakeStateMachine // state machine to represent the drivetrain
 public:
     enum class MStates // enumeration to organize possible states
     {
-        off,  // not doing anything
-        in,   // intake rings
-        out,  // outtake rings
-        smart // decide what to do based on sensors
+        off,      // not doing anything
+        in,       // intake rings
+        out,      // outtake rings
+        override, // should be intaking, but the lift is too low
+        smart     // decide what to do based on sensors
     };
     static MStates getState();
     static void setState(const MStates istate);
@@ -38,6 +39,7 @@ private:
     static MStates mstate;
     static bool mtoggling;
     static bool mcontrolEnabled;
+    static MStates moverrideState;
 
     /* ------------------------- Controls ------------------------ */
     static ControllerButton &mbtnToggle; // botton to toggle in/out

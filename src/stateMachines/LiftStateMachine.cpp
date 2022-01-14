@@ -32,6 +32,11 @@ bool LiftStateMachine::stateChanged()
     }
 }
 
+double LiftStateMachine::getAngle()
+{
+    return mrotation.get();
+}
+
 void LiftStateMachine::engageClaw()
 {
     mclaw.toggle(true);
@@ -143,7 +148,7 @@ void LiftStateMachine::update() // move the robot based on the state
             setLiftAngle(def::SET_LIFT_TOP_DEG);
             break;
         case LIFT_STATES::bottom:
-            setLiftAngle(def::SET_LIFT_BOTOM_DEG);
+            setLiftAngle(def::SET_LIFT_BOTTOM_DEG);
             break;
         case LIFT_STATES::rings:
             setLiftAngle(def::SET_LIFT_RINGS_DEG);
@@ -192,7 +197,7 @@ bool LiftStateMachine::moverrideDistance = false;
 bool LiftStateMachine::mengageClaw = mclaw.isEngaged();
 bool LiftStateMachine::mcontrolEnabled = false;
 bool LiftStateMachine::mpidEnabled = false;
-double LiftStateMachine::mpidTarget = def::SET_LIFT_BOTOM_DEG;
+double LiftStateMachine::mpidTarget = def::SET_LIFT_BOTTOM_DEG;
 
 /* ------------------------- Controls ------------------------ */
 ControllerButton &LiftStateMachine::mbtnToggle = def::btn_lift_toggle;

@@ -27,6 +27,7 @@ public:
     static MStates getState();
     static void setState(const MStates istate);
     static bool stateChanged();
+    static double getAngle(); // returns the angle of the arm
 
     static void engageClaw();
     static void disengageClaw();

@@ -97,8 +97,9 @@ namespace def
     const double SET_DT_POW_STRAFE = 5;
     const double SET_DT_POW_TURN = 3;
 
-    const double SET_LIFT_BOTOM_DEG = 22.8;
+    const double SET_LIFT_BOTTOM_DEG = 22.8;
     const double SET_LIFT_RINGS_DEG = 42;
+    const double SET_LIFT_MIN_DEG = 32;
     const double SET_LIFT_TOP_DEG = 97;
     const double SET_LIFT_DISTANCE_MIN_MM = 20;
 

@@ -32,6 +32,16 @@ void IntakeStateMachine::disableControl()
 
 void IntakeStateMachine::controlState() // update the state based on controller input
 {
+    if (LiftStateMachine::getAngle() < def::SET_LIFT_MIN_DEG)
+    {
+        setState(INTAKE_STATES::override);
+        moverrideState = mstate;
+    }
+    else if (mstate == INTAKE_STATES::override)
+    {
+        setState(moverrideState);
+    }
+
     if (mbtnToggle.changedToPressed()) // if the toggle button is pressed
     {
         if (getState() == INTAKE_STATES::in) // if it's already going in,
@@ -51,7 +61,7 @@ void IntakeStateMachine::controlState() // update the state based on controller 
         setState(INTAKE_STATES::out);
         mtoggling = false; // ignore the toggled state in future loops
     }
-    else if (mtoggling == false) // if it's supposed to ignore toggling...
+    else if (mtoggling == false && mstate != INTAKE_STATES::override) // if it's supposed to ignore toggling...
     {
         setState(INTAKE_STATES::off); // just turn off
     }
@@ -70,8 +80,12 @@ void IntakeStateMachine::update() // move the robot based on the state
     case INTAKE_STATES::out:
         mmtr.moveVoltage(-12000);
         break;
+    case INTAKE_STATES::override:
+        mmtr.moveVoltage(0);
+        break;
     case INTAKE_STATES::smart:
         // TODO: add sensors and program this section if desired
+
         break;
     }
 }
@@ -97,6 +111,7 @@ Motor &IntakeStateMachine::mmtr = def::mtr_intake;
 INTAKE_STATES IntakeStateMachine::mstate = INTAKE_STATES::off;
 bool IntakeStateMachine::mtoggling = false;
 bool IntakeStateMachine::mcontrolEnabled = false;
+INTAKE_STATES IntakeStateMachine::moverrideState = INTAKE_STATES::off;
 
 /* ------------------------- Controls ------------------------ */
 ControllerButton &IntakeStateMachine::mbtnToggle = def::btn_intake_toggle;
