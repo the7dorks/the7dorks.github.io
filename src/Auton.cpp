@@ -62,15 +62,69 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
     CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
     // awp
 
+    LiftStateMachine::disableControl();
+    IntakeStateMachine::disableControl();
+    HolderStateMachine::disableControl();
+    def::sm_dt.setState(DT_STATES::busy);
+
     switch (auton)
     {
     case Autons::none:
         break;
     case Autons::awp:
+        Drivetrain::straightToPoint({-7_in, 0_in, 0_deg}, cutDrive(1.5));
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+        IntakeStateMachine::setState(INTAKE_STATES::in);
+        pros::delay(1500);
+        HolderStateMachine::setState(HOLDER_STATES::open);
+        // Drivetrain::straightForDistance(17_in);
+        Drivetrain::straightToPoint({12_in, 0_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({-11_in, -17_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({-98_in, -23_in, 0_deg}, cutDrive(15));
+        Drivetrain::arcadeFor(-0.25, 0, 1500);
+        pros::delay(500);
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+        LiftStateMachine::setState(LIFT_STATES::top);
+        pros::delay(700);
+        Drivetrain::turnToAngle(90_deg);
+        Drivetrain::setMaxSpeed(0.5);
+        Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({-106_in, -14_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({-106_in, -14_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
+        HolderStateMachine::setState(HOLDER_STATES::open);
         break;
     case Autons::awp1N:
+        Drivetrain::straightToPoint({43_in, 0_in, 0_deg});
+        LiftStateMachine::engageClaw();
+        Drivetrain::straightToPoint({19_in, 0_in, 0_deg});
+        Drivetrain::turnToAngle(90_deg);
+        LiftStateMachine::disengageClaw();
+        Drivetrain::straightToPoint({12_in, 0_in, 0_deg}, cutDrive(3));
+
+        Drivetrain::arcadeFor(-0.25, 0, 1000);
+        pros::delay(500);
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+        LiftStateMachine::setState(LIFT_STATES::top);
+        pros::delay(700);
+        Drivetrain::turnToAngle(180_deg);
+        Drivetrain::setMaxSpeed(0.5);
+        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({22_in, -20_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({22_in, -20_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
+        HolderStateMachine::setState(HOLDER_STATES::open);
+
         break;
     case Autons::oneNeutral:
+        // pros::delay(1000);
+        // LiftStateMachine::disengageClaw();
+        // pros::delay(1000);
+        Drivetrain::straightToPoint({43_in, 0_in, 0_deg}, cutDrive(2));
+        LiftStateMachine::engageClaw();
+        Drivetrain::straightToPoint({10_in, 0_in, 0_deg}, cutDrive(1));
         break;
     case Autons::twoNeutral:
         break;

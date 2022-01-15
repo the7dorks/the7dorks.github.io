@@ -98,6 +98,7 @@ void opcontrol()
     // that control all of the movement
 
     Auton::suspendAsyncTask();
+    Drivetrain::setMaxSpeed(1);
     def::sm_dt.setState(DT_STATES::manual);
     LiftStateMachine::enableControl();
     IntakeStateMachine::enableControl();

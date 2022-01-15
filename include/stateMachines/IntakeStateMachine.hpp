@@ -18,6 +18,7 @@ public:
     {
         off,      // not doing anything
         in,       // intake rings
+        slowIn,   // intake slow
         out,      // outtake rings
         override, // should be intaking, but the lift is too low
         smart     // decide what to do based on sensors

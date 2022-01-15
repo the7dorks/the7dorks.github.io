@@ -265,8 +265,7 @@ double PID::iterate(double ierror) // goes through one iteration of the PID loop
     }
 
     mderivative = merror - mlastError; // calculate the derivative before lastError is overwritten
-    std::cout << "derivative: " << mderivative << "     error: " << merror << std::endl;
-    mlastError = merror; // save the current error for the next cycle
+    mlastError = merror;               // save the current error for the next cycle
 
     return merror *
                mkP +

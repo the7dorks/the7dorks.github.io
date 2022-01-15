@@ -441,7 +441,7 @@ void Drivetrain::straightForDistance(QLength idistance, std::vector<AsyncAction>
             inError,
             iactions); // executes the next action if availible, and removes it from the list
 
-        Drivetrain::moveArcade(imagnitudeSlew.iterate(imagnitudePID.iterate(inError)), iturnPID.iterate(angleError), false);
+        Drivetrain::moveArcade(imagnitudeSlew.iterate(imagnitudePID.iterate(inError)), -iturnPID.iterate(angleError), false);
 
         // def::display.setMiscData(1, "inErr: " + std::to_string(inError) + "\nangErr: " + std::to_string(angleError));
 
@@ -486,10 +486,10 @@ void Drivetrain::strafeToPoint(
 */
 
 void Drivetrain::straightToPoint(
-    ExtendedPoint itarget, std::vector<AsyncAction> iactions, QLength inoTurnRange,
+    ExtendedPoint itarget, std::vector<AsyncAction> iactions, bool inoReverse, QLength inoTurnRange,
     double iturnWeight, PID imagnitudePID, PID iturnPID, Slew imagnitudeSlew,
-    Slew iturnSlew, bool inoReverse) // drives to the point without strafing using set PID/Slew gains, and executing
-                                     // the AsyncActions at the right times
+    Slew iturnSlew) // drives to the point without strafing using set PID/Slew gains, and executing
+                    // the AsyncActions at the right times
 {
     const double noTurnRangeIn = inoTurnRange.convert(inch);
 
@@ -516,10 +516,12 @@ void Drivetrain::straightToPoint(
         {
             if (!inoReverse) // not tested (1/10/2022)
             {
+                QAngle old = angleToPoint;
                 if (angleToPoint > 90_deg)
                     angleToPoint -= 180_deg;
                 else if (angleToPoint < -90_deg)
                     angleToPoint += 180_deg;
+                std::cout << "old: " << old.convert(degree) << "new: " << angleToPoint.convert(degree) << std::endl;
             }
             turn = iturnSlew.iterate(iturnPID.iterate(
                 angleToPoint.convert(degree))); // calculates value from PID fed into Slew
@@ -541,10 +543,13 @@ void Drivetrain::straightToPoint(
             inToPoint,
             iactions); // executes the next action if availible, and removes it from the list
 
-        Drivetrain::moveArcade(forward, turn, true);
+        std::cout << "forward: " << forward << "     turn: " << turn << std::endl;
+
+        Drivetrain::moveArcade(forward, -turn, true);
 
         pros::delay(20);
     }
+    Drivetrain::moveArcade(0, 0, false);
 }
 
 void Drivetrain::arcStraightToPoint(

@@ -77,6 +77,9 @@ void IntakeStateMachine::update() // move the robot based on the state
     case INTAKE_STATES::in:
         mmtr.moveVoltage(12000);
         break;
+    case INTAKE_STATES::slowIn:
+        mmtr.moveVoltage(6000);
+        break;
     case INTAKE_STATES::out:
         mmtr.moveVoltage(-12000);
         break;
