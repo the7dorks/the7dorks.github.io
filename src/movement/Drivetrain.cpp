@@ -435,7 +435,7 @@ void Drivetrain::straightForDistance(QLength idistance, std::vector<AsyncAction>
                          mmtrLeftFront.getPosition() * def::DRIVE_DEG_TO_IN +
                          inStart; // calculates how far the robot needs to drive
 
-        std::cout << "error: " << inError << std::endl;
+        // std::cout << "error: " << inError << std::endl;
 
         Drivetrain::checkNextAsync(
             inError,
@@ -521,7 +521,7 @@ void Drivetrain::straightToPoint(
                     angleToPoint -= 180_deg;
                 else if (angleToPoint < -90_deg)
                     angleToPoint += 180_deg;
-                std::cout << "old: " << old.convert(degree) << "new: " << angleToPoint.convert(degree) << std::endl;
+                // std::cout << "old: " << old.convert(degree) << "new: " << angleToPoint.convert(degree) << std::endl;
             }
             turn = iturnSlew.iterate(iturnPID.iterate(
                 angleToPoint.convert(degree))); // calculates value from PID fed into Slew
@@ -543,7 +543,7 @@ void Drivetrain::straightToPoint(
             inToPoint,
             iactions); // executes the next action if availible, and removes it from the list
 
-        std::cout << "forward: " << forward << "     turn: " << turn << std::endl;
+        // std::cout << "forward: " << forward << "     turn: " << turn << std::endl;
 
         Drivetrain::moveArcade(forward, -turn, true);
 

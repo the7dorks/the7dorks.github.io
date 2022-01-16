@@ -129,6 +129,10 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
     case Autons::twoNeutral:
         break;
     case Autons::prog:
+        LiftStateMachine::disengageClaw();
+        Drivetrain::straightToPoint({8_in, 0_in, 0_deg}, cutDrive(1));
+        LiftStateMachine::engageClaw();
+        Drivetrain::straightToPoint({0_in, 0_in, 0_deg}, cutDrive(1));
         break;
     }
 }

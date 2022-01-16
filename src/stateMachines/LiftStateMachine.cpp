@@ -39,12 +39,14 @@ double LiftStateMachine::getAngle()
 
 void LiftStateMachine::engageClaw()
 {
-    mclaw.toggle(true);
+    mclaw.toggle(false);
+    std::cout << "claw engaged\n";
 }
 
 void LiftStateMachine::disengageClaw()
 {
-    mclaw.toggle(false);
+    mclaw.toggle(true);
+    std::cout << "claw disengaged\n";
 }
 
 bool LiftStateMachine::goalInRange()
@@ -101,7 +103,10 @@ void LiftStateMachine::controlState() // update the state based on controller in
     if (mbtnClawToggle.changedToPressed()) // if pneumatics are manually toggled
     {
         moverrideDistance = true; // give manual control rights
-        mclaw.toggle();           // toggle
+        if (mclaw.toggle())
+            std::cout << "true\n";
+        else
+            std::cout << "false\n";
     }
 
     // sensor toggler
