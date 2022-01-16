@@ -16,6 +16,11 @@
 /* ----------------------------------------------------------- */
 
 /* -------------------------- State -------------------------- */
+DT_STATES DrivetrainStateMachine::mstate = DT_STATES::off;
+DT_STATES DrivetrainStateMachine::mlastState = mstate;
+
+bool DrivetrainStateMachine::mcontrolEnabled = false;
+
 bool DrivetrainStateMachine::stateChanged() // returns whether the last state is the same as the
                                             // current one
 {
@@ -26,19 +31,27 @@ bool DrivetrainStateMachine::stateChanged() // returns whether the last state is
     return false;
 }
 
+/* ------------------------- Controls ------------------------ */
+Controller &DrivetrainStateMachine::mcontroller = def::controller;
+
 /* ----------------------------------------------------------- */
 /*                      Public Information                     */
 /* ----------------------------------------------------------- */
-DrivetrainStateMachine::DrivetrainStateMachine()
-    : mstate(DT_STATES::off), mlastState(mstate), mcontroller(def::controller)
-{
-} // constructor to set defaults
-
 DT_STATES DrivetrainStateMachine::getState() { return mstate; }
 void DrivetrainStateMachine::setState(DT_STATES istate)
 {
     mlastState = mstate;
     mstate = istate;
+}
+
+void DrivetrainStateMachine::enableControl()
+{
+  mcontrolEnabled = true;
+}
+
+void DrivetrainStateMachine::disableControl()
+{
+  mcontrolEnabled = false;
 }
 
 void DrivetrainStateMachine::doAutonMotion(
@@ -69,4 +82,15 @@ void DrivetrainStateMachine::update() // move the robot based on the state
         //                        false);
         break;
     }
+}
+
+void DrivetrainStateMachine::run()
+{
+  while (true)
+  {
+      if (mcontrolEnabled)
+          controlState();
+      update();
+      pros::delay(20);
+  }
 }

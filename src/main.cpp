@@ -10,7 +10,7 @@
 
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
-pros::Task sm_dt_task(sm_dt_task_func);
+pros::Task sm_dt_task(DrivetrainStateMachine::run);
 pros::Task sm_lift_task(LiftStateMachine::run);
 pros::Task sm_intake_task(IntakeStateMachine::run);
 pros::Task sm_holder_task(HolderStateMachine::run);
@@ -29,6 +29,7 @@ void initialize()
 
     Auton::suspendAsyncTask();
     Auton::readSettings();            // read sd card to remember the auton selected when the brain was run last
+
     def::display.setAutonDropdowns(); // update auton dropdown to match the sd card
 
     def::mtr_dt_left_front.setEncoderUnits(AbstractMotor::encoderUnits::degrees);
@@ -70,7 +71,6 @@ void competition_initialize() {}
  */
 void autonomous()
 {
-    sm_dt_task.suspend();
     Auton::runAuton(); // uses the auton class to run the selected auton
 }
 
@@ -98,8 +98,11 @@ void opcontrol()
     // that control all of the movement
 
     Auton::suspendAsyncTask();
+
     Drivetrain::setMaxSpeed(1);
-    def::sm_dt.setState(DT_STATES::manual);
+    DrivetrainStateMachine::setState(DT_STATES::manual);
+
+    DrivetrainStateMachine::enableControl();
     LiftStateMachine::enableControl();
     IntakeStateMachine::enableControl();
     HolderStateMachine::enableControl();

@@ -45,27 +45,20 @@ void Auton::suspendAsyncTask()
 
 void Auton::runAuton() // runs the selected auton
 {
-    pros::Task auton_task(auton_task_func);
-}
-
-/* ----------------------------------------------------------- */
-/*                     Private Information                     */
-/* ----------------------------------------------------------- */
-void Auton::auton_task_func(void *) // separate thread for running the auton, in case a particular
-                                    // auton needs control over its thread
-{
+    std::cout << "in auton task\n";
     // when making autons, you must add the text to the dropdown in DisplayControl.cpp, a new enum
     // value in Auton.hpp, and a new case is this switch
     Auton::readSettings();
 
     waitForImu();
     CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
-    // awp
-
+    
+    DrivetrainStateMachine::disableControl();
     LiftStateMachine::disableControl();
     IntakeStateMachine::disableControl();
     HolderStateMachine::disableControl();
-    def::sm_dt.setState(DT_STATES::busy);
+    
+    DrivetrainStateMachine::setState(DT_STATES::busy);
 
     switch (auton)
     {
@@ -129,6 +122,7 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
     case Autons::twoNeutral:
         break;
     case Autons::prog:
+        std::cout << "running auton\n";
         LiftStateMachine::disengageClaw();
         Drivetrain::straightToPoint({8_in, 0_in, 0_deg}, cutDrive(1));
         LiftStateMachine::engageClaw();
@@ -136,6 +130,10 @@ void Auton::auton_task_func(void *) // separate thread for running the auton, in
         break;
     }
 }
+
+/* ----------------------------------------------------------- */
+/*                     Private Information                     */
+/* ----------------------------------------------------------- */
 
 void Auton::startAsyncTaskWithSettings(std::function<bool()> iasyncCondition, std::function<void()> iasyncAction)
 {

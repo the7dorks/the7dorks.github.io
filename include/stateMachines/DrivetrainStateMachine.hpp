@@ -11,37 +11,35 @@
  */
 #pragma once                                        // makes sure the file is only included once
 #include "main.h"                                   // gives access to dependancies from other files
-class DrivetrainStateMachine : public VStateMachine // state machine to represent the drivetrain
+class DrivetrainStateMachine // state machine to represent the drivetrain
 {
 public:
-  DrivetrainStateMachine(); // constructor to set defaults
   enum class MStates        // enumeration to organize possible states
   {
     off,
     busy,   // doing an AutonMotion
     manual, // standard split arcade drive
   };
-  MStates getState();
-  void setState(MStates istate);
+  static MStates getState();
+  static void setState(MStates istate);
 
-  void
+  static void enableControl();
+  static void disableControl();
+
+  static void
   doAutonMotion(std::function<void()> iaction); // disable manual control, and execute the action
 
-  void controlState() override; // update the state based on controller input
-  void update() override;       // move the robot based on the state
+  static void controlState(); // update the state based on controller input
+  static void update();       // move the robot based on the state
+  static void run();          // control the state and update the robot to be run in a separate task
 
 private:
   /* -------------------------- State -------------------------- */
-  MStates mstate, mlastState;
+  static MStates mstate, mlastState;
+  static bool mcontrolEnabled;
 
-  bool stateChanged(); // returns whether the last state is the same as the current one
+  static bool stateChanged(); // returns whether the last state is the same as the current one
 
   /* ------------------------- Controls ------------------------ */
-  Controller &mcontroller; // reference to the controller to get joystick values
+  static Controller &mcontroller; // reference to the controller to get joystick values
 };
-
-namespace def
-{
-  extern DrivetrainStateMachine
-      sm_dt; // declares the sm_dt object as extern, to make sure it only gets constructed once
-} // namespace def

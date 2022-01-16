@@ -41,8 +41,6 @@ public:
   static void runAuton(); // runs the selected auton
 
 private:
-  static void auton_task_func(void *); // separate thread for running the auton, in case a
-                                       // particular auton needs control over it's thread.
 
   static void startAsyncTaskWithSettings(std::function<bool()> iasyncCondition, std::function<void()> iasyncAction);
   static void async_task_func(void *); // async task function
