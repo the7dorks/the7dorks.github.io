@@ -36,7 +36,7 @@ namespace def
   pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
-  DistanceSensor distance_claw(0);
+  DistanceSensor distance_claw(18);
 
   /* ----------------------------------------------------------- */
   /*                           Controls                          */
@@ -72,23 +72,23 @@ namespace def
 
 /*
 Controls
-  
+
   L2                R1
   L1                R2
-  
+
     ^             X
   <   >         Y   A
     v             B
-  
-UP      lift toggle (ground level / platform level)
-DOWN    
-LEFT    intake toggle (in/off)
-RIGHT   
 
-A       
+UP      lift toggle (ground level / platform level)
+DOWN
+LEFT    intake toggle (in/off)
+RIGHT
+
+A
 B       toggle holder
 X       toggle claw
-Y       
+Y
 
 L1      lift up
 L2      lift down

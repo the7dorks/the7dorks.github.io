@@ -103,29 +103,26 @@ void LiftStateMachine::controlState() // update the state based on controller in
     if (mbtnClawToggle.changedToPressed()) // if pneumatics are manually toggled
     {
         moverrideDistance = true; // give manual control rights
-        if (mclaw.toggle())
-            std::cout << "true\n";
-        else
-            std::cout << "false\n";
+        mclaw.toggle();
     }
 
     // sensor toggler
-    // if (moverrideDistance && mclaw.isEngaged() == (mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if sensor is overridden but agrees with manual instruction
-    // {
-    //     moverrideDistance = false; // reengage sensor
-    // }
+    if (moverrideDistance && mclaw.isEngaged() == !(mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if sensor is overridden but agrees with manual instruction
+    {
+        moverrideDistance = false; // reengage sensor
+    }
 
-    // if (!moverrideDistance) // if the sensor isn't disabled
-    // {
-    //     if ((mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if something is close enough to the distance sensor
-    //     {
-    //         mclaw.toggle(true);
-    //     }
-    //     else
-    //     {
-    //         mclaw.toggle(false);
-    //     }
-    // }
+    if (!moverrideDistance) // if the sensor isn't disabled
+    {
+        if ((mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if something is close enough to the distance sensor
+        {
+            mclaw.toggle(false);
+        }
+        else
+        {
+            mclaw.toggle(true);
+        }
+    }
 }
 
 void LiftStateMachine::update() // move the robot based on the state

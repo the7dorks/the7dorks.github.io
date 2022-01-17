@@ -44,6 +44,7 @@ std::valarray<double> CustomOdometry::getSensorVals() // returns new sensor valu
 /* ----------------------------------------------------------- */
 /*                      Public Information                     */
 /* ----------------------------------------------------------- */
+pros::Mutex CustomOdometry::odom_mutex = pros::Mutex();
 OdomState CustomOdometry::getState() { return mstate; }       // returns the current state of the robot
 QLength CustomOdometry::getX() { return mstate.x; }           // returns the x value of the state
 QLength CustomOdometry::getY() { return mstate.y; }           // returns the y value of the state
@@ -125,17 +126,18 @@ void odomTaskFunc(void *) // friend function to CustomOdometry to be run as a se
 
     while (CustomOdometry::menabled)
     {
+        CustomOdometry::odom_mutex.take();
         newVals = CustomOdometry::getSensorVals(); // provides new sensor values and saves them
         newState = CustomOdometry::mathStep(
             newVals -
-            lastVals);      // runs odometry math on sensor value change to calulate change in state
+            lastVals);      // runs odometry math on sensor value change to calculate change in state
         lastVals = newVals; // stores sensor values for the next iteration
 
         // updates state based on change
         CustomOdometry::mstate.x += newState.y;
         CustomOdometry::mstate.y += newState.x;
         CustomOdometry::mstate.theta = newVals[2] * radian + CustomOdometry::mstateInitial.theta;
-
+        CustomOdometry::odom_mutex.give();
         pros::delay(10); // run odometry at 100hz (every 10 ms)
     }
 }

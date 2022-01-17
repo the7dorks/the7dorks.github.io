@@ -32,12 +32,12 @@ void IntakeStateMachine::disableControl()
 
 void IntakeStateMachine::controlState() // update the state based on controller input
 {
-    if (LiftStateMachine::getAngle() < def::SET_LIFT_MIN_DEG)
+    if (LiftStateMachine::getAngle() < def::SET_LIFT_MIN_DEG && mstate != INTAKE_STATES::override)
     {
-        setState(INTAKE_STATES::override);
         moverrideState = mstate;
+        setState(INTAKE_STATES::override);
     }
-    else if (mstate == INTAKE_STATES::override)
+    else if (mstate == INTAKE_STATES::override && LiftStateMachine::getAngle() > def::SET_LIFT_MIN_DEG)
     {
         setState(moverrideState);
     }

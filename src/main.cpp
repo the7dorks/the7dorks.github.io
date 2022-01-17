@@ -28,7 +28,7 @@ void initialize()
     def::imu2.reset();
 
     Auton::suspendAsyncTask();
-    Auton::readSettings();            // read sd card to remember the auton selected when the brain was run last
+    Auton::readSettings(); // read sd card to remember the auton selected when the brain was run last
 
     def::display.setAutonDropdowns(); // update auton dropdown to match the sd card
 

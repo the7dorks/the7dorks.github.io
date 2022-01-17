@@ -45,19 +45,19 @@ void Auton::suspendAsyncTask()
 
 void Auton::runAuton() // runs the selected auton
 {
-    std::cout << "in auton task\n";
     // when making autons, you must add the text to the dropdown in DisplayControl.cpp, a new enum
     // value in Auton.hpp, and a new case is this switch
     Auton::readSettings();
+    Auton::suspendAsyncTask();
 
     waitForImu();
     CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
-    
+
     DrivetrainStateMachine::disableControl();
     LiftStateMachine::disableControl();
     IntakeStateMachine::disableControl();
     HolderStateMachine::disableControl();
-    
+
     DrivetrainStateMachine::setState(DT_STATES::busy);
 
     switch (auton)
@@ -112,17 +112,18 @@ void Auton::runAuton() // runs the selected auton
 
         break;
     case Autons::oneNeutral:
-        // pros::delay(1000);
-        // LiftStateMachine::disengageClaw();
-        // pros::delay(1000);
-        Drivetrain::straightToPoint({43_in, 0_in, 0_deg}, cutDrive(2));
+        Auton::startAsyncTaskWithSettings(
+            makeFunc({ return LiftStateMachine::goalInRange(); }), // if the goal is in range
+            makeFunc({ Drivetrain::disable();  // stop driving forward
+                       LiftStateMachine::engageClaw(); }));                                        // grab the goal
+        LiftStateMachine::disengageClaw();
+        Drivetrain::straightToPoint({48_in, 0_in, 0_deg}, cutDrive(1));
         LiftStateMachine::engageClaw();
-        Drivetrain::straightToPoint({10_in, 0_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({10_in, 0_in, 0_deg});
         break;
     case Autons::twoNeutral:
         break;
     case Autons::prog:
-        std::cout << "running auton\n";
         LiftStateMachine::disengageClaw();
         Drivetrain::straightToPoint({8_in, 0_in, 0_deg}, cutDrive(1));
         LiftStateMachine::engageClaw();

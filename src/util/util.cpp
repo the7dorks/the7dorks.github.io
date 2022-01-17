@@ -136,13 +136,15 @@ void odomSetState(OdomDebug::state_t istate) // sets the state of odometry based
 }
 void odomResetAll() // resets everything having to do with odometry (for "Reset" button)
 {
-    CustomOdometry::setState({0_ft, 0_ft, 0_deg}); // sets the robot's positinon to 0
+    CustomOdometry::odom_mutex.take();
+    CustomOdometry::setState({0_ft, 0_ft, 0_deg}); // sets the robot's position to 0
     def::imu1.reset();                             // resets the imu
     def::imu2.reset();                             // resets the imu
-    // resets the ecoders
+    // resets the encoders
     def::track_encoder_forward.reset();
     def::track_encoder_side.reset();
     waitForImu(); // waits for the imu
+    CustomOdometry::odom_mutex.give();
 }
 
 /* ---------------------- Task Functions --------------------- */
