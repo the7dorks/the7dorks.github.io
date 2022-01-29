@@ -414,8 +414,8 @@ void Drivetrain::turnToAngle(QAngle iangle, std::vector<AsyncAction> iactions, P
 
 void Drivetrain::turnToPoint(ExtendedPoint itarget, std::vector<AsyncAction> iactions, PID ipid)
 {
-    QAngle angleToTarget = atan2((itarget.x - Drivetrain::getXPos()).convert(inch),
-                                 (itarget.y - Drivetrain::getYPos()).convert(inch)) *
+    QAngle angleToTarget = atan2((itarget.y - Drivetrain::getYPos()).convert(inch),
+                                 (itarget.x - Drivetrain::getXPos()).convert(inch)) *
                            radian; // calculates the angle to the target
     Drivetrain::turnToAngle(angleToTarget, iactions,
                             ipid); // turn to face the angle the point was at in the beginning
