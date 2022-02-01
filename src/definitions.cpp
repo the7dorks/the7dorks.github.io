@@ -27,11 +27,11 @@ namespace def
 
   /* ------------------------ Pneumatics ----------------------- */
   pros::ADIDigitalOut sol_claw('A');
-  pros::ADIDigitalOut sol_holder({{4, 'H'}});
+  pros::ADIDigitalOut sol_holder({{3, 'H'}});
 
   /* ------------------------- Sensors ------------------------- */
-  ADIEncoder track_encoder_forward({4, 'C', 'D'}, true);
-  ADIEncoder track_encoder_side({4, 'A', 'B'}, true);
+  ADIEncoder track_encoder_forward({3, 'C', 'D'}, true);
+  ADIEncoder track_encoder_side({3, 'A', 'B'}, true);
   pros::Imu imu1(6);
   pros::Imu imu2(7);
 

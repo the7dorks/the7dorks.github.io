@@ -111,8 +111,8 @@ public:
                                                                        // executing the AsyncActions at the right times
 
     static void turnToPoint(ExtendedPoint itarget, std::vector<AsyncAction> iactions = {},
-                            PID ipid = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms)); // the same as turnToAngle but takes a point
-                                                                                    // instead of an angle as a target
+                            PID ipid = PID(0.07, 0.02, 0.20, 1, 0.5, 0.01, 1_ms)); // the same as turnToAngle but takes a point
+                                                                                   // instead of an angle as a target
 
     static void straightForDistance(QLength idistance, std::vector<AsyncAction> iactions = {},
                                     PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms),
@@ -131,7 +131,7 @@ public:
     */
 
     static void straightToPoint(
-        ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, bool inoReverse = false, QLength inoTurnRange = 6_in, double iturnWeight = 1.7, PID imagnitudePID = PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew imagnitudeSlew = Slew(1, 1), Slew iturnSlew = Slew(1, 1)); // drives to the point without strafing using set PID/Slew gains, and executing the AsyncActions at the right times
+        ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, bool inoReverse = false, QLength inoTurnRange = 6_in, double iturnWeight = 1.7, PID imagnitudePID = PID(0.3, 0.001, 0.8, 1.0, 0.5, 0.00001, 1_ms), PID iturnPID = PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew imagnitudeSlew = Slew(1, 1), Slew iturnSlew = Slew(1, 1)); // drives to the point without strafing using set PID/Slew gains, and executing the AsyncActions at the right times
 
     static void arcStraightToPoint(
         ExtendedPoint itarget, std::vector<AsyncAction> iactions = {}, double iweightModifier = 10,

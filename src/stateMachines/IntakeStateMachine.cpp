@@ -76,6 +76,14 @@ void IntakeStateMachine::update() // move the robot based on the state
         break;
     case INTAKE_STATES::in:
         mmtr.moveVoltage(12000);
+        pros::delay(50);
+        while (mmtr.getActualVelocity() < 2)
+        {
+            mmtr.moveVoltage(-12000);
+            pros::delay(100);
+            mmtr.moveVoltage(12000);
+            pros::delay(100);
+        }
         break;
     case INTAKE_STATES::slowIn:
         mmtr.moveVoltage(6000);

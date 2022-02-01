@@ -46,7 +46,7 @@ lv_res_t DisplayControl::tabview_auton_dropdowns_action(
                 << std::endl; // output to the terminal if the sd card was not accessed correctly
         }
         fclose(file);
-        //Auton::readSettings(); // update auton based on new sd card values
+        // Auton::readSettings(); // update auton based on new sd card values
     }
 
     return LV_RES_OK; // required for dropdown callback
@@ -144,6 +144,8 @@ DisplayControl::DisplayControl() : modom(mtabview_odom, LV_COLOR_PURPLE)
      * enum value in Auton.hpp, and a new case in the switch in Auton.cpp.
      */
     lv_ddlist_set_options(mtabview_auton_dropdown, "None\n"
+                                                   "Left\n"
+                                                   "Right\n"
                                                    "AWP\n"
                                                    "AWP+1 Neutral\n"
                                                    "One Neutral\n"

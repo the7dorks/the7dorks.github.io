@@ -49,9 +49,9 @@ void LiftStateMachine::disengageClaw()
     std::cout << "claw disengaged\n";
 }
 
-bool LiftStateMachine::goalInRange()
+bool LiftStateMachine::goalInRange(double idistanceMM)
 {
-    return mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0;
+    return mdistance.get() < idistanceMM && mdistance.get() > 0;
 }
 
 void LiftStateMachine::enableControl()

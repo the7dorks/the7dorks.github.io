@@ -15,6 +15,8 @@ public:
   enum class Autons // all possible autons
   {
     none,
+    left,
+    right,
     awp,
     awp1N,
     oneNeutral,
@@ -41,7 +43,6 @@ public:
   static void runAuton(); // runs the selected auton
 
 private:
-
   static void startAsyncTaskWithSettings(std::function<bool()> iasyncCondition, std::function<void()> iasyncAction);
   static void async_task_func(void *); // async task function
   static std::function<bool()> masyncCondition;

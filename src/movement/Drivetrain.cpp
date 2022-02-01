@@ -193,7 +193,7 @@ void Drivetrain::checkNextAsync(
     if (iactions.size()) // if there is at least one action to execute
     {
         const AsyncAction &nextAction = iactions.at(0);
-        if (ierror < nextAction.merror) // if the robot is close enough to the target
+        if (abs(ierror) < nextAction.merror) // if the robot is close enough to the target
         {
             nextAction.maction();             // execute the action
             iactions.erase(iactions.begin()); // remove the action, having already executed it
@@ -406,6 +406,7 @@ void Drivetrain::turnToAngle(QAngle iangle, std::vector<AsyncAction> iactions, P
             iactions); // executes the next action if availible, and removes it from the list
 
         Drivetrain::moveArcade(0, -ipid.iterate(angleError), false);
+        // std::cout << "in angle loop. Error: " << angleError << "     use: " << counter << std::endl;
         pros::delay(20);
     }
     Drivetrain::moveArcade(0, 0, false);

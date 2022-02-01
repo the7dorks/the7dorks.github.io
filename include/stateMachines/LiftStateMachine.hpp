@@ -31,7 +31,7 @@ public:
 
     static void engageClaw();
     static void disengageClaw();
-    static bool goalInRange();
+    static bool goalInRange(double idistanceMM = def::SET_LIFT_DISTANCE_MIN_MM);
 
     static void enableControl();
     static void disableControl();

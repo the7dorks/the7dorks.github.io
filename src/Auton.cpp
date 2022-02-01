@@ -67,99 +67,133 @@ void Auton::runAuton() // runs the selected auton
     {
     case Autons::none:
         break;
+    case Autons::left:
+        Auton::startAsyncTaskWithSettings(
+            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM + 15); }), // if the goal is in range
+            makeFunc({ LiftStateMachine::engageClaw();
+                    pros::delay(50);
+                    Drivetrain::disable();  // stop driving forward
+                    pros::delay(500); 
+                    LiftStateMachine::setState(LIFT_STATES::rings); }));
+
+        LiftStateMachine::disengageClaw();
+        Drivetrain::straightToPoint({47_in, -12_in, 0_deg}, cutDrive(1)); // drive towards the goal
+        Drivetrain::straightToPoint({-1_in, 5_in, 0_deg}, cutDrive(1));
+        Drivetrain::turnToAngle(60_deg, cutDrive(10)); // turn towards alliance goal
+        pros::delay(1000);
+        Drivetrain::straightToPoint(
+            {-5_in, -15_in, 0_deg}, {AsyncAction(22, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(12, makeFunc({ Drivetrain::disable(); }))}, false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
+        Drivetrain::setMaxSpeed(1);
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+        Drivetrain::straightToPoint({2_in, 4_in, 0_deg}, cutDrive(1));
+        LiftStateMachine::disengageClaw();
+        IntakeStateMachine::setState(INTAKE_STATES::in);
+        Drivetrain::straightToPoint({30_in, -20_in, 0_deg}, {AsyncAction(13, makeFunc({ Drivetrain::setMaxSpeed(0.33); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true);
+        Drivetrain::setMaxSpeed(0.5);
+        Drivetrain::straightToPoint({30_in, -70_in, 0_deg}, {AsyncAction(38, makeFunc({ Drivetrain::setMaxSpeed(0.25); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))});
+        break;
+    case Autons::right:
+        Auton::startAsyncTaskWithSettings(
+            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM + 15); }), // if the goal is in range
+            makeFunc({ LiftStateMachine::engageClaw();
+                    pros::delay(50);
+                    Drivetrain::disable();  // stop driving forward
+                    pros::delay(1000); 
+                    LiftStateMachine::setState(LIFT_STATES::top); }));
+        LiftStateMachine::disengageClaw();
+        Drivetrain::straightToPoint({52_in, 0_in, 0_deg}, cutDrive(1));
+
+        Drivetrain::straightToPoint({17_in, 0_in, 0_deg}, cutDrive(1));
+        Drivetrain::turnToAngle(90_deg, cutDrive(5));
+        Drivetrain::straightToPoint({17_in, -18_in, 0_deg}, {AsyncAction(17, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(9, makeFunc({ Drivetrain::disable(); }))});
+        HolderStateMachine::setState(HOLDER_STATES::closed); // get the alliance goal
+        Drivetrain::setMaxSpeed(1);
+        Drivetrain::straightToPoint({17_in, -12_in, 0_deg}, cutDrive(1)); // back up
+        Drivetrain::turnToPoint({50_in, -12_in, 0_deg}, cutDrive(5));     // turn to face the row of rings
+        IntakeStateMachine::setState(INTAKE_STATES::in);
+        Drivetrain::straightToPoint({50_in, -12_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.35); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true); // drive into the row of rings
+        Drivetrain::setMaxSpeed(1);
+        Drivetrain::turnToPoint({50_in, -24_in, 0_deg}, cutDrive(5)); // turn to the next row
+        Drivetrain::setMaxSpeed(0.35);
+        Drivetrain::straightToPoint({50_in, -24_in, 0_deg}, cutDrive(1)); // drive into the next row
+
+        Drivetrain::setMaxSpeed(1);
+        Drivetrain::turnToAngle(0_deg, cutDrive(45));
+        LiftStateMachine::setState(LIFT_STATES::rings);
+        Drivetrain::straightToPoint({8_in, -12_in, 0_deg}, cutDrive(1));
+        HolderStateMachine::setState(HOLDER_STATES::open);
+        break;
     case Autons::awp:
-        // Drivetrain::straightToPoint({-7_in, 0_in, 0_deg}, cutDrive(1.5));
-        // HolderStateMachine::setState(HOLDER_STATES::closed);
-        // IntakeStateMachine::setState(INTAKE_STATES::in);
-        // pros::delay(1500);
-        // HolderStateMachine::setState(HOLDER_STATES::open);
-        // // Drivetrain::straightForDistance(17_in);
-        // Drivetrain::straightToPoint({12_in, 0_in, 0_deg}, cutDrive(1));
-        // Drivetrain::straightToPoint({-11_in, -17_in, 0_deg}, cutDrive(3));
-        // Drivetrain::straightToPoint({-98_in, -23_in, 0_deg}, cutDrive(15));
-        // Drivetrain::arcadeFor(-0.25, 0, 1500);
-        // pros::delay(500);
-        // HolderStateMachine::setState(HOLDER_STATES::closed);
-        // LiftStateMachine::setState(LIFT_STATES::top);
-        // pros::delay(700);
-        // Drivetrain::turnToAngle(90_deg);
-        // Drivetrain::setMaxSpeed(0.5);
-        // Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
-        // Drivetrain::straightToPoint({-106_in, -14_in, 0_deg}, cutDrive(1));
-        // Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
-        // Drivetrain::straightToPoint({-106_in, -14_in, 0_deg}, cutDrive(1));
-        // Drivetrain::straightToPoint({-106_in, 5_in, 0_deg}, cutDrive(1));
-        // HolderStateMachine::setState(HOLDER_STATES::open);
+        // drop rings in the first alliance goal
         LiftStateMachine::setState(LIFT_STATES::top);
         pros::delay(600);
         LiftStateMachine::disengageClaw();
         pros::delay(100);
         LiftStateMachine::setState(LIFT_STATES::bottom);
-        Drivetrain::turnToPoint({15_in, 48_in, 0_deg});
+
+        // drive up to second alliance goal
+        Drivetrain::straightToPoint({-3_in, 18_in, 0_deg}, cutDrive(6));
+        // Drivetrain::straightToPoint({75_in, 24_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
+        LiftStateMachine::setState(LIFT_STATES::rings);
+        Drivetrain::straightToPoint({98_in, 23_in, 0_deg}, {AsyncAction(16, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
+        Drivetrain::setMaxSpeed(1);
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+
+        IntakeStateMachine::setState(INTAKE_STATES::in);
+
+        Drivetrain::straightToPoint({97_in, 60_in, 0_deg}, {AsyncAction(28, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))}, true);
+        Drivetrain::setMaxSpeed(1);
+        Drivetrain::straightToPoint({107_in, 20_in, 0_deg}, cutDrive(3));
+        HolderStateMachine::setState(HOLDER_STATES::open); // back up with 14 seconds left
+        break;
+    case Autons::awp1N:
+        LiftStateMachine::setState(LIFT_STATES::top);
+        pros::delay(600);
+        LiftStateMachine::disengageClaw();
+        pros::delay(100);
+        LiftStateMachine::setState(LIFT_STATES::bottom);
+        Drivetrain::turnToPoint({14_in, 48_in, 0_deg});
         Auton::startAsyncTaskWithSettings(
             makeFunc({ return LiftStateMachine::goalInRange(); }), // if the goal is in range
-            makeFunc({ Drivetrain::disable();  // stop driving forward
-                       LiftStateMachine::engageClaw();
-                       pros::delay(400); 
-                       LiftStateMachine::setState(LIFT_STATES::top); }));                                        // grab the goal
+            makeFunc({ LiftStateMachine::engageClaw();
+                    pros::delay(50);
+                    Drivetrain::disable();  // stop driving forward
+                    pros::delay(500); 
+                    LiftStateMachine::setState(LIFT_STATES::rings); }));
         Drivetrain::straightForDistance(5.5_ft);
         Drivetrain::straightToPoint({13_in, 38_in, 0_deg}, cutDrive(10)); // back up with the neutral goal
 
-        Drivetrain::turnToPoint({42_in, 39_in, 0_deg}, cutDrive(10), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // turn towards ring pile
-        Drivetrain::straightToPoint({40_in, 39_in, 0_deg}, cutDrive(8), true, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
+        // Drivetrain::turnToPoint({42_in, 39_in, 0_deg}, cutDrive(10), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // turn towards ring pile
+        Drivetrain::straightToPoint({37_in, 39_in, 0_deg}, cutDrive(8), true, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
 
-        Drivetrain::turnToAngle(-82_deg, cutDrive(1)); // face the platform
+        // Drivetrain::turnToAngle(-82_deg, cutDrive(1)); // face the platform
         waitUntil(makeFunc({ return LiftStateMachine::getAngle() > def::SET_LIFT_TOP_DEG - 10; }));
-        IntakeStateMachine::setState(INTAKE_STATES::in);
-        Drivetrain::setMaxSpeed(0.5);
-        Drivetrain::straightToPoint({48_in, 24_in, 0_deg}, {AsyncAction(8, makeFunc({ IntakeStateMachine::setState(INTAKE_STATES::off); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))}, false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // drive towards the platform
-        Drivetrain::setMaxSpeed(1);
+        // Drivetrain::setMaxSpeed(0.5);
+        Drivetrain::straightToPoint({49_in, 21_in, 0_deg}, cutDrive(1), false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // drive towards the platform
+        Drivetrain::turnToAngle(-90_deg, cutDrive(1), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
+        // Drivetrain::setMaxSpeed(1);
         LiftStateMachine::disengageClaw();
         pros::delay(300);
         // Drivetrain::arcadeFor(-0.5, 0.0, 100);
 
         Drivetrain::turnToAngle(180_deg); // face the alliance goal with the holder
-        Drivetrain::straightToPoint({97_in, 25_in, 0_deg}, {AsyncAction(18, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
+        Drivetrain::straightToPoint({98_in, 23_in, 0_deg}, {AsyncAction(16, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
         Drivetrain::setMaxSpeed(1);
         HolderStateMachine::setState(HOLDER_STATES::closed);
 
         // Drivetrain::straightToPoint({97_in, 24_in, 0_deg}, cutDrive(1)); // get the row of rings
         IntakeStateMachine::setState(INTAKE_STATES::in);
-        Drivetrain::turnToAngle(90_deg, cutDrive(0.5));
+        // Drivetrain::turnToAngle(90_deg, cutDrive(0.5));
 
         // Auton::startAsyncTaskWithSettings(makeFunc({ return (timer.millis() - startTime) > 14_s; }), makeFunc({
         //     Drivetrain::disable();
         //     Drivetrain::setMaxSpeed(1);
         //     Drivetrain::straightToPoint({97_in, 24_in, 0_deg}, cutDrive(3)); HolderStateMachine::setState(HOLDER_STATES::open); })); // back up with 14 seconds left
 
-        Drivetrain::setMaxSpeed(0.4);
-        Drivetrain::straightToPoint({97_in, 60_in, 0_deg}, cutDrive(1));
+        Drivetrain::straightToPoint({97_in, 60_in, 0_deg}, {AsyncAction(28, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))}, true);
         Drivetrain::setMaxSpeed(1);
-        Drivetrain::straightToPoint({97_in, 24_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({107_in, 20_in, 0_deg}, cutDrive(3));
         HolderStateMachine::setState(HOLDER_STATES::open); // back up with 14 seconds left
-        break;
-    case Autons::awp1N:
-        Drivetrain::straightToPoint({43_in, 0_in, 0_deg});
-        LiftStateMachine::engageClaw();
-        Drivetrain::straightToPoint({19_in, 0_in, 0_deg});
-        Drivetrain::turnToAngle(90_deg);
-        LiftStateMachine::disengageClaw();
-        Drivetrain::straightToPoint({12_in, 0_in, 0_deg}, cutDrive(3));
-
-        Drivetrain::arcadeFor(-0.25, 0, 1000);
-        pros::delay(500);
-        HolderStateMachine::setState(HOLDER_STATES::closed);
-        LiftStateMachine::setState(LIFT_STATES::top);
-        pros::delay(700);
-        Drivetrain::turnToAngle(180_deg);
-        Drivetrain::setMaxSpeed(0.5);
-        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
-        Drivetrain::straightToPoint({22_in, -20_in, 0_deg}, cutDrive(1));
-        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
-        Drivetrain::straightToPoint({22_in, -20_in, 0_deg}, cutDrive(1));
-        Drivetrain::straightToPoint({2_in, -20_in, 0_deg}, cutDrive(1));
-        HolderStateMachine::setState(HOLDER_STATES::open);
-
         break;
     case Autons::oneNeutral:
         Auton::startAsyncTaskWithSettings(

@@ -51,8 +51,10 @@ QLength CustomOdometry::getY() { return mstate.y; }           // returns the y v
 QAngle CustomOdometry::getTheta() { return mstate.theta; }    // returns the theta value of the state
 void CustomOdometry::setStateInitial(const OdomState &istate) // sets the state of the robot
 {
+    CustomOdometry::odom_mutex.take();
     mstateInitial = istate;
     mstate = istate;
+    CustomOdometry::odom_mutex.give();
 }
 void CustomOdometry::setState(const OdomState &istate) // sets the state of the robot
 {
