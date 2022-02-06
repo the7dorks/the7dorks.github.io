@@ -20,7 +20,7 @@ public:
     awp,
     awp1N,
     oneNeutral,
-    twoNeutral,
+    safeLeft,
     prog
   } static auton; // selected auton
 

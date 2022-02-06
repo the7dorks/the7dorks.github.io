@@ -149,7 +149,7 @@ DisplayControl::DisplayControl() : modom(mtabview_odom, LV_COLOR_PURPLE)
                                                    "AWP\n"
                                                    "AWP+1 Neutral\n"
                                                    "One Neutral\n"
-                                                   "Two Neutral\n"
+                                                   "Safe Left\n"
                                                    "Prog\n"); // auton types in selection dropdown
     lv_ddlist_set_options(mtabview_auton_dropdown_side, "Right\n"
                                                         "Left\n"); // color selector

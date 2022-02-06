@@ -17,7 +17,7 @@ namespace def
   Motor mtr_dt_left_front(9);
   Motor mtr_dt_right_front(-13);
   Motor mtr_dt_right_mid(14);
-  Motor mtr_dt_right_back(-12);
+  Motor mtr_dt_right_back(-15);
   Motor mtr_dt_left_back(8);
   Motor mtr_dt_left_mid(-10);
 
@@ -36,7 +36,7 @@ namespace def
   pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
-  DistanceSensor distance_claw(15);
+  DistanceSensor distance_claw(2);
 
   /* ----------------------------------------------------------- */
   /*                           Controls                          */
