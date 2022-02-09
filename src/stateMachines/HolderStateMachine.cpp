@@ -1,11 +1,11 @@
 /**
  * HolderStateMachine.cpp
- * 
+ *
  * This file contains the declaration of the HolderStateMachine class.
  * HolderStateMachine is a state machine.
- * It has an enumeration of different possible states to make it easy 
+ * It has an enumeration of different possible states to make it easy
  * for the user to control the holder.
- * 
+ *
  * To use the state machine in auton, make sure you disable/reenable
  * the normal state machine tasks and runt the specified action.
  */
@@ -30,6 +30,26 @@ void HolderStateMachine::disableControl()
     mcontrolEnabled = false;
 }
 
+int HolderStateMachine::getGoalLocation()
+{
+    const double left = mdistLeft.get();
+    const double center = mdistCenter.get();
+    const double right = mdistRight.get();
+
+    if ((left != 0 && left < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX) && (right == 0 || right > left)) // if the left sees the edge of the goal, and the right doesn't, go left
+    {
+        return 1;
+    }
+    else if ((right != 0 && right < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX) && (left == 0 || left > right)) // if the right sees the edge of the goal and the left doesn't, go right
+    {
+        return 2;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void HolderStateMachine::controlState()
 {
     if (mbtnToggle.changedToPressed()) // if the toggle button is pressed
@@ -38,6 +58,11 @@ void HolderStateMachine::controlState()
             setState(HOLDER_STATES::closed);   // close it.
         else                                   // otherwise,
             setState(HOLDER_STATES::open);     // open it.
+    }
+
+    if (mdistCenter.get() < def::SET_HOLDER_DISTANCE_MAX_MM && mdistCenter.get() != 0)
+    {
+        setState(HOLDER_STATES::closed);
     }
 }
 
@@ -75,6 +100,9 @@ void HolderStateMachine::run()
 /* ----------------------------------------------------------- */
 /* ------------------------- Devices ------------------------- */
 SolenoidWrapper HolderStateMachine::msol = SolenoidWrapper(def::sol_holder, false);
+DistanceSensor &HolderStateMachine::mdistLeft = def::distance_eye_back_left;
+DistanceSensor &HolderStateMachine::mdistCenter = def::distance_eye_back_center;
+DistanceSensor &HolderStateMachine::mdistRight = def::distance_eye_back_right;
 
 /* -------------------------- State -------------------------- */
 HOLDER_STATES HolderStateMachine::mstate = HOLDER_STATES::open;

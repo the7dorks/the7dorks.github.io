@@ -1,11 +1,11 @@
 /**
  * HolderStateMachine.hpp
- * 
+ *
  * This file contains the declaration of the HolderStateMachine class.
  * HolderStateMachine is a state machine.
- * It has an enumeration of different possible states to make it easy 
+ * It has an enumeration of different possible states to make it easy
  * for the user to control the holder.
- * 
+ *
  * To use the state machine in auton, make sure you disable/reenable
  * the normal state machine tasks and runt the specified action.
  */
@@ -26,6 +26,8 @@ public:
     static void enableControl();
     static void disableControl();
 
+    static int getGoalLocation(); // 0: center, 1: left, 2: right
+
     static void controlState(); // update the state based on controller input
     static void update();       // move the robot based on the state
     static void run();          // control the state and update the robot to run in separate task
@@ -33,6 +35,9 @@ public:
 private:
     /* ------------------------- Devices ------------------------- */
     static SolenoidWrapper msol;
+    static DistanceSensor &mdistLeft;
+    static DistanceSensor &mdistCenter;
+    static DistanceSensor &mdistRight;
 
     /* -------------------------- State -------------------------- */
     static MStates mstate;

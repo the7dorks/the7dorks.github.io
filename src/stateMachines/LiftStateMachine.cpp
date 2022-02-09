@@ -51,7 +51,7 @@ void LiftStateMachine::disengageClaw()
 
 bool LiftStateMachine::goalInRange(double idistanceMM)
 {
-    return mdistance.get() < idistanceMM && mdistance.get() > 0;
+    return mdistClaw.get() < idistanceMM && mdistClaw.get() > 0;
 }
 
 void LiftStateMachine::enableControl()
@@ -72,6 +72,27 @@ void LiftStateMachine::enablePID()
 void LiftStateMachine::disablePID()
 {
     mpidEnabled = false;
+}
+
+int LiftStateMachine::getGoalLocation()
+{
+    setState(LIFT_STATES::bottom);
+    const double left = mdistLeft.get();
+    const double center = mdistClaw.get();
+    const double right = mdistRight.get();
+
+    if ((left != 0 && left < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (right == 0 || right > left)) // if the left sees the edge of the goal, and the right doesn't, go left
+    {
+        return 1;
+    }
+    else if ((right != 0 && right < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (left == 0 || left > right)) // if the right sees the edge of the goal and the left doesn't, go right
+    {
+        return 2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void LiftStateMachine::controlState() // update the state based on controller input
@@ -107,14 +128,14 @@ void LiftStateMachine::controlState() // update the state based on controller in
     }
 
     // // sensor toggler
-    // if (moverrideDistance && mclaw.isEngaged() == !(mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if sensor is overridden but agrees with manual instruction
+    // if (moverrideDistance && mclaw.isEngaged() == !(mdistClaw.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistClaw.get() > 0)) // if sensor is overridden but agrees with manual instruction
     // {
     //     moverrideDistance = false; // reengage sensor
     // }
 
     // if (!moverrideDistance) // if the sensor isn't disabled
     // {
-    //     if ((mdistance.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistance.get() > 0)) // if something is close enough to the distance sensor
+    //     if ((mdistClaw.get() < def::SET_LIFT_DISTANCE_MIN_MM && mdistClaw.get() > 0)) // if something is close enough to the distance sensor
     //     {
     //         mclaw.toggle(false);
     //     }
@@ -190,7 +211,9 @@ void LiftStateMachine::run()
 Motor &LiftStateMachine::mmtr = def::mtr_lift;
 SolenoidWrapper LiftStateMachine::mclaw = SolenoidWrapper(def::sol_claw, false);
 RotationSensor &LiftStateMachine::mrotation = def::rotation_lift;
-DistanceSensor &LiftStateMachine::mdistance = def::distance_claw;
+DistanceSensor &LiftStateMachine::mdistClaw = def::distance_claw;
+DistanceSensor &LiftStateMachine::mdistLeft = def::distance_eye_front_left;
+DistanceSensor &LiftStateMachine::mdistRight = def::distance_eye_front_right;
 
 /* -------------------------- State -------------------------- */
 LIFT_STATES LiftStateMachine::mstate = LIFT_STATES::bottom;

@@ -146,6 +146,109 @@ void odomResetAll() // resets everything having to do with odometry (for "Reset"
     waitForImu(); // waits for the imu
     CustomOdometry::odom_mutex.give();
 }
+bool seekHolder()
+{
+    if (def::distance_eye_back_center.get() != 0)
+    {
+        while (def::distance_eye_back_center.get() > def::SET_HOLDER_DISTANCE_MAX_MM)
+        {
+            switch (HolderStateMachine::getGoalLocation())
+            {
+            case 0: // straight
+                if (def::distance_eye_back_center.get() > 300)
+                {
+                    Drivetrain::moveArcade(-1, 0);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(-0.2, 0);
+                }
+                break;
+            case 1: // left
+                if (def::distance_eye_back_center.get() > 300)
+                {
+                    Drivetrain::moveArcade(-1, -0.3);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(-0.2, -0.1);
+                }
+                break;
+            case 2: // right
+                if (def::distance_eye_back_center.get() > 300)
+                {
+                    Drivetrain::moveArcade(-1, 0.3);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(-0.2, 0.1);
+                }
+                break;
+            }
+
+            pros::delay(20);
+        }
+        Drivetrain::moveArcade(0, 0);
+        HolderStateMachine::setState(HOLDER_STATES::closed);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool seekClaw()
+{
+    if (def::distance_claw.get() != 0)
+    {
+        LiftStateMachine::disengageClaw();
+        while (def::distance_claw.get() > def::SET_LIFT_DISTANCE_MIN_MM)
+        {
+            switch (LiftStateMachine::getGoalLocation())
+            {
+            case 0: // straight
+                if (def::distance_claw.get() > 300)
+                {
+                    Drivetrain::moveArcade(1, 0);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(0.2, 0);
+                }
+                break;
+            case 1: // left
+                if (def::distance_claw.get() > 300)
+                {
+                    Drivetrain::moveArcade(1, -0.3);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(0.2, -0.1);
+                }
+                break;
+            case 2: // right
+                if (def::distance_claw.get() > 300)
+                {
+                    Drivetrain::moveArcade(1, 0.3);
+                }
+                else
+                {
+                    Drivetrain::moveArcade(0.2, 0.1);
+                }
+                break;
+            }
+
+            pros::delay(20);
+        }
+        Drivetrain::moveArcade(0, 0);
+        LiftStateMachine::engageClaw();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 /* ---------------------- Task Functions --------------------- */
 void display_task_func() // display task to be run independently
@@ -155,7 +258,8 @@ void display_task_func() // display task to be run independently
         def::display.setOdomData(); // update the odometry information
 
         // room for any other miscellaneous debugging
-        def::display.setMiscData(1, std::to_string(def::rotation_lift.get()) + "\nstate: " + std::to_string((int)LiftStateMachine::getState()));
+        def::display.setMiscData(1, "Left Eye: " + std::to_string(def::distance_eye_front_left.get()) + "\nCenter Eye: " + std::to_string(def::distance_claw.get()) + "\nRight Eye: " + std::to_string(def::distance_eye_front_right.get()));
+        // def::display.setMiscData(2, "Confidence: " + std::to_string(def::distance_eye_back_left.getConfidence()) + "\nConfidence: " + std::to_string(def::distance_eye_back_center.getConfidence()) + "\nConfidence: " + std::to_string(def::distance_eye_back_right.getConfidence()));
 
         // sets the chart to show motor velocites (in RPM) when in the range 150-250
         def::display.setChartData(0, def::mtr_dt_left_front.getActualVelocity() - 150);

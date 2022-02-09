@@ -48,6 +48,12 @@ namespace def
 
     extern RotationSensor rotation_lift;
     extern DistanceSensor distance_claw;
+    extern DistanceSensor distance_eye_front_left;  // on the left side
+    extern DistanceSensor distance_eye_front_right; // on the right side
+
+    extern DistanceSensor distance_eye_back_left; // on the right side of the robot
+    extern DistanceSensor distance_eye_back_center;
+    extern DistanceSensor distance_eye_back_right; // on the left side of the robot
 
     /* ----------------------------------------------------------- */
     /*                           Controls                          */
@@ -103,4 +109,6 @@ namespace def
     const double SET_LIFT_TOP_DEG = 124;
     const double SET_LIFT_DISTANCE_MIN_MM = 35;
 
+    const double SET_HOLDER_DISTANCE_MAX_MM = 30;
+    const double SET_HOLDER_EYES_DISTANCE_DIFF_MAX = 200;
 } // namespace def

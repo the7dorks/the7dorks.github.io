@@ -53,6 +53,8 @@ bool waitUntil(
     std::function<bool()> icondition, QTime itimout = 0_ms,
     std::function<void()> iaction = []() {});           // runs code until the condition is true
 double controlAdjust(double iinput, double ipower = 1); // adjusts the curve of the input from the joysticks
+bool seekHolder();                                      // drive the bot to get a mobile goal using the back eyes | returns success
+bool seekClaw();                                        // drive the bot to get a mobile goal using the front eyes | returns success
 
 /* -------------------- OdomDebug Helpers -------------------- */
 void odomSetState(OdomDebug::state_t istate); // sets the state of odometry based on display inputs
@@ -168,25 +170,25 @@ namespace util
 {
 
     /* ----------------------- DEMA Filter -----------------------  /
- * DEMA is short for Double Exponential Moving Average. It is a method
- * is a type of filter that smooths data and gives more weight to
- * more recent values.
- *
- * A Simple Moving Average (SMA) takes the mean of a certain number
- * of values over a specified period of time. An Exponential Moving
- * Average (EMA) is similar, but it gives more weight to newer values,
- * so it more closly tracks the actual value. A DEMA is the EMA of
- * an EMA. More specifically, it is calculated by 2EMA - EMA(EMA),
- * and it gives even more weight to newer values.
- *
- * The DEMAFilter class was originally added as an easy way to improve
- * the quality of angle measurements from the inertial sensor. It was
- * needed because the odometry loop updates at 100hz, and the inertial
- * sensors used to only update at 50hz. The DEMA filter did improve
- * the position calculation a small amount, but now the inertial
- * sensor can update at 100hz (maybe more; it's unclear), and the
- * filter is no longer useful.
- */
+     * DEMA is short for Double Exponential Moving Average. It is a method
+     * is a type of filter that smooths data and gives more weight to
+     * more recent values.
+     *
+     * A Simple Moving Average (SMA) takes the mean of a certain number
+     * of values over a specified period of time. An Exponential Moving
+     * Average (EMA) is similar, but it gives more weight to newer values,
+     * so it more closly tracks the actual value. A DEMA is the EMA of
+     * an EMA. More specifically, it is calculated by 2EMA - EMA(EMA),
+     * and it gives even more weight to newer values.
+     *
+     * The DEMAFilter class was originally added as an easy way to improve
+     * the quality of angle measurements from the inertial sensor. It was
+     * needed because the odometry loop updates at 100hz, and the inertial
+     * sensors used to only update at 50hz. The DEMA filter did improve
+     * the position calculation a small amount, but now the inertial
+     * sensor can update at 100hz (maybe more; it's unclear), and the
+     * filter is no longer useful.
+     */
     template <int N> // the DEMA filter can be set to use the previous N values, changing how
                      // significant newer values are
     class DEMAFilter
@@ -234,10 +236,10 @@ namespace util
     };
 
     /* ---------------------- Angle Wrappers ---------------------  /
-    * All of these functions take an angle as an input, and return an
-    * angle fitting into a certain range. For example, wrapDeg(370) would
-    * return 10, and wrapDeg180(200) would return -160
-    */
+     * All of these functions take an angle as an input, and return an
+     * angle fitting into a certain range. For example, wrapDeg(370) would
+     * return 10, and wrapDeg180(200) would return -160
+     */
     double wrapDeg(double iangle);       // [0, 360)
     double wrapDeg180(double iangle);    // [-180, 180)
     double wrapRad(double iangle);       // [0, 2pi)
@@ -249,10 +251,10 @@ namespace util
                       double icheck); // checks if an angle is between 2 others
 
     /* ------------------------- Find Max ------------------------  /
-    * these functions all find the maximum value of a few different types
-    * of inputs. They use templates so they can be used on different types,
-    * and on arrays of different lengths.
-    */
+     * these functions all find the maximum value of a few different types
+     * of inputs. They use templates so they can be used on different types,
+     * and on arrays of different lengths.
+     */
     template <class T, std::size_t N>
     T findMax(const std::array<T, N> &&iarray) // returns the max value in iarray
     {
@@ -291,8 +293,8 @@ namespace util
     }
 
     /* ------------------------- Fitters -------------------------  /
-    * These functions modfify the input to fit in a specified range
-    */
+     * These functions modfify the input to fit in a specified range
+     */
     template <std::size_t N>
     std::array<double, N>
     scaleToFit(double imagnitude,

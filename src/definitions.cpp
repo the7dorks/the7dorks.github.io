@@ -14,16 +14,16 @@ namespace def
   /* ----------------------------------------------------------- */
 
   /* -------------------------- Motors ------------------------- */
-  Motor mtr_dt_left_front(9);
-  Motor mtr_dt_right_front(-13);
-  Motor mtr_dt_right_mid(14);
-  Motor mtr_dt_right_back(-15);
+  Motor mtr_dt_left_front(10);
+  Motor mtr_dt_right_front(-14);
+  Motor mtr_dt_right_mid(13);
+  Motor mtr_dt_right_back(-12);
   Motor mtr_dt_left_back(8);
-  Motor mtr_dt_left_mid(-10);
+  Motor mtr_dt_left_mid(-9);
 
-  Motor mtr_lift(17);
+  Motor mtr_lift(19);
 
-  Motor mtr_intake(16);
+  Motor mtr_intake(18);
 
   /* ------------------------ Pneumatics ----------------------- */
   pros::ADIDigitalOut sol_claw('A');
@@ -32,11 +32,17 @@ namespace def
   /* ------------------------- Sensors ------------------------- */
   ADIEncoder track_encoder_forward({3, 'C', 'D'}, true);
   ADIEncoder track_encoder_side({3, 'A', 'B'}, true);
-  pros::Imu imu1(6);
+  pros::Imu imu1(17);
   pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
-  DistanceSensor distance_claw(2);
+  DistanceSensor distance_claw(6);
+  DistanceSensor distance_eye_front_left(2);
+  DistanceSensor distance_eye_front_right(1);
+
+  DistanceSensor distance_eye_back_left(11);
+  DistanceSensor distance_eye_back_center(21);
+  DistanceSensor distance_eye_back_right(4); // on the left side
 
   /* ----------------------------------------------------------- */
   /*                           Controls                          */

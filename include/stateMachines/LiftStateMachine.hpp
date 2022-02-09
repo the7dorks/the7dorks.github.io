@@ -38,6 +38,8 @@ public:
     static void enablePID();
     static void disablePID();
 
+    static int getGoalLocation(); // 0: center, 1: left, 2: right
+
     static void controlState();                     // update the state based on controller input
     static void update();                           // move the robot based on the state
     static void setLiftAngle(const double itarget); // set the target PID angle for the lift
@@ -48,7 +50,9 @@ private:
     static Motor &mmtr;
     static SolenoidWrapper mclaw;
     static RotationSensor &mrotation;
-    static DistanceSensor &mdistance;
+    static DistanceSensor &mdistClaw;
+    static DistanceSensor &mdistLeft;
+    static DistanceSensor &mdistRight;
 
     /* -------------------------- State -------------------------- */
     static MStates mstate, mlastState;
