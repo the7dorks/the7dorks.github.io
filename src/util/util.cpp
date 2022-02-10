@@ -146,49 +146,57 @@ void odomResetAll() // resets everything having to do with odometry (for "Reset"
     waitForImu(); // waits for the imu
     CustomOdometry::odom_mutex.give();
 }
-bool seekHolder()
+bool seekHolder(bool isSafe)
 {
+    while (def::distance_eye_back_center.get() > def::SET_HOLDER_DISTANCE_MAX_MM || (!isSafe && def::distance_eye_back_center.get() == 0))
+    {
+        switch (HolderStateMachine::getGoalLocation(isSafe))
+        {
+        case 0: // straight
+            if (def::distance_eye_back_center.get() > 300)
+            {
+                Drivetrain::moveArcade(-1, 0);
+            }
+            else
+            {
+                Drivetrain::moveArcade(-0.2, 0);
+            }
+            break;
+        case 1: // left
+            if (def::distance_eye_back_center.get() > 300)
+            {
+                Drivetrain::moveArcade(-1, -0.3);
+            }
+            else if (def::distance_eye_back_center.get() == 0)
+            {
+                Drivetrain::moveArcade(0, -0.5);
+            }
+            else
+            {
+                Drivetrain::moveArcade(-0.2, -0.1);
+            }
+            break;
+        case 2: // right
+            if (def::distance_eye_back_center.get() > 300)
+            {
+                Drivetrain::moveArcade(-1, 0.3);
+            }
+            else if (def::distance_eye_back_center.get() == 0)
+            {
+                Drivetrain::moveArcade(0, 0.5);
+            }
+            else
+            {
+                Drivetrain::moveArcade(-0.2, 0.1);
+            }
+            break;
+        }
+
+        pros::delay(20);
+    }
+    Drivetrain::moveArcade(0, 0);
     if (def::distance_eye_back_center.get() != 0)
     {
-        while (def::distance_eye_back_center.get() > def::SET_HOLDER_DISTANCE_MAX_MM)
-        {
-            switch (HolderStateMachine::getGoalLocation())
-            {
-            case 0: // straight
-                if (def::distance_eye_back_center.get() > 300)
-                {
-                    Drivetrain::moveArcade(-1, 0);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(-0.2, 0);
-                }
-                break;
-            case 1: // left
-                if (def::distance_eye_back_center.get() > 300)
-                {
-                    Drivetrain::moveArcade(-1, -0.3);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(-0.2, -0.1);
-                }
-                break;
-            case 2: // right
-                if (def::distance_eye_back_center.get() > 300)
-                {
-                    Drivetrain::moveArcade(-1, 0.3);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(-0.2, 0.1);
-                }
-                break;
-            }
-
-            pros::delay(20);
-        }
-        Drivetrain::moveArcade(0, 0);
         HolderStateMachine::setState(HOLDER_STATES::closed);
         return true;
     }
@@ -197,50 +205,59 @@ bool seekHolder()
         return false;
     }
 }
-bool seekClaw()
+bool seekClaw(bool isSafe)
 {
+    LiftStateMachine::disengageClaw();
+    while (def::distance_claw.get() > def::SET_LIFT_DISTANCE_MIN_MM || (!isSafe && def::distance_claw.get() == 0))
+    {
+        switch (LiftStateMachine::getGoalLocation())
+        {
+        case 0: // straight
+            if (def::distance_claw.get() > 300)
+            {
+                Drivetrain::moveArcade(1, 0);
+            }
+            else
+            {
+                Drivetrain::moveArcade(0.2, 0);
+            }
+            break;
+        case 1: // left
+            if (def::distance_claw.get() > 300)
+            {
+                Drivetrain::moveArcade(1, -0.3);
+            }
+            else if (def::distance_claw.get() == 0)
+            {
+                Drivetrain::moveArcade(0, -0.5);
+            }
+            else
+            {
+                Drivetrain::moveArcade(0.2, -0.1);
+            }
+            break;
+        case 2: // right
+            if (def::distance_claw.get() > 300)
+            {
+                Drivetrain::moveArcade(1, 0.3);
+            }
+            else if (def::distance_claw.get() == 0)
+            {
+                Drivetrain::moveArcade(0, 0.5);
+            }
+            else
+            {
+                Drivetrain::moveArcade(0.2, 0.1);
+            }
+            break;
+        }
+
+        pros::delay(20);
+    }
+
+    Drivetrain::moveArcade(0, 0);
     if (def::distance_claw.get() != 0)
     {
-        LiftStateMachine::disengageClaw();
-        while (def::distance_claw.get() > def::SET_LIFT_DISTANCE_MIN_MM)
-        {
-            switch (LiftStateMachine::getGoalLocation())
-            {
-            case 0: // straight
-                if (def::distance_claw.get() > 300)
-                {
-                    Drivetrain::moveArcade(1, 0);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(0.2, 0);
-                }
-                break;
-            case 1: // left
-                if (def::distance_claw.get() > 300)
-                {
-                    Drivetrain::moveArcade(1, -0.3);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(0.2, -0.1);
-                }
-                break;
-            case 2: // right
-                if (def::distance_claw.get() > 300)
-                {
-                    Drivetrain::moveArcade(1, 0.3);
-                }
-                else
-                {
-                    Drivetrain::moveArcade(0.2, 0.1);
-                }
-                break;
-            }
-
-            pros::delay(20);
-        }
-        Drivetrain::moveArcade(0, 0);
         LiftStateMachine::engageClaw();
         return true;
     }

@@ -112,13 +112,25 @@ void opcontrol()
         if (down.changedToPressed())
         {
             DrivetrainStateMachine::setState(DT_STATES::busy);
-            seekHolder();
+            seekHolder(true);
+            DrivetrainStateMachine::setState(DT_STATES::manual);
+        }
+        else if (y.changedToPressed())
+        {
+            DrivetrainStateMachine::setState(DT_STATES::busy);
+            seekHolder(false);
             DrivetrainStateMachine::setState(DT_STATES::manual);
         }
         else if (right.changedToPressed())
         {
             DrivetrainStateMachine::setState(DT_STATES::busy);
-            seekClaw();
+            seekClaw(true);
+            DrivetrainStateMachine::setState(DT_STATES::manual);
+        }
+        else if (a.changedToPressed())
+        {
+            DrivetrainStateMachine::setState(DT_STATES::busy);
+            seekClaw(false);
             DrivetrainStateMachine::setState(DT_STATES::manual);
         }
         // if (down.changedToPressed())

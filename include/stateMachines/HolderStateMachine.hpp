@@ -26,7 +26,7 @@ public:
     static void enableControl();
     static void disableControl();
 
-    static int getGoalLocation(); // 0: center, 1: left, 2: right
+    static int getGoalLocation(bool isafe = false); // 0: center, 1: left, 2: right
 
     static void controlState(); // update the state based on controller input
     static void update();       // move the robot based on the state

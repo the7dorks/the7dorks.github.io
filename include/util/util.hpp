@@ -53,8 +53,8 @@ bool waitUntil(
     std::function<bool()> icondition, QTime itimout = 0_ms,
     std::function<void()> iaction = []() {});           // runs code until the condition is true
 double controlAdjust(double iinput, double ipower = 1); // adjusts the curve of the input from the joysticks
-bool seekHolder();                                      // drive the bot to get a mobile goal using the back eyes | returns success
-bool seekClaw();                                        // drive the bot to get a mobile goal using the front eyes | returns success
+bool seekHolder(bool isSafe = false);                   // drive the bot to get a mobile goal using the back eyes | returns success
+bool seekClaw(bool isSafe = false);                     // drive the bot to get a mobile goal using the front eyes | returns success
 
 /* -------------------- OdomDebug Helpers -------------------- */
 void odomSetState(OdomDebug::state_t istate); // sets the state of odometry based on display inputs

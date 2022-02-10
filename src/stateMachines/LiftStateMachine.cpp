@@ -74,24 +74,56 @@ void LiftStateMachine::disablePID()
     mpidEnabled = false;
 }
 
-int LiftStateMachine::getGoalLocation()
+int LiftStateMachine::getGoalLocation(bool isafe)
 {
     setState(LIFT_STATES::bottom);
     const double left = mdistLeft.get();
     const double center = mdistClaw.get();
     const double right = mdistRight.get();
 
-    if ((left != 0 && left < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (right == 0 || right > left)) // if the left sees the edge of the goal, and the right doesn't, go left
+    if (isafe)
     {
-        return 1;
-    }
-    else if ((right != 0 && right < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (left == 0 || left > right)) // if the right sees the edge of the goal and the left doesn't, go right
-    {
-        return 2;
+        if ((left != 0 && left < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (right == 0 || right > left)) // if the left sees the edge of the goal, and the right doesn't, go left
+        {
+            return 1;
+        }
+        else if ((right != 0 && right < center + def::SET_HOLDER_EYES_DISTANCE_DIFF_MAX + 20) && (left == 0 || left > right)) // if the right sees the edge of the goal and the left doesn't, go right
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
     }
     else
     {
-        return 0;
+        if (left == 0)
+        {
+            if (right == 0)
+            {
+                return 0; // center (neither see it)
+            }
+            else
+            {
+                return 2; // right (only right sees it)
+            }
+        }
+        else if (right == 0) // left (only left sees it)
+        {
+            return 1; // left
+        }
+        else
+        {
+            if (left < right)
+            {
+                return 1; // left
+            }
+            else
+            {
+                return 2; // right
+            }
+        }
     }
 }
 
