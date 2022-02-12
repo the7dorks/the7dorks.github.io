@@ -4,7 +4,7 @@ title: "Build Day: Building Drivetrain 1.0.0"
 date: 2021-06-23
 author: "Isaiah Stumme"
 categories: Create
-tags: Drivetrain 1.0.0
+tags: Drivetrain-1.0.0
 ---
 ##### Drivetrain-1.0.0
 Today we followed the CAD and built our first drivetrain
