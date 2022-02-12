@@ -80,11 +80,13 @@ void Auton::runAuton() // runs the selected auton
         Drivetrain::straightToPoint({47_in, -12_in, 0_deg}, cutDrive(1)); // drive towards the goal
         Drivetrain::straightToPoint({-1_in, 5_in, 0_deg}, cutDrive(1));
         Drivetrain::turnToAngle(60_deg, cutDrive(10)); // turn towards alliance goal
-        pros::delay(1000);
-        Drivetrain::straightToPoint(
-            {-5_in, -17_in, 0_deg}, {AsyncAction(22, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(12, makeFunc({ Drivetrain::disable(); }))}, false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-        Drivetrain::setMaxSpeed(1);
-        HolderStateMachine::setState(HOLDER_STATES::closed);
+
+        // pros::delay(1000);
+        // Drivetrain::straightToPoint(
+        //     {-5_in, -17_in, 0_deg}, {AsyncAction(22, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(12, makeFunc({ Drivetrain::disable(); }))}, false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
+        // Drivetrain::setMaxSpeed(1);
+        // HolderStateMachine::setState(HOLDER_STATES::closed);
+        seekHolder(); // EXPERIMENTAL
         Drivetrain::straightToPoint({2_in, 4_in, 0_deg}, cutDrive(1));
         LiftStateMachine::disengageClaw();
         IntakeStateMachine::setState(INTAKE_STATES::in);
@@ -108,9 +110,10 @@ void Auton::runAuton() // runs the selected auton
         Drivetrain::straightToPoint({17_in, 0_in, 0_deg}, cutDrive(1));
         Drivetrain::setMaxSpeed(1);
         Drivetrain::turnToAngle(90_deg, cutDrive(5));
-        Drivetrain::straightToPoint({17_in, -18_in, 0_deg}, {AsyncAction(17, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(9, makeFunc({ Drivetrain::disable(); }))});
-        HolderStateMachine::setState(HOLDER_STATES::closed); // get the alliance goal
-        pros::delay(10);
+        // Drivetrain::straightToPoint({17_in, -18_in, 0_deg}, {AsyncAction(17, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(9, makeFunc({ Drivetrain::disable(); }))});
+        // HolderStateMachine::setState(HOLDER_STATES::closed); // get the alliance goal
+        // pros::delay(10);
+        seekHolder(); // EXPERIMENTAL
         Drivetrain::setMaxSpeed(1);
         pros::delay(10);
         Drivetrain::straightToPoint({17_in, -12_in, 0_deg}, cutDrive(3)); // back up
@@ -166,9 +169,8 @@ void Auton::runAuton() // runs the selected auton
         Drivetrain::setMaxSpeed(1);
         Drivetrain::turnToAngle(180_deg);
         Drivetrain::setMaxSpeed(0.5);
-        Drivetrain::straightToPoint({95_in, 24_in, 0_deg}, cutDrive(1));
-
-        HolderStateMachine::setState(HOLDER_STATES::closed);
+        Drivetrain::straightToPoint({95_in, 24_in, 0_deg}, cutDrive(30));
+        seekHolder(); // EXPERIMENTAL
         pros::delay(500);
         IntakeStateMachine::setState(INTAKE_STATES::in);
         pros::delay(500);

@@ -148,6 +148,7 @@ void odomResetAll() // resets everything having to do with odometry (for "Reset"
 }
 bool seekHolder(bool isSafe)
 {
+    HolderStateMachine::setState(HOLDER_STATES::open);
     while (def::distance_eye_back_center.get() > def::SET_HOLDER_DISTANCE_MAX_MM || (!isSafe && def::distance_eye_back_center.get() == 0))
     {
         switch (HolderStateMachine::getGoalLocation(isSafe))
