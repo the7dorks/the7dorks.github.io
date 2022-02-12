@@ -2,8 +2,8 @@
 layout: post
 title: ""
 date: 2021-12-1
-author: ""
+author: "Noah"
 categories: Management
 tags:
 ---
-Update with entry
+We needed to build a new robot, so we got parts this day.
