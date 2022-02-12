@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Build Day Building Drivetrain 1.0.0"
+title: "Build Day: Building Drivetrain 1.0.0"
 date: 2021-06-23
 author: "Isaiah Stumme"
 categories: Create
