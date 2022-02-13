@@ -21,7 +21,8 @@ To power our pneumatic systems we needed to add pneumatic reservoirs to store pr
 ###### Create
 
 Continuing on our construction from 11/02, we added bracing to the back of the Mobile Goal holder and a gear to attach it to a motor on the robot. This will make the holder sturdier when holding heavy game elements and allow it to rotate and raise the Mobile Goals above the ground.
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211105_195835.jpg">
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211105_195841.jpg"> <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211105_195848.jpg"> <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211105_195835.jpg"> 
 
 
 ###### Test
