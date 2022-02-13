@@ -8,7 +8,7 @@ tags: Intake-X
 ---
 ##### Intakes-Version 
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211207_175753.jpg">
+<img class="responsive-img" width="500" src="/assets/pics/building/robot-3/ringthing!.jpeg">
 
 
 
