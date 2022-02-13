@@ -12,7 +12,7 @@ Now that our robot was able to hold two Mobile Goals at once, we wanted to expan
 We saw that a lot of teams where able to grab 3 Moblie Goals in some way. One team that had lots of documentation about there robot was 60883D. They also had a design that was very easy to modifY to fit our robot and playstyle. We decided on a similer design that would mean we would not have to change anything about our holder and just add onto it. 
 <img class="responsive-img" width="500" src="/assets/pics/research/Screen%20Shot%202022-02-12%20at%206.52.32%20PM.png">
 ###### Create
-We then mounted the desgin to our holder. We only had had a few problems while trying to mount it and soon had our agreed apon desgin on the back of our robot.
+We then mounted the desgin to our holder. We only had had a few problems while trying to mount it and soon had our agreed apon desgin on the back of our robot. It works by the lexan tilting the third Mobile Goal up as we drive into it, then we push the holder down to tilt the third Mobile Goal off the ground. 
 
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211108_180342.jpg"> 
 
