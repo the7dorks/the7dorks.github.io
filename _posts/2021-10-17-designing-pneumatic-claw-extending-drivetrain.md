@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Designing Pneumatic Claw and Extending Drivetrain"
+title: "Build Day:Designing Pneumatic Claw and Extending Drivetrain"
 date: 2021-10-17
 author: "Isaiah Stumme"
 categories: Design Create
