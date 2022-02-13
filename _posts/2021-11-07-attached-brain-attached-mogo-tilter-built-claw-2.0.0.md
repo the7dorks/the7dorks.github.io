@@ -3,7 +3,7 @@ layout: post
 title: "Build Day:Attached brain, attached mogo tilter, and built-claw-2.0.0"
 date: 2021-11-07
 author: "Isaiah Stumme"
-categories: Design Create
+categories: Design Create Test
 tags: Robot-1 Holder-1.0.1 Claw-2.0.0
 ---
 
@@ -32,3 +32,6 @@ We built the claw and discovered that it would be more effective to put a c-chan
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw2.PNG">
 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.PNG">
+
+###### Test
+In our tests we found the claw was much stronger then we predicted and still was able activate many more times then we would need in a match.
