@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Research: 60883D Robot | Build Day: Constructing"
+title: "Research: 60883D Robot | Build Day: Constructing Holder-1.1.0"
 date: 2021-11-08
 author: "Jac Copeland"
-categories: (Research Create )
-tags: (Holder-1.1.0)
+categories: Research Create
+tags: Holder-1.1.0
 ---
 ##### Holder-1.1.0
 Now that our robot was able to hold two Mobile Goals at once, we wanted to expand that to 3. The easiest way to do that would be to modify and add to the back holder of our robot
