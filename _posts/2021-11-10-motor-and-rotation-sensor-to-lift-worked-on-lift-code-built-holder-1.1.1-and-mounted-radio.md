@@ -32,5 +32,12 @@ We also had to add the radio in order to start practicing.
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211110_214425.jpg">
 
 ##### Holder-1.1.1
-holder maybe- 20211110_214438.jpg
-best holder- 20211110_214440.jpg
+
+We had a little trouble lining up Mobile Goals with our grabber on the back. We decided that making something that would line up and then hold the stem of the goal would be the best solution for this.
+
+###### Build
+
+We found the best solution for this was to add two Standoffs to our grabber to guide the Mobile Goals in.
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211110_214440.jpg">
+
