@@ -33,4 +33,5 @@ We built the claw and discovered that it would be more effective to put a c-chan
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.PNG">
 
 ###### Test
+
 In our tests we found the claw was much stronger then we predicted and still was able activate many more times then we would need in a match.
