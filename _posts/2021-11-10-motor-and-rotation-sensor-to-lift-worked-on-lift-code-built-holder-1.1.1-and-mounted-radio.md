@@ -37,7 +37,7 @@ We had a little trouble lining up Mobile Goals with our grabber on the back. We 
 
 ###### Build
 
-We found the best solution for this was to add two Standoffs to our grabber to guide the Mobile Goals in.
+We found the most effective way to do this was to add two Standoffs to our grabber to guide the Mobile Goals in.
 
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211110_214440.jpg">
 
