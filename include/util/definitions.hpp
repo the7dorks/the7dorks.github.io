@@ -43,6 +43,7 @@ namespace def
     /* ------------------------- Sensors ------------------------- */
     extern ADIEncoder track_encoder_forward;
     extern ADIEncoder track_encoder_side;
+    extern ADIEncoder track_encoder_testing;
     extern pros::Imu imu1;
     extern pros::Imu imu2;
 
@@ -109,6 +110,6 @@ namespace def
     const double SET_LIFT_TOP_DEG = 124;
     const double SET_LIFT_DISTANCE_MIN_MM = 35;
 
-    const double SET_HOLDER_DISTANCE_MAX_MM = 30;
+    const double SET_HOLDER_DISTANCE_MAX_MM = 32;
     const double SET_HOLDER_EYES_DISTANCE_DIFF_MAX = 200;
 } // namespace def

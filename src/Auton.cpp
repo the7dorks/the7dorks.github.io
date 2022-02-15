@@ -50,8 +50,7 @@ void Auton::runAuton() // runs the selected auton
     Auton::readSettings();
     Auton::suspendAsyncTask();
 
-    Timer timer = Timer();
-    QTime startTime = timer.millis();
+    mstartTime = mtimer.millis();
 
     waitForImu();
     CustomOdometry::setStateInitial({0_in, 0_in, -def::imu1.get_rotation() * degree});
@@ -69,68 +68,70 @@ void Auton::runAuton() // runs the selected auton
         break;
     case Autons::left:
         Auton::startAsyncTaskWithSettings(
-            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM + 15); }), // if the goal is in range
-            makeFunc({ LiftStateMachine::engageClaw();
-                    pros::delay(50);
-                    Drivetrain::disable();  // stop driving forward
-                    pros::delay(500); 
-                    LiftStateMachine::setState(LIFT_STATES::rings); }));
+            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM - 10); }), // if the goal is in range
+            makeFunc({
+                LiftStateMachine::engageClaw();
+                pros::delay(50);
+                Drivetrain::disable(); // stop driving forward
+                pros::delay(1500);
+                LiftStateMachine::setState(LIFT_STATES::rings);
+            }));
 
         LiftStateMachine::disengageClaw();
+        LiftStateMachine::setState(LIFT_STATES::bottom);
+
         Drivetrain::straightToPoint({47_in, -12_in, 0_deg}, cutDrive(1)); // drive towards the goal
         Drivetrain::straightToPoint({-1_in, 5_in, 0_deg}, cutDrive(1));
         Drivetrain::turnToAngle(60_deg, cutDrive(10)); // turn towards alliance goal
 
-        // pros::delay(1000);
-        // Drivetrain::straightToPoint(
-        //     {-5_in, -17_in, 0_deg}, {AsyncAction(22, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(12, makeFunc({ Drivetrain::disable(); }))}, false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-        // Drivetrain::setMaxSpeed(1);
-        // HolderStateMachine::setState(HOLDER_STATES::closed);
-        seekHolder(); // EXPERIMENTAL
+        seekHolder();
         Drivetrain::straightToPoint({2_in, 4_in, 0_deg}, cutDrive(1));
         LiftStateMachine::disengageClaw();
         IntakeStateMachine::setState(INTAKE_STATES::in);
+        Auton::startTaskAfterDelay(14_s, makeFunc({ HolderStateMachine::setState(HOLDER_STATES::open); }));
+
         Drivetrain::straightToPoint({30_in, -20_in, 0_deg}, {AsyncAction(13, makeFunc({ Drivetrain::setMaxSpeed(0.33); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true);
         Drivetrain::setMaxSpeed(0.5);
         Drivetrain::straightToPoint({30_in, -70_in, 0_deg}, {AsyncAction(38, makeFunc({ Drivetrain::setMaxSpeed(0.25); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))});
         break;
     case Autons::right:
         Auton::startAsyncTaskWithSettings(
-            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM + 15); }), // if the goal is in range
+            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM); }), // if the goal is in range
             makeFunc({ LiftStateMachine::engageClaw();
                     pros::delay(50);
                     Drivetrain::disable();  // stop driving forward
-                    pros::delay(1000); 
-                    LiftStateMachine::setState(LIFT_STATES::top); }));
+                    pros::delay(1500); 
+                    LiftStateMachine::setState(LIFT_STATES::rings); }));
         LiftStateMachine::disengageClaw();
-        Drivetrain::straightToPoint({52_in, 0_in, 0_deg}, {AsyncAction(17, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
+        LiftStateMachine::setState(LIFT_STATES::bottom);
+        Drivetrain::straightToPoint({52_in, 0_in, 0_deg}, cutDrive(2));
 
-        pros::delay(200);
-        Drivetrain::setMaxSpeed(0.75);
-        Drivetrain::straightToPoint({17_in, 0_in, 0_deg}, cutDrive(1));
-        Drivetrain::setMaxSpeed(1);
+        Drivetrain::straightToPoint({17_in, 0_in, 0_deg}, cutDrive(1), false, 6_in, 1.7, PID(0.3, 0.001, 0.8, 3.0, 0.5, 0.00001, 1_ms), PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew(0.05, 0.5));
+
         Drivetrain::turnToAngle(90_deg, cutDrive(5));
         // Drivetrain::straightToPoint({17_in, -18_in, 0_deg}, {AsyncAction(17, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(9, makeFunc({ Drivetrain::disable(); }))});
         // HolderStateMachine::setState(HOLDER_STATES::closed); // get the alliance goal
         // pros::delay(10);
         seekHolder(); // EXPERIMENTAL
-        Drivetrain::setMaxSpeed(1);
+        LiftStateMachine::setState(LIFT_STATES::top);
         pros::delay(10);
         Drivetrain::straightToPoint({17_in, -12_in, 0_deg}, cutDrive(3)); // back up
         Drivetrain::turnToPoint({50_in, -12_in, 0_deg}, cutDrive(5));     // turn to face the row of rings
         IntakeStateMachine::setState(INTAKE_STATES::in);
+        Auton::startTaskAfterDelay(13_s, makeFunc({
+                                       Drivetrain::setMaxSpeed(1);
+                                       Drivetrain::turnToAngle(0_deg, cutDrive(45));
+                                       LiftStateMachine::setState(LIFT_STATES::rings);
+                                       Drivetrain::straightToPoint({8_in, -12_in, 0_deg}, cutDrive(3));
+                                       HolderStateMachine::setState(HOLDER_STATES::open);
+                                       Drivetrain::arcadeFor(0.5, 0, 200);
+                                   }));
         Drivetrain::straightToPoint({50_in, -12_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.35); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true); // drive into the row of rings
         Drivetrain::setMaxSpeed(1);
         Drivetrain::turnToPoint({50_in, -24_in, 0_deg}, cutDrive(5)); // turn to the next row
         Drivetrain::setMaxSpeed(0.35);
         Drivetrain::straightToPoint({50_in, -24_in, 0_deg}, cutDrive(1)); // drive into the next row
 
-        Drivetrain::setMaxSpeed(1);
-        Drivetrain::turnToAngle(0_deg, cutDrive(45));
-        LiftStateMachine::setState(LIFT_STATES::rings);
-        Drivetrain::straightToPoint({8_in, -12_in, 0_deg}, cutDrive(3));
-        HolderStateMachine::setState(HOLDER_STATES::open);
-        Drivetrain::arcadeFor(0.5, 0, 200);
         break;
     case Autons::awp:
         /*
@@ -230,17 +231,18 @@ void Auton::runAuton() // runs the selected auton
         break;
     case Autons::oneNeutral:
         Auton::startAsyncTaskWithSettings(
-            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM + 15); }), // if the goal is in range
-            makeFunc({ LiftStateMachine::engageClaw();
-                    pros::delay(50);
-                    Drivetrain::disable();  // stop driving forward
-                    pros::delay(1000); 
-                    LiftStateMachine::setState(LIFT_STATES::rings); }));
+            makeFunc({ return LiftStateMachine::goalInRange(def::SET_LIFT_DISTANCE_MIN_MM); }), // if the goal is in range
+            makeFunc({
+                LiftStateMachine::engageClaw();
+                pros::delay(50);
+                Drivetrain::disable(); // stop driving forward
+            }));
 
         LiftStateMachine::disengageClaw();
+        LiftStateMachine::setState(LIFT_STATES::bottom);
         Drivetrain::straightToPoint({52_in, 0_in, 0_deg}, cutDrive(2));
 
-        Drivetrain::straightToPoint({10_in, 0_in, 0_deg}, {}, false, 6_in);
+        Drivetrain::straightToPoint({10_in, 0_in, 0_deg}, {}, false, 6_in, 1.7, PID(0.3, 0.001, 0.8, 3.0, 0.5, 0.00001, 1_ms), PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew(0.05, 0.5));
         break;
     case Autons::safeLeft:
         LiftStateMachine::setState(LIFT_STATES::top);
@@ -295,3 +297,27 @@ std::function<bool()> Auton::masyncCondition = []()
 { return false; };
 std::function<void()> Auton::masyncAction;
 pros::Task Auton::masync_task(Auton::async_task_func);
+
+void Auton::startTaskAfterDelay(QTime idelay, std::function<void()> iaction)
+{
+    mdelayAction = iaction;
+    mdelayTime = idelay;
+    mdelay_task.resume();
+}
+void Auton::delay_task_func(void *)
+{
+    while (true)
+    {
+        if (mtimer.millis() - mstartTime > mdelayTime)
+        {
+            mdelayAction();
+            mdelay_task.suspend();
+        }
+        pros::delay(20);
+    }
+}
+std::function<void()> Auton::mdelayAction;
+Timer Auton::mtimer = Timer();
+QTime Auton::mstartTime = 0_ms;
+QTime Auton::mdelayTime = 2_min;
+pros::Task Auton::mdelay_task(Auton::delay_task_func);

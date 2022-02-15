@@ -111,52 +111,19 @@ void opcontrol()
     // {
     //     if (down.changedToPressed())
     //     {
-    //         DrivetrainStateMachine::setState(DT_STATES::busy);
-    //         seekHolder(true);
-    //         DrivetrainStateMachine::setState(DT_STATES::manual);
+    //         LiftStateMachine::setState(LIFT_STATES::bottom);
     //     }
     //     else if (y.changedToPressed())
     //     {
-    //         DrivetrainStateMachine::setState(DT_STATES::busy);
-    //         seekHolder(false);
-    //         DrivetrainStateMachine::setState(DT_STATES::manual);
     //     }
     //     else if (right.changedToPressed())
     //     {
-    //         DrivetrainStateMachine::setState(DT_STATES::busy);
-    //         seekClaw(true);
-    //         DrivetrainStateMachine::setState(DT_STATES::manual);
+    //         LiftStateMachine::setState(LIFT_STATES::top);
     //     }
     //     else if (a.changedToPressed())
     //     {
-    //         DrivetrainStateMachine::setState(DT_STATES::busy);
-    //         seekClaw(false);
-    //         DrivetrainStateMachine::setState(DT_STATES::manual);
     //     }
-    //     // if (down.changedToPressed())
-    //     // {
-    //     //     DrivetrainStateMachine::setState(DT_STATES::busy);
-    //     //     Drivetrain::straightForDistance(1.00_ft, {}, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), Slew(1, 1), PID(0, 0, 0, 0, 5, 5, 1_ms));
-    //     //     DrivetrainStateMachine::setState(DT_STATES::manual);
-    //     // }
-    //     // else if (right.changedToPressed())
-    //     // {
-    //     //     DrivetrainStateMachine::setState(DT_STATES::busy);
-    //     //     Drivetrain::straightForDistance(-1.0_ft, {}, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), Slew(1, 1), PID(0, 0, 0, 0, 5, 5, 1_ms));
-    //     //     DrivetrainStateMachine::setState(DT_STATES::manual);
-    //     // }
-    //     // else if (y.changedToPressed())
-    //     // {
-    //     //     DrivetrainStateMachine::setState(DT_STATES::busy);
-    //     //     Drivetrain::turnToAngle(90_deg, {}, PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-    //     //     DrivetrainStateMachine::setState(DT_STATES::manual);
-    //     // }
-    //     // else if (a.changedToPressed())
-    //     // {
-    //     //     DrivetrainStateMachine::setState(DT_STATES::busy);
-    //     //     Drivetrain::turnToAngle(0_deg, {}, PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-    //     //     DrivetrainStateMachine::setState(DT_STATES::manual);
-    //     // }
+
     //     pros::delay(20);
     // }
 }

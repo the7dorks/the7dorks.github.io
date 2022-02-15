@@ -51,7 +51,7 @@ void LiftStateMachine::disengageClaw()
 
 bool LiftStateMachine::goalInRange(double idistanceMM)
 {
-    return mdistClaw.get() < idistanceMM && mdistClaw.get() > 0;
+    return mdistClaw.get() < idistanceMM + 70 * mdistClaw.getObjectVelocity() && mdistClaw.get() > 0;
 }
 
 void LiftStateMachine::enableControl()
@@ -248,8 +248,8 @@ DistanceSensor &LiftStateMachine::mdistLeft = def::distance_eye_front_left;
 DistanceSensor &LiftStateMachine::mdistRight = def::distance_eye_front_right;
 
 /* -------------------------- State -------------------------- */
-LIFT_STATES LiftStateMachine::mstate = LIFT_STATES::bottom;
-LIFT_STATES LiftStateMachine::mlastState = LIFT_STATES::bottom;
+LIFT_STATES LiftStateMachine::mstate = LIFT_STATES::off;
+LIFT_STATES LiftStateMachine::mlastState = LIFT_STATES::off;
 bool LiftStateMachine::moverrideDistance = false;
 bool LiftStateMachine::mengageClaw = mclaw.isEngaged();
 bool LiftStateMachine::mcontrolEnabled = false;
@@ -263,5 +263,5 @@ ControllerButton &LiftStateMachine::mbtnDown = def::btn_lift_down;
 ControllerButton &LiftStateMachine::mbtnClawToggle = def::btn_claw_toggle;
 
 /* -------------------------- Other -------------------------- */
-PID LiftStateMachine::mpid = PID(0.11, 0.0, 0.13, 0.0, 0.0, 0.0, 500_ms);
+PID LiftStateMachine::mpid = PID(0.06, 0.0, 0.0, 0.0, 0.0, 0.0, 500_ms);
 double LiftStateMachine::holdForceFromAngle(double iangle) { return 0.0; }

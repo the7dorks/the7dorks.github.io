@@ -48,4 +48,12 @@ private:
   static std::function<bool()> masyncCondition;
   static std::function<void()> masyncAction;
   static pros::Task masync_task;
+
+  static void startTaskAfterDelay(QTime idelay, std::function<void()> iaction);
+  static void delay_task_func(void *); // task to execute an action after some time
+  static std::function<void()> mdelayAction;
+  static Timer mtimer;
+  static QTime mstartTime;
+  static QTime mdelayTime;
+  static pros::Task mdelay_task;
 };

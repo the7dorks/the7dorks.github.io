@@ -91,11 +91,11 @@ void HolderStateMachine::controlState()
         else                                   // otherwise,
             setState(HOLDER_STATES::open);     // open it.
     }
-
-    if (mdistCenter.get() < def::SET_HOLDER_DISTANCE_MAX_MM && mdistCenter.get() != 0)
-    {
-        setState(HOLDER_STATES::closed);
-    }
+    // AUTO GRABBER
+    // if (mdistCenter.get() < def::SET_HOLDER_DISTANCE_MAX_MM && mdistCenter.get() != 0)
+    // {
+    //     setState(HOLDER_STATES::closed);
+    // }
 }
 
 void HolderStateMachine::update()

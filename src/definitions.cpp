@@ -32,13 +32,14 @@ namespace def
   /* ------------------------- Sensors ------------------------- */
   ADIEncoder track_encoder_forward({3, 'C', 'D'}, true);
   ADIEncoder track_encoder_side({3, 'A', 'B'}, true);
+  ADIEncoder track_encoder_testing('C', 'D', true);
   pros::Imu imu1(17);
   pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
-  DistanceSensor distance_claw(6);
+  DistanceSensor distance_claw(1); // (6)
   DistanceSensor distance_eye_front_left(2);
-  DistanceSensor distance_eye_front_right(1);
+  DistanceSensor distance_eye_front_right(0); // (1)
 
   DistanceSensor distance_eye_back_left(11);
   DistanceSensor distance_eye_back_center(21);
