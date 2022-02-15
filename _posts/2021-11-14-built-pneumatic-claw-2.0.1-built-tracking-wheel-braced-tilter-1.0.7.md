@@ -9,8 +9,17 @@ tags: Claw-2.0.1 Robot-1 Holder(version)
 
 ##### Robot-1
 
+In order to make our Autonomous more consistent we decided to use tracking wheels and odometry. This allows us to tell where our robot is on the field at all times and be able to tell our robot exact coordinates to go to on the field. 
 
+###### Create
 
+We used a small Omni-Directional Wheel along with a Optical Shaft Encoder in each of our two tracking wheels along with some spacing and c channels. It took a little while to get the spacing right but soon we had near frictionless tracking wheels. 
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155402.jpg">
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155409.jpg">
+
+##### Holder(version)
 
 Pics
 20211114_155222.jpg claw side
