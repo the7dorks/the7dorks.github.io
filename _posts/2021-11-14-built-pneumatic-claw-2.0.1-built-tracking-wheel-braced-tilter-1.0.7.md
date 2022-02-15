@@ -4,8 +4,12 @@ title: "Build Day: Pneumatic Claw 2.0.1, Tracking Wheels, and Braced Holder"
 date: 2021-11-14
 author: "Isaiah Stumme"
 categories: Create Test  
-tags: Claw-2.0.1 Robot-1 Holder___
+tags: Claw-2.0.1 Robot-1 Holder(version)
 --- 
+
+##### Robot-1
+
+
 
 
 Pics
