@@ -8,7 +8,6 @@ tags: Claw-2.0.1 Robot-1 Holder___
 --- 
 
 
-
 Pics
 20211114_155222.jpg claw side
 20211114_155230.jpg grabber
