@@ -21,15 +21,19 @@ Next, we needed a claw to pick up Mobile Goals.
 
 ###### Design
 Using a double acting cylinder, some c-channels, and a simple join we designed our first claw.
+
 <br class="print-only">
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0side.jpg">
+
 <br class="print-only">
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0otherside.jpg">
 
 
 ###### Create
 We then buit the claw and attached it to the four bar lift.
+
 <br class="print-only">
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0onbot.jpg">
+
 <br class="print-only">
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0onbotside.jpg">
