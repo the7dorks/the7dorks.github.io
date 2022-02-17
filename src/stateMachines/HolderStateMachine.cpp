@@ -57,26 +57,26 @@ int HolderStateMachine::getGoalLocation(bool isafe)
         {
             if (right == 0)
             {
-                return 0; // center (neither see it)
+                return 0; // center (neither see anything)
             }
             else
             {
-                return 2; // right (only right sees it)
+                return 2; // right (only right sees something)
             }
         }
-        else if (right == 0) // left (only left sees it)
+        else if (right == 0)
         {
-            return 1; // left
+            return 1; // left (only left sees something)
         }
         else
         {
             if (left < right)
             {
-                return 1; // left
+                return 1; // left (what left sees is closer)
             }
             else
             {
-                return 2; // right
+                return 2; // right (what right sees is closer)
             }
         }
     }
