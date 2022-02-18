@@ -77,7 +77,7 @@ namespace def
     /* ----------------------------------------------------------- */
 
     /* --------------------- Tracking Wheels --------------------- */
-    const QLength TRACK_WHEEL_DIAMETER = 2.838_in;
+    const QLength TRACK_WHEEL_DIAMETER = 2.7815_in;
     const QLength TRACK_WHEEL_CIRCUMFERENCE = TRACK_WHEEL_DIAMETER * M_PI;
     const QLength TRACK_FORWARD_OFFSET = 2.2_in;
     const QLength TRACK_SIDE_OFFSET = 6.05_in;
