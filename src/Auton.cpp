@@ -88,10 +88,11 @@ void Auton::runAuton() // runs the selected auton
         Drivetrain::straightToPoint({2_in, 4_in, 0_deg}, cutDrive(1));
         LiftStateMachine::disengageClaw();
         IntakeStateMachine::setState(INTAKE_STATES::in);
-        Auton::startTaskAfterDelay(14_s, makeFunc({ HolderStateMachine::setState(HOLDER_STATES::open); }));
+        Auton::startTaskAfterDelay(14_s, makeFunc({ HolderStateMachine::setState(HOLDER_STATES::open); 
+        Drivetrain::disable();
+        Drivetrain::arcadeFor(0.3, 0, 200); }));
 
-        Drivetrain::straightToPoint({30_in, -20_in, 0_deg}, {AsyncAction(13, makeFunc({ Drivetrain::setMaxSpeed(0.33); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true);
-        Drivetrain::setMaxSpeed(0.5);
+        Drivetrain::straightToPoint({30_in, -20_in, 0_deg}, {AsyncAction(20, makeFunc({ Drivetrain::setMaxSpeed(0.25); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true);
         Drivetrain::straightToPoint({30_in, -70_in, 0_deg}, {AsyncAction(38, makeFunc({ Drivetrain::setMaxSpeed(0.25); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))});
         break;
     case Autons::right:
@@ -115,72 +116,49 @@ void Auton::runAuton() // runs the selected auton
         seekHolder(); // EXPERIMENTAL
         LiftStateMachine::setState(LIFT_STATES::top);
         pros::delay(10);
-        Drivetrain::straightToPoint({17_in, -12_in, 0_deg}, cutDrive(3)); // back up
-        Drivetrain::turnToPoint({50_in, -12_in, 0_deg}, cutDrive(5));     // turn to face the row of rings
+        Drivetrain::straightToPoint({17_in, -10_in, 0_deg}, cutDrive(3)); // back up
+        Drivetrain::turnToPoint({50_in, -10_in, 0_deg}, cutDrive(5));     // turn to face the row of rings
         IntakeStateMachine::setState(INTAKE_STATES::in);
         Auton::startTaskAfterDelay(13_s, makeFunc({
                                        Drivetrain::setMaxSpeed(1);
                                        Drivetrain::turnToAngle(0_deg, cutDrive(45));
-                                       LiftStateMachine::setState(LIFT_STATES::rings);
                                        Drivetrain::straightToPoint({8_in, -12_in, 0_deg}, cutDrive(3));
+                                       LiftStateMachine::setState(LIFT_STATES::rings);
                                        HolderStateMachine::setState(HOLDER_STATES::open);
                                        Drivetrain::arcadeFor(0.5, 0, 200);
                                    }));
-        Drivetrain::straightToPoint({50_in, -12_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.35); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true); // drive into the row of rings
+        Drivetrain::straightToPoint({50_in, -10_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.25); })), AsyncAction(3, makeFunc({ Drivetrain::disable(); }))}, true); // drive into the row of rings
         Drivetrain::setMaxSpeed(1);
         Drivetrain::turnToPoint({50_in, -24_in, 0_deg}, cutDrive(5)); // turn to the next row
-        Drivetrain::setMaxSpeed(0.35);
+        Drivetrain::setMaxSpeed(0.25);
         Drivetrain::straightToPoint({50_in, -24_in, 0_deg}, cutDrive(1)); // drive into the next row
 
         break;
     case Autons::awp:
-        /*
-            // drop rings in the first alliance goal
-            LiftStateMachine::setState(LIFT_STATES::top);
-            pros::delay(600);
-            LiftStateMachine::disengageClaw();
-            pros::delay(100);
-
-            // drive up to second alliance goal
-            Drivetrain::straightToPoint({-3_in, 17_in, 0_deg}, cutDrive(6));
-            LiftStateMachine::setState(LIFT_STATES::bottom);
-            // Drivetrain::straightToPoint({75_in, 24_in, 0_deg}, {AsyncAction(35, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
-            LiftStateMachine::setState(LIFT_STATES::rings);
-            Drivetrain::straightToPoint({90_in, 23_in, 0_deg}, {AsyncAction(16, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
-            Drivetrain::setMaxSpeed(1);
-            HolderStateMachine::setState(HOLDER_STATES::closed);
-
-            IntakeStateMachine::setState(INTAKE_STATES::in);
-
-            Drivetrain::straightToPoint({93_in, 60_in, 0_deg}, {AsyncAction(28, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))}, true);
-            Drivetrain::setMaxSpeed(1);
-            Drivetrain::straightToPoint({100_in, 20_in, 0_deg}, cutDrive(3));
-            HolderStateMachine::setState(HOLDER_STATES::open); // back up with 14 seconds left
-            */
         LiftStateMachine::setState(LIFT_STATES::top);
         pros::delay(300);
         LiftStateMachine::disengageClaw();
         pros::delay(100);
 
         LiftStateMachine::setState(LIFT_STATES::bottom);
-        Drivetrain::turnToPoint({14_in, 22_in, 0_deg}, cutDrive(5));
-        Drivetrain::straightToPoint({14_in, 22_in, 0_deg}, cutDrive(3));
-        Drivetrain::straightToPoint({72_in, 22_in, 0_deg}, {AsyncAction(45, makeFunc({ Drivetrain::setMaxSpeed(1); })), AsyncAction(25, makeFunc({ Drivetrain::disable(); }))});
-        Drivetrain::straightToPoint({76_in, 40_in, 0_deg}, cutDrive(8));
+        Drivetrain::turnToPoint({15_in, 18_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({15_in, 18_in, 0_deg}, cutDrive(1));
+        Drivetrain::turnToPoint({73_in, 20_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({73_in, 20_in, 0_deg}, {AsyncAction(45, makeFunc({ Drivetrain::setMaxSpeed(1); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))});
         pros::delay(200);
-        // Drivetrain::setMaxSpeed(1);
-        Drivetrain::turnToAngle(135_deg);
-        // Drivetrain::straightToPoint({95_in, 24_in, 0_deg}, cutDrive(30));
-        seekHolder(); // EXPERIMENTAL
+        Drivetrain::setMaxSpeed(1);
+        Drivetrain::turnToAngle(180_deg);
+
+        seekHolder();
         pros::delay(500);
         IntakeStateMachine::setState(INTAKE_STATES::in);
         pros::delay(500);
-
-        Drivetrain::straightToPoint({65_in, 26_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({65_in, 23_in, 0_deg}, cutDrive(3));
         HolderStateMachine::setState(HOLDER_STATES::open);
         pros::delay(500);
-        Drivetrain::turnToPoint({13_in, 63_in, 0_deg});
-        Drivetrain::straightToPoint({13_in, 63_in, 0_deg}, cutDrive(30));
+        Drivetrain::straightToPoint({15_in, 23_in, 0_deg}, cutDrive(1));
+        Drivetrain::turnToPoint({15_in, 63_in, 0_deg});
+        Drivetrain::straightToPoint({15_in, 63_in, 0_deg}, cutDrive(30));
         if (def::distance_claw.get() < 600)
         {
             seekClaw();
@@ -190,6 +168,33 @@ void Auton::runAuton() // runs the selected auton
         {
             Drivetrain::turnToAngle(90_deg);
         }
+
+        // LiftStateMachine::setState(LIFT_STATES::bottom);
+        // Drivetrain::turnToPoint({14_in, 22_in, 0_deg}, cutDrive(5));
+        // Drivetrain::straightToPoint({14_in, 22_in, 0_deg}, cutDrive(3));
+        // Drivetrain::straightToPoint({72_in, 22_in, 0_deg}, {AsyncAction(45, makeFunc({ Drivetrain::setMaxSpeed(1); })), AsyncAction(25, makeFunc({ Drivetrain::disable(); }))});
+        // Drivetrain::straightToPoint({76_in, 40_in, 0_deg}, cutDrive(8));
+        // pros::delay(200);
+        // Drivetrain::turnToAngle(135_deg);
+        // seekHolder();
+        // pros::delay(500);
+        // IntakeStateMachine::setState(INTAKE_STATES::in);
+        // pros::delay(500);
+
+        // Drivetrain::straightToPoint({65_in, 26_in, 0_deg}, cutDrive(3));
+        // HolderStateMachine::setState(HOLDER_STATES::open);
+        // pros::delay(500);
+        // Drivetrain::turnToPoint({13_in, 63_in, 0_deg});
+        // Drivetrain::straightToPoint({13_in, 63_in, 0_deg}, cutDrive(30));
+        // if (def::distance_claw.get() < 600)
+        // {
+        //     seekClaw();
+        //     Drivetrain::straightToPoint({12_in, 25_in, 0_deg});
+        // }
+        // else
+        // {
+        //     Drivetrain::turnToAngle(90_deg);
+        // }
         break;
     case Autons::awp1N:
         LiftStateMachine::setState(LIFT_STATES::top);
