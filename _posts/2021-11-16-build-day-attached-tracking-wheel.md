@@ -15,7 +15,7 @@ Added the two tracking wheels to the bottom of the robot.
 
 ###### Test
 
-We realized after added the lexon to the holder in order to carry a 3rd Mobile Goal, the goal had a hard time going into the holder without help from the wall.
+We realized after adding the lexon to the holder in order to carry a 3rd Mobile Goal, the goal had a hard time going into the holder without help from the wall.
 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/HolderNotWorking.PNG">
 
