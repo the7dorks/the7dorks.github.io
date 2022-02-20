@@ -4,7 +4,7 @@ title: "Build Day: Pneumatic Claw 2.0.1, Tracking Wheels, and Braced Holder"
 date: 2021-11-14
 author: "Isaiah Stumme"
 categories: Create Test  
-tags: Claw-2.0.1 Robot-1 Holder(version)
+tags: Claw-2.0.1 Robot-1 Holder-1.1.2
 --- 
 
 ##### Robot-1
@@ -19,7 +19,7 @@ We used a small Omni-Directional Wheel along with a Optical Shaft Encoder in eac
 
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155409.jpg">
 
-##### Holder(version)
+##### Holder-1.1.2
 
 Pics
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155222.jpg"> claw side
