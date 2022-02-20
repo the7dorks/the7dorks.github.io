@@ -2,9 +2,31 @@
 layout: post
 title: "Brainstorming: Chosing a Gear Ratio"
 date: 2021-11-25
-author: ""
+author: "Isaiah"
 categories: Design
-tags:
+tags: DriveTrain-2.0.0
 ---
+ 
+##### DriveTrain-2.0.0
+Today we decided to plan out our drivetrain for our next robot. 
 
-Update with Entree
+###### Design
+Today we started planning drivetrain gear ratios. We decided to disregard chain, because chain can break, and it introduces additional friction and slop. Then a member from 333B made an acceleration simulation to calculate which ratio would be the fastest at rushing the mobile goals in the middle, by using information about the torque curves of V5 motors and assuming the robot weighs 15 pounds. Here are all our considerations:
+
+- 600rpm, 7:3, 4"         @ 4.49 ft/s    <--- 333A now
+- 600rpm, 5:3, 3.25"    @ 5.11 ft/s      <--- 355V now, 333A CU State bot; this worked for us with 4 motors, so with 6 we could def do a faster ratio
+- 100rpm, 1:3, 4"           @ 5.24 ft/s
+- 200rpm, 1:2*, 3.25"  @ 5.67 ft/s    <--- 333A CU pushbot (I think)
+- 200rpm, 3:5, 4"         @ 5.82 ft/s
+- 100rpm, 1:5, 2.75"     @ 6.00 ft/s
+- 600rpm, 5:3, 4"         @6.28 ft/s
+
+- For 600rpm with a 7:3 ratio on 4in wheels:      2.424366106925306s for goal rush
+- For 600rpm with a 5:3 ratio on 3.25in wheels:   2.585674822114004s for goal rush
+- For 100rpm with a 1:3 ratio on 4in wheels:      2.6186146828319083s for goal rush
+- For 200rpm with a 1:2 ratio on 3.25in wheels:   2.7255405754769875s for goal rush
+- For 200rpm with a 3:5 ratio on 4in wheels:      2.760262237369417s for goal rush
+- For 100rpm with a 1:5 ratio on 2.75in wheels:   2.8030595529069404s for goal rush
+- For 600rpm with a 5:3 ratio on 4in wheels:      2.868548662402545s for goal rush
+
+Given this data, we decided on the second one: 600rpm motor with a 5:3 ratio on 3.25” wheels. While this is not the theoretical fastest ratio, it would be faster for longer distances, because it has a higher top speed. Additionally, 3.25” wheels have screw holes, so we could attach the gear to the wheels, and have the whole wheel assembly be on a screw joint instead of a shaft, because screw joints are more sturdy and have less friction. This ratio also has the added benefit of using 600rpm motor cartridges, which have less slop.
