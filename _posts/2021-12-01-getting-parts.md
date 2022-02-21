@@ -6,4 +6,4 @@ author: "Noah"
 categories: Management
 tags: Create
 ---
-We needed to build a new robot, so we got parts this day.
+We needed to start building the new robot 2nd, so we got parts today.
