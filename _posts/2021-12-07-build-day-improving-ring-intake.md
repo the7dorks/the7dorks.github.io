@@ -3,7 +3,7 @@ layout: post
 title: "Build Day: Improving Ring Intaking"
 date: 2021-12-7
 author: "Isaiah"
-categories: Create Test Reflect
+categories: Create Test
 tags: Conveyor-2.0.2 Conveyor-2.1.0
 ---
 
