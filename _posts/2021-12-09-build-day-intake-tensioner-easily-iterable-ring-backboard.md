@@ -15,8 +15,7 @@ Once again we needed a way to minimize the deadzone of our ring intake.
 
 Added another tensioner next to the other to get rid of the remaining deadzone while intaking rings.
 
-
-Another.jpg
+<img class="responsive-img" width="500" src="/assets/pics/building/robot-2/Another.jpg">
 
 ###### Test 
 
@@ -24,4 +23,10 @@ It is able to collect rings from any angle and works as we hoped.
 
 ##### Conveyor-2.1.2 
 
-fffffffffffffffffffffffin tmr
+###### Create
+
+Also replaced the lexan shroud that we had before with c channels. This means they are easier to fine tune and change on the fly.
+
+<img class="responsive-img" width="500" src="/assets/pics/building/robot-2/CS.jpg">
+
+
