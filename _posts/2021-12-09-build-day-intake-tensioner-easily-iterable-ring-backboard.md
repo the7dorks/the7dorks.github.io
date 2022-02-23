@@ -29,4 +29,7 @@ Also replaced the lexan shroud that we had before with c channels. This means th
 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-2/CS.jpg">
 
+###### Test
+To test this design, we turned on the intakes and fed rings into the bottom in "random" positions. <mark>It successfully scored 7/20 Rings</mark>, which is okay, but we will work on improving it in the future.
+
 
