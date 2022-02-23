@@ -30,4 +30,4 @@ Here is the tesing version of the holder that we made to see how it would prefor
 
 ###### Reflect
 
-It worked as well as we could have hoped. The issue of releasing the mobile goal still exists, but otherwise, this design seems like it will work.
+<mark>It worked as well as we could have hoped.</mark> The issue of releasing the mobile goal still exists, but otherwise, this design seems like it will work.
