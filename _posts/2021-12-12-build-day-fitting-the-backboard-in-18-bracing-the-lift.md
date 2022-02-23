@@ -24,7 +24,7 @@ tags: Conveyor-2.1.4 Conveyor-2.0.2
 
 ###### Test 
 
-After the changes to the ring intake to make it fit in 18, it fails most of the time :(
+After the changes to the ring intake to make it fit in 18, it fails most of the time. 13/30 Rings were scored on the branch.
 
 
 ##### Conveyor-2.1.5
