@@ -31,7 +31,7 @@ Today we  analyzed 9181W’s programming skills video and got several ideas for 
 - Here is an example of a 4 motor drivetrain differential from the Apex Alliance: 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/ExsampleOfBot.png">
 
-- This might not be the best, because it can only move either the drivetrain or Mobile Goal holder, but not both at once, which could make our robot slower. After doing some research, we discovered that it also might not work with 6 motors, which is the whole point.
+- This might not be the best, because it can only move either the drivetrain or Mobile Goal holder, but not both at once, which could make our robot slower. After doing some research, we discovered that it also might not work with 6 motors, so this differential is not the solution for motor sharing.
 
 - Using an example from this video, it would be possible to make a differential that allows the robot to both drive and power the Mobile Goal holder at the same time, just a little slower for each. https://www.youtube.com/watch?v=2NL3bhBeIWk&start=230
 - Ultimately, using any sort of differential is promising, but potentially very complicated, which we need to avoid, because additional complexity makes robots harder to build, and less likely to work as consistently.
@@ -39,4 +39,4 @@ Today we  analyzed 9181W’s programming skills video and got several ideas for 
 
 ###### Mobile Goal Holder Research and Brainstorming
 
-We could make the Mobile Goal holder be powered by pneumatics. Adding more pneumatics might make us run out of air, but this was not at all an issue for our last robot, and we will likely only actuate the pneumatics a few times per match. Because this is the simplest, and least finicky, we are choosing to go with this pneumatic holder design (at least until we test it).
+We could make the Mobile Goal holder be powered by pneumatics. Adding more pneumatics might make us run out of air, but this was not at all an issue for our last robot, and we will likely only actuate the pneumatics a few times per match. Because this is the simplest to design and build, we are choosing to go with this pneumatic holder design (at least until we test it).
