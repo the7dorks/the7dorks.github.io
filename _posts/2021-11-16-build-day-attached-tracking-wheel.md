@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Build Day:Attached Tracking Wheel and Imporved Holder"
+title: "Build Day: Attached Tracking Wheel and Imporved Holder"
 date: 2021-11-16
 author: "Lukas"
 categories: Create Test
@@ -21,7 +21,7 @@ We realized after adding the lexon to the holder in order to carry a 3rd Mobile 
 
 ###### Create
 
-Fixed problem with holder.
+We fixed the provblem with the holder with standoffs.
 
 
 
