@@ -2,9 +2,22 @@
 layout: post
 title: "CADding: The New Drivetrain"
 date: 2021-11-26
-author: ""
-categories: Design
-tags:
+author: "Isaiah"
+categories: Design 
+tags: DriveTrain-2.0.0
 ---
+##### DriveTrain-2.0.0
 
-Update with entree
+Now that we had all the data about the best drivetrain for our robot we decided we should design it in 3d design software. 
+
+###### Design
+
+Here is the design that we decided on:
+
+<img class="responsive-img" style="vertical-align:top" width="49%" src="/assets/pics/building/robot-2/1x3x1_6m_drivetrain_centered_motors.png">
+
+Here is the gear ratio in closer detail in the CAD:
+
+<img class="responsive-img" style="vertical-align:top" width="49%" src="/assets/pics/building/robot-2/cadoftrain.png">
+
+This design is meant to be as thin as possible to allow us the maximum amount of space for subsystems. The motors are all together in the middle of the drivetrain and out of the way. Screw joints are used whenever possible to reduce friction and extra bracing is added to these joints whenever possible to reduce rubbing and increase strength and resiliancy. Reducing friction will help increase speed and allow the robot to drive straighter improving consistency.
