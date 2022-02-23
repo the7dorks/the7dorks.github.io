@@ -8,7 +8,7 @@ tags: DriveTrain-2.0.0
 ---
 ##### DriveTrain-2.0.0
 
-Now that we had all the data about the best drivetrain for our team we decided we should design it in 3d software. 
+Now that we had all the data about the best drivetrain for our robot we decided we should design it in 3d design software. 
 
 ###### Design
 
