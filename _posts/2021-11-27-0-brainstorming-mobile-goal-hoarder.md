@@ -8,7 +8,8 @@ tags: Holder-2.0.0
 ---
 
 ##### Holder-2.0.0
-We also wanted to build and design a new holder for the back of our robot.
+- <mark>Based on our decision in "Research: Looking at More Recent Robots | Brainstorming: New Robot?" on 11/22/2021, we need some sort of ring intaking conveyor.</mark>
+- We also want to make it use as little air as possible, to save more clamping strength for the claw.
 
 ###### Design
 
@@ -17,7 +18,7 @@ We also wanted to build and design a new holder for the back of our robot.
 <img class="responsive-img" width="49%" src="/assets/pics/building/robot-2/HolderConfig.png">
 
 
- - Actually implementing pneumatics to make this happen:
+- Actually implementing pneumatics to make this happen:
 
 
     - Lever: overly complicated
