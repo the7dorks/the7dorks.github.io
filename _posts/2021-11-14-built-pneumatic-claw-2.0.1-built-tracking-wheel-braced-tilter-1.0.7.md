@@ -2,7 +2,7 @@
 layout: post
 title: "Build Day: Pneumatic Claw 2.0.1, Tracking Wheels, and Braced Holder"
 date: 2021-11-14
-author: "Isaiah Stumme"
+author: "Isaiah Stumme and Porter Shawver"
 categories: Create Test  
 tags: Claw-2.0.1 Robot-1 Holder-1.1.2
 --- 
@@ -19,29 +19,30 @@ We used a small Omni-Directional Wheel along with a Optical Shaft Encoder in eac
 
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155409.jpg">
 
+##### Claw 2.0.1
+The pneumatics pull the claw in, clamping onto the goal:
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155222.jpg">
+     
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155230.jpg">
+
+###### Create
+We also added a distance sensor so that the robot can see when a goal is close enough in the claw to be grabbed. This will be helpful for grabbing at the right time in autonomous:
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155310.jpg">
+
+Now we also use pressure limiters to decrease the amount of compressed air used on each actuation so that we can have more total actuations:
+
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155424.jpg">
+
 ##### Holder-1.1.2
 
-Pics
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155222.jpg"> claw side
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155230.jpg"> grabber
+###### Create
+We added more bracing to the holder.
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155256.jpg"> claw behind
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155310.jpg"> claw sensor
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155327.jpg">
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155325.jpg"> grabber gears and stuff
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155327.jpg"> back
+<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155348.jpg">
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155348.jpg"> grabber mechanisum
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155338.jpg"> grabber inside
-
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155402.jpg"> tracking wheel
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155409.jpg"> tracking wheel top
-
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155917.jpg"> botom of bot
-     
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211114_155424.jpg"> pnumatics
+###### Test
+Without the motors attached, it seems much more sturdy than before.
