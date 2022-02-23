@@ -13,7 +13,7 @@ We decided to add the Brian to the robot.
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/BrainPlacement.PNG">
 
 ##### Holder-1.0.1
-We also attached the Mobile Goal holder to the back of our robot. This allows us to grab two goals at once. It also opens up the possibility of parking on the platform with two Moblie Goals and a robot. 
+We also attached the Mobile Goal holder to the back of our robot. This allows us to grab two goals at once. It also opens up the possibility of parking on the platform with two Mobile Goals and a robot. 
 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/HolderAttached.PNG">
 
@@ -29,7 +29,6 @@ We wanted a claw that was more reliable and applied more force to the Mobile Goa
 ###### Create
 We built the claw and discovered that it would be more effective to put a c-channel under the claw to help more firmly grip Mobile Goals and hold them in place. Then we attached the claw to the bot and mounted it onto the end of our lift and added some structure to firmly hold the claw in place. 
 
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw2.PNG"><br>
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.PNG">
 
 ###### Test

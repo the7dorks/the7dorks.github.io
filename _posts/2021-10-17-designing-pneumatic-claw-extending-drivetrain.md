@@ -16,24 +16,28 @@ Acting on our decision from August 16, we began modifying our previous design to
 ###### Create
 We extended our drivetrain and added unpowered wheels to give the robot a wider base and improve balance when holding Mobile Goals.
 
+###### Test
+These wheels can spin freely for at least 20 seconds in our testing, which is a very minimal amount of friction. They are mounted sturdily, and the robot is much less tippy. This achieves our design goals just as we wanted.
+
 ##### Claw-1.0.0
 Next, we needed a claw to pick up Mobile Goals.
 
 ###### Design
 Using a double acting cylinder, some c-channels, and a simple join we designed our first claw.
 
-<br class="print-only">
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0side.jpg">
+<img class="responsive-img" width="250" src="/assets/pics/building/robot-1/claw1.0.0side.jpg">
 
-<br class="print-only">
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0otherside.jpg">
+<img class="responsive-img" width="250" src="/assets/pics/building/robot-1/claw1.0.0otherside.jpg">
 
 
 ###### Create
-We then buit the claw and attached it to the four bar lift.
+We then built the claw and attached it to the four bar lift.
 
 <br class="print-only">
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0onbot.jpg">
-
 <br class="print-only">
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-1/claw1.0.0onbotside.jpg">
+<img class="responsive-img" width="250" src="/assets/pics/building/robot-1/claw1.0.0onbot.jpg">
+
+<img class="responsive-img" width="300" src="/assets/pics/building/robot-1/claw1.0.0onbotside.jpg">
+
+###### Test
+It can hold onto Mobile Goals, but not very tightly. We will probably want to improve this in the future.
