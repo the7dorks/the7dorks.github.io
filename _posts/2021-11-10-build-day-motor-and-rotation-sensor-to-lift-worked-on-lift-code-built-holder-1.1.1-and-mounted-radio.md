@@ -16,6 +16,7 @@ We now wanted to try to test and practice driving with our robot. To do this we 
 - We mounted a Rotational Sensor to the lift, allowing us to know its position at all times.
 - Worked on new code for the lift using the Rotational Sensor.
 - Added a triangle of rubber bands to the lift to help counteract gravity's uneven pull on the lift. Because torque is given by r\*f\*sin(theta), the torque due to gravity acting on the lift changes as the lift changes height. The triangle banding creates a nonlinear torque that oppositely matches the force of gravity. This is a trick we picked up in Tower Takeover.  
+
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211110_214504.jpg">
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211110_214457.jpg">
 
