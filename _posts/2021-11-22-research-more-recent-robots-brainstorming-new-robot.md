@@ -13,7 +13,7 @@ We shared the github repository that this notebook is hosted in with 333B to mak
 ###### 9181W Skills Video
 Today we  analyzed 9181W’s programming skills video and got several ideas for designs to explore. The first is to use a combination of standoffs and zipties to hold a Mobile Goal in the robot shown below. This could prove useful for a more efficient Mobile Goal holder.
 
-<img class="responsive-img" width="600" src="/assets/pics/building/robot-2/Screenshot_20220217-083437_Photos.jpg">
+<img class="responsive-img" width="600" src="/assets/pics/Photos-001/22112021-9181robot.png">
 
 
 - The lift on this robot sticks out a lot farther than ours does which allows them to stick farther over the lip of the Platform and elevate Mobile Goals much more quickly.
