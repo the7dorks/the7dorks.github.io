@@ -6,6 +6,35 @@ author: "Jac Copeland"
 categories: Analyze Research Design
 tags:
 ---
+
+##### Robot Design Determination
+###### Analyze
+We decided to approach this robot with the intention of scoring more points, more efficiently. To start we determined that rings were going to be at the center of our design process because rings accompanied mobile goals hold more scoring potential than mobile goals alone. 
+
+This chart displays the thought that went into the scoring potential of various robot designs. 
+
+
+| Scoring *non-objective scores are on a 1-4 scale, 4 being best 1 being worst* | 3 mobile goal robot                     | 2 mobile goal ring robot                |
+|-------------------------------------------------------------------------------|-----------------------------------------|-----------------------------------------|
+| **Max skills score:                                                           | Driver: 310 Programming: 310 Total: 620 | Driver: 370 Programming: 370 Total: 740 |
+| ***Autonomous potential score                                                 | 2                                       | 4                                       |
+| ****Driver potential score                                                    | 3                                       | 4                                       |
+| Overall judgement                                                             |                                         | Winner                                  |
+
+
+**Note: Skills scores are assumed maximums in both driver and programming. The robot with the 2 mobile goal would have to have scored 10 rings on 2 alliance goals as well as elevating all 7 goals and parking in order to reach a score of 370 for each field. This is fairly unrealistic, but comparatively to the 310 point cap that a mobile goal only robot has, it is more wise to construct a robot with better scoring potential in skills.
+__________________________
+
+***Note: The autonomous potential score is judged on a robot's ability to score during the 15 second autonomous period at the beginning of every match. A "3 mobile goal robot" can only, in the best case, score a total of 60 points by moving each of the yellow neutral goals to the robot's scoring zone. Due to the fact that robots cannot score additional points by elevating goals during the autonomous period, it is more effective and reliable to score a combination of mobile goals and rings during the autonomous period. Also unrealistic, the potential for scoring of a "2 mobile goal ring robot" during the autonomous period would be 120 if 10 rings were scored on both alliance goals and all neutral goals were brought to the alliance's scoring zone. This is an unrealistic act to perform during the autonomous period due to the 15 second time limitation, however, due to the necessity of ring interaction to gain the Win Point within autonomous as well as the overall scoring capability of scoring rings as well as getting a neutral goal, makes the overall autonomous potential with a "2 mobile goal ring robot" far greater than that of a "3 mobile goal robot." Because of this, the alliance can gain an advantage with win points, autonomous points, and the autonomous bonus. 
+
+___________________________
+
+****Note: The driver potential score is judged on a robot’s ability to score during the 1:45 driver control period. With a robot that can do more, more scoring is possible. By adding ring capabilities the “2 mobile goal ring robot” can interact and score more game elements than the “3 mobile goal robot” making it have a higher scoring potential and a more versatile robot overall earning it the higher score on the rubric.
+
+___________________________
+
+#### After deciding which robot we wanted to approach, we began the design process.
+
 ##### Design
 We shared the github repository that this notebook is hosted in with 333B to make it easier for us to share CAD designs, because sharing with Inventor is difficult otherwise.
 
