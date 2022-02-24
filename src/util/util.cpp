@@ -211,7 +211,7 @@ bool seekClaw(bool isSafe)
     LiftStateMachine::disengageClaw();
     while (def::distance_claw.get() > def::SET_LIFT_DISTANCE_MIN_MM || (!isSafe && def::distance_claw.get() == 0))
     {
-        switch (LiftStateMachine::getGoalLocation())
+        switch (LiftStateMachine::getGoalLocation(isSafe))
         {
         case 0: // straight
             if (def::distance_claw.get() > 300)
@@ -267,6 +267,30 @@ bool seekClaw(bool isSafe)
         return false;
     }
 }
+void placeGoal(QTime pause, QTime timeout)
+{
+    LiftStateMachine::setState(LIFT_STATES::platform);
+    waitUntil(makeFunc({ return LiftStateMachine::getAngle() < def::SET_LIFT_PLATFORM_DEG + 4; }), timeout);
+    pros::delay(pause.convert(millisecond));
+    LiftStateMachine::disengageClaw();
+    Drivetrain::moveArcade(-0.3, 0);
+    pros::delay(180);
+    LiftStateMachine::setState(LIFT_STATES::top);
+    pros::delay(150);
+    Drivetrain::moveArcade(0, 0);
+}
+void park()
+{
+    double rollStart = def::imu2.get_roll();
+    LiftStateMachine::setState(LIFT_STATES::drag);
+    waitUntil(makeFunc({ return LiftStateMachine::getAngle() < def::SET_LIFT_RINGS_DEG; }));
+    Drivetrain::moveArcade(1, 0);
+    waitUntil(makeFunc({ return def::imu2.get_roll() - rollStart > 10; }));
+    pros::delay(500);
+    waitUntil(makeFunc({ return def::imu2.get_roll() - rollStart < 22; }));
+    // Drivetrain::arcadeFor(-1, 0, 300);
+    Drivetrain::straightToPoint({CustomOdometry::getX() - cos(CustomOdometry::getTheta()) * inch * 1.5, CustomOdometry::getY() - sin(CustomOdometry::getTheta()) * inch * 1.5, CustomOdometry::getTheta()});
+}
 
 /* ---------------------- Task Functions --------------------- */
 void display_task_func() // display task to be run independently
@@ -276,7 +300,7 @@ void display_task_func() // display task to be run independently
         def::display.setOdomData(); // update the odometry information
 
         // room for any other miscellaneous debugging
-        def::display.setMiscData(1, "Left Eye: " + std::to_string(def::distance_eye_front_left.get()) + "\nCenter Eye: " + std::to_string(def::distance_claw.get()) + "\nRight Eye: " + std::to_string(def::distance_eye_front_right.get()));
+        def::display.setMiscData(1, "Left Eye: " + std::to_string(def::distance_eye_front_left.get()) + "\nCenter Eye: " + std::to_string(def::distance_claw.get()) + "\nRight Eye: " + std::to_string(def::distance_eye_front_right.get()) + "\npitch: " + std::to_string(def::imu2.get_roll()));
         // def::display.setMiscData(2, "Confidence: " + std::to_string(def::distance_eye_back_left.getConfidence()) + "\nConfidence: " + std::to_string(def::distance_eye_back_center.getConfidence()) + "\nConfidence: " + std::to_string(def::distance_eye_back_right.getConfidence()));
 
         // sets the chart to show motor velocites (in RPM) when in the range 150-250

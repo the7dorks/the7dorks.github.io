@@ -218,12 +218,12 @@ void Drivetrain::checkNextAsync(
  */
 void Drivetrain::lock()
 {
-    mmtrLeftFront.setBrakeMode(AbstractMotor::brakeMode::brake);
-    mmtrRightFront.setBrakeMode(AbstractMotor::brakeMode::brake);
-    mmtrRightMid.setBrakeMode(AbstractMotor::brakeMode::brake);
-    mmtrRightBack.setBrakeMode(AbstractMotor::brakeMode::brake);
-    mmtrLeftBack.setBrakeMode(AbstractMotor::brakeMode::brake);
-    mmtrLeftMid.setBrakeMode(AbstractMotor::brakeMode::brake);
+    mmtrLeftFront.setBrakeMode(AbstractMotor::brakeMode::hold);
+    mmtrRightFront.setBrakeMode(AbstractMotor::brakeMode::hold);
+    mmtrRightMid.setBrakeMode(AbstractMotor::brakeMode::hold);
+    mmtrRightBack.setBrakeMode(AbstractMotor::brakeMode::hold);
+    mmtrLeftBack.setBrakeMode(AbstractMotor::brakeMode::hold);
+    mmtrLeftMid.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 void Drivetrain::unlock()
 {

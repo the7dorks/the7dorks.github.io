@@ -8,6 +8,22 @@
  */
 #include "main.h" // gives access to dependencies from other files
 
+void override_task_func()
+{
+    ControllerButton down = ControllerDigital::down;
+    while (true)
+    {
+        if (down.changedToPressed())
+        {
+            Drivetrain::disable();
+            pros::delay(50);
+            Drivetrain::enable();
+            std::cout << "\ndisabler";
+        }
+        pros::delay(20);
+    }
+}
+
 DisplayControl def::display = DisplayControl();
 pros::Task odomTask(odomTaskFunc);
 pros::Task sm_dt_task(DrivetrainStateMachine::run);
@@ -15,6 +31,7 @@ pros::Task sm_lift_task(LiftStateMachine::run);
 pros::Task sm_intake_task(IntakeStateMachine::run);
 pros::Task sm_holder_task(HolderStateMachine::run);
 pros::Task display_task(display_task_func);
+pros::Task override_task(override_task_func);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -100,6 +117,7 @@ void opcontrol()
     Auton::suspendAsyncTask();
 
     Drivetrain::setMaxSpeed(1);
+    Drivetrain::unlock();
     DrivetrainStateMachine::setState(DT_STATES::manual);
 
     DrivetrainStateMachine::enableControl();
@@ -107,23 +125,26 @@ void opcontrol()
     IntakeStateMachine::enableControl();
     HolderStateMachine::enableControl();
 
-    // while (true)
-    // {
-    //     if (down.changedToPressed())
-    //     {
-    //         LiftStateMachine::setState(LIFT_STATES::bottom);
-    //     }
-    //     else if (y.changedToPressed())
-    //     {
-    //     }
-    //     else if (right.changedToPressed())
-    //     {
-    //         LiftStateMachine::setState(LIFT_STATES::top);
-    //     }
-    //     else if (a.changedToPressed())
-    //     {
-    //     }
+    while (true)
+    {
+        if (down.changedToPressed())
+        {
+            Drivetrain::disable();
+            DrivetrainStateMachine::setState(DT_STATES::manual);
+            pros::delay(50);
+            Drivetrain::enable();
+        }
+        else if (right.changedToPressed())
+        {
 
-    //     pros::delay(20);
-    // }
+            DrivetrainStateMachine::setState(DT_STATES::busy);
+            park();
+            DrivetrainStateMachine::setState(DT_STATES::manual);
+        }
+        else if (a.changedToPressed())
+        {
+        }
+
+        pros::delay(20);
+    }
 }

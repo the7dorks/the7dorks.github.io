@@ -37,9 +37,9 @@ namespace def
   pros::Imu imu2(7);
 
   RotationSensor rotation_lift(20, false);
-  DistanceSensor distance_claw(1); // (6)
-  DistanceSensor distance_eye_front_left(2);
-  DistanceSensor distance_eye_front_right(0); // (1)
+  DistanceSensor distance_claw(16);
+  DistanceSensor distance_eye_front_left(1);
+  DistanceSensor distance_eye_front_right(6);
 
   DistanceSensor distance_eye_back_left(11);
   DistanceSensor distance_eye_back_center(21);

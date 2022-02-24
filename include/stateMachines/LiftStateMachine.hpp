@@ -16,13 +16,16 @@ class LiftStateMachine // state machine to represent the drivetrain
 public:
     enum class MStates // enumeration to organize possible states
     {
-        off,    // not doing anything
-        hold,   // hold the lift where it is
-        up,     // moves the lift up
-        down,   // moves the lift down
-        top,    // moves the arm to the top and holds
-        bottom, // moves the lift to the bottom and holds
-        rings   // moves the lift to be able to get rings
+        off,      // not doing anything
+        hold,     // hold the lift where it is
+        up,       // moves the lift up
+        down,     // moves the lift down
+        top,      // moves the arm to the top and holds
+        clear,    // minimum height for a goal on the platform
+        platform, // height for putting goals flat on the platform
+        drag,     // moves the lift to the right hight for dragging a goal in the claw
+        bottom,   // moves the lift to the bottom and holds
+        rings     // moves the lift to be able to get rings
     };
     static MStates getState();
     static void setState(const MStates istate);

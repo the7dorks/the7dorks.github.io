@@ -148,7 +148,7 @@ void LiftStateMachine::controlState() // update the state based on controller in
     {
         setState(LIFT_STATES::down);
     }
-    else if (mstate != LIFT_STATES::top && mstate != LIFT_STATES::bottom && mstate != LIFT_STATES::rings) // if the lift isn't set to a position, hold
+    else if (mstate != LIFT_STATES::top && mstate != LIFT_STATES::platform && mstate != LIFT_STATES::clear && mstate != LIFT_STATES::drag && mstate != LIFT_STATES::bottom && mstate != LIFT_STATES::rings) // if the lift isn't set to a position, hold
     {
         setState(LIFT_STATES::hold);
     }
@@ -201,6 +201,15 @@ void LiftStateMachine::update() // move the robot based on the state
             break;
         case LIFT_STATES::top:
             setLiftAngle(def::SET_LIFT_TOP_DEG);
+            break;
+        case LIFT_STATES::clear:
+            setLiftAngle(def::SET_LIFT_CLEAR_DEG);
+            break;
+        case LIFT_STATES::platform:
+            setLiftAngle(def::SET_LIFT_PLATFORM_DEG);
+            break;
+        case LIFT_STATES::drag:
+            setLiftAngle(def::SET_LIFT_DRAG_DEG);
             break;
         case LIFT_STATES::bottom:
             setLiftAngle(def::SET_LIFT_BOTTOM_DEG);
