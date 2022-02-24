@@ -13,15 +13,15 @@ Added the two tracking wheels to the bottom of the robot.
 
 ##### Holder-1.1.3
 
+###### Create
+
+We fixed the provblem with the holder with standoffs.
+
 ###### Test
 
 We realized after adding the lexon to the holder in order to carry a 3rd Mobile Goal, the goal had a hard time going into the holder without help from the wall.
 
 <img class="responsive-img" width="500" src="/assets/pics/building/robot-1/HolderNotWorking.PNG">
-
-###### Create
-
-We fixed the provblem with the holder with standoffs.
 
 
 
