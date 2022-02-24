@@ -6,6 +6,7 @@ author: "Isaiah Stumme and Porter Shawver"
 categories: Create Test
 tags: Lift-1.0.1 Code Robot-1 Holder-1.1.1
 ---
+
 ##### Lift-1.0.1
 
 We now wanted to try to test and practice driving with our robot. To do this we needed to add the motor to the lift. 
