@@ -4,6 +4,6 @@ title: "Testing Motors for the Drivetrain"
 date: 2021-12-17
 author: ""
 categories: Test
-tags:
+tags: Research, Create
 ---
-Update with entry
+We measured motors to find the best ones, and finished one half of the drivetrain.
