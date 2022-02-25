@@ -57,6 +57,7 @@ bool seekHolder(bool isSafe = false);                     // drive the bot to ge
 bool seekClaw(bool isSafe = false);                       // drive the bot to get a mobile goal using the front eyes | returns success
 void placeGoal(QTime pause = 0_ms, QTime timeout = 0_ms); // set a goal down on the platform, release, and back up
 void park();                                              // park on the platform
+void pidPark();                                           // park on the platform using pid on the inertial sensor
 
 /* -------------------- OdomDebug Helpers -------------------- */
 void odomSetState(OdomDebug::state_t istate); // sets the state of odometry based on display inputs

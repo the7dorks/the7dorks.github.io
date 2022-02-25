@@ -127,14 +127,7 @@ void opcontrol()
 
     while (true)
     {
-        if (down.changedToPressed())
-        {
-            Drivetrain::disable();
-            DrivetrainStateMachine::setState(DT_STATES::manual);
-            pros::delay(50);
-            Drivetrain::enable();
-        }
-        else if (right.changedToPressed())
+        if (right.changedToPressed())
         {
 
             DrivetrainStateMachine::setState(DT_STATES::busy);
@@ -143,6 +136,9 @@ void opcontrol()
         }
         else if (a.changedToPressed())
         {
+            DrivetrainStateMachine::setState(DT_STATES::busy);
+            pidPark();
+            DrivetrainStateMachine::setState(DT_STATES::manual);
         }
 
         pros::delay(20);

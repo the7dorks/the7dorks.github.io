@@ -287,9 +287,27 @@ void park()
     Drivetrain::moveArcade(1, 0);
     waitUntil(makeFunc({ return def::imu2.get_roll() - rollStart > 10; }));
     pros::delay(500);
-    waitUntil(makeFunc({ return def::imu2.get_roll() - rollStart < 22; }));
+    waitUntil(makeFunc({ return def::imu2.get_roll() - rollStart < 20; }));
     // Drivetrain::arcadeFor(-1, 0, 300);
     Drivetrain::straightToPoint({CustomOdometry::getX() - cos(CustomOdometry::getTheta()) * inch * 1.5, CustomOdometry::getY() - sin(CustomOdometry::getTheta()) * inch * 1.5, CustomOdometry::getTheta()});
+}
+void pidPark()
+{
+    PID pid(3, 0, 0, 0, 1, 1, 300_ms);
+    double rollTarget = def::imu2.get_roll();
+
+    LiftStateMachine::setState(LIFT_STATES::drag);
+    waitUntil(makeFunc({ return LiftStateMachine::getAngle() < def::SET_LIFT_RINGS_DEG; }));
+    Drivetrain::moveArcade(1, 0);
+    waitUntil(makeFunc({ return def::imu2.get_roll() - rollTarget > 10; }));
+    pros::delay(500);
+
+    while (!pid.isSettled() && Drivetrain::isEnabled())
+    {
+
+        Drivetrain::moveArcade(-pid.iterate(rollTarget - def::imu2.get_roll()), 0);
+        pros::delay(20);
+    }
 }
 
 /* ---------------------- Task Functions --------------------- */

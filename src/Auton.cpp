@@ -168,82 +168,40 @@ void Auton::runAuton() // runs the selected auton
         {
             Drivetrain::turnToAngle(90_deg);
         }
-
-        // LiftStateMachine::setState(LIFT_STATES::bottom);
-        // Drivetrain::turnToPoint({14_in, 22_in, 0_deg}, cutDrive(5));
-        // Drivetrain::straightToPoint({14_in, 22_in, 0_deg}, cutDrive(3));
-        // Drivetrain::straightToPoint({72_in, 22_in, 0_deg}, {AsyncAction(45, makeFunc({ Drivetrain::setMaxSpeed(1); })), AsyncAction(25, makeFunc({ Drivetrain::disable(); }))});
-        // Drivetrain::straightToPoint({76_in, 40_in, 0_deg}, cutDrive(8));
-        // pros::delay(200);
-        // Drivetrain::turnToAngle(135_deg);
-        // seekHolder();
-        // pros::delay(500);
-        // IntakeStateMachine::setState(INTAKE_STATES::in);
-        // pros::delay(500);
-
-        // Drivetrain::straightToPoint({65_in, 26_in, 0_deg}, cutDrive(3));
-        // HolderStateMachine::setState(HOLDER_STATES::open);
-        // pros::delay(500);
-        // Drivetrain::turnToPoint({13_in, 63_in, 0_deg});
-        // Drivetrain::straightToPoint({13_in, 63_in, 0_deg}, cutDrive(30));
-        // if (def::distance_claw.get() < 600)
-        // {
-        //     seekClaw();
-        //     Drivetrain::straightToPoint({12_in, 25_in, 0_deg});
-        // }
-        // else
-        // {
-        //     Drivetrain::turnToAngle(90_deg);
-        // }
         break;
     case Autons::awp1N:
         LiftStateMachine::setState(LIFT_STATES::top);
-        pros::delay(600);
+        pros::delay(300);
         LiftStateMachine::disengageClaw();
         pros::delay(100);
+
         LiftStateMachine::setState(LIFT_STATES::bottom);
-        Drivetrain::turnToPoint({14_in, 48_in, 0_deg});
-        Auton::startAsyncTaskWithSettings(
-            makeFunc({ return LiftStateMachine::goalInRange(); }), // if the goal is in range
-            makeFunc({ LiftStateMachine::engageClaw();
-                    pros::delay(50);
-                    Drivetrain::disable();  // stop driving forward
-                    pros::delay(500); 
-                    LiftStateMachine::setState(LIFT_STATES::top); }));
-        Drivetrain::straightForDistance(5.5_ft);
-        Drivetrain::straightToPoint({13_in, 38_in, 0_deg}, cutDrive(10)); // back up with the neutral goal
-
-        // Drivetrain::turnToPoint({42_in, 39_in, 0_deg}, cutDrive(10), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // turn towards ring pile
-        Drivetrain::straightToPoint({37_in, 39_in, 0_deg}, cutDrive(8), true, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-
-        // Drivetrain::turnToAngle(-82_deg, cutDrive(1)); // face the platform
-        waitUntil(makeFunc({ return LiftStateMachine::getAngle() > def::SET_LIFT_TOP_DEG - 10; }));
-        Drivetrain::setMaxSpeed(0.5);
-        Drivetrain::straightToPoint({49_in, 21_in, 0_deg}, cutDrive(1), false, 6_in, 1.7, PID(0.3, 0.0, 0.8, 0.0, 0.25, 0.00001, 1_ms), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms)); // drive towards the platform
+        Drivetrain::turnToPoint({15_in, 18_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({15_in, 18_in, 0_deg}, cutDrive(1));
+        Drivetrain::turnToPoint({73_in, 20_in, 0_deg}, cutDrive(3));
+        Drivetrain::straightToPoint({73_in, 20_in, 0_deg}, {AsyncAction(45, makeFunc({ Drivetrain::setMaxSpeed(1); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))});
+        pros::delay(200);
         Drivetrain::setMaxSpeed(1);
-        Drivetrain::turnToAngle(-90_deg, cutDrive(1), PID(0.07, 0.02, 0.3, 1, 0.25, 0.01, 1_ms));
-        LiftStateMachine::disengageClaw();
-        pros::delay(300);
-        // Drivetrain::arcadeFor(-0.5, 0.0, 100);
+        Drivetrain::turnToAngle(180_deg);
 
-        Drivetrain::turnToAngle(180_deg); // face the alliance goal with the holder
-        Drivetrain::straightToPoint({98_in, 23_in, 0_deg}, {AsyncAction(16, makeFunc({ Drivetrain::setMaxSpeed(0.5); })), AsyncAction(2, makeFunc({ Drivetrain::disable(); }))});
-        Drivetrain::setMaxSpeed(1);
-        HolderStateMachine::setState(HOLDER_STATES::closed);
-
-        // Drivetrain::straightToPoint({97_in, 24_in, 0_deg}, cutDrive(1)); // get the row of rings
+        seekHolder();
+        pros::delay(500);
         IntakeStateMachine::setState(INTAKE_STATES::in);
-        // Drivetrain::turnToAngle(90_deg, cutDrive(0.5));
-
-        // Auton::startAsyncTaskWithSettings(makeFunc({ return (timer.millis() - startTime) > 14_s; }), makeFunc({
-        //     Drivetrain::disable();
-        //     Drivetrain::setMaxSpeed(1);
-        //     Drivetrain::straightToPoint({97_in, 24_in, 0_deg}, cutDrive(3)); HolderStateMachine::setState(HOLDER_STATES::open); })); // back up with 14 seconds left
-
-        Drivetrain::straightToPoint({97_in, 60_in, 0_deg}, {AsyncAction(28, makeFunc({ Drivetrain::setMaxSpeed(0.4); })), AsyncAction(1, makeFunc({ Drivetrain::disable(); }))}, true);
-        Drivetrain::setMaxSpeed(1);
-        Drivetrain::straightToPoint({107_in, 20_in, 0_deg}, cutDrive(3));
-        HolderStateMachine::setState(HOLDER_STATES::open); // back up with 14 seconds left
+        pros::delay(500);
+        Drivetrain::straightToPoint({82_in, 24_in, 0_deg}, cutDrive(3));
+        HolderStateMachine::setState(HOLDER_STATES::open);
+        // Drivetrain::turnToPoint({15_in, 63_in, 0_deg});
+        Drivetrain::straightToPoint({58_in, 51_in, 0_deg}, cutDrive(15));
+        if (def::distance_claw.get() < 600)
+        {
+            seekClaw();
+            LiftStateMachine::setState(LIFT_STATES::drag);
+            Drivetrain::straightToPoint({82_in, 28_in, 0_deg}, cutDrive(1));
+        }
+        else
+        {
+            Drivetrain::turnToAngle(90_deg);
+        }
         break;
     case Autons::oneNeutral:
         Auton::startAsyncTaskWithSettings(
@@ -310,7 +268,7 @@ void Auton::runAuton() // runs the selected auton
         Drivetrain::straightToPoint({20_in, 0_in, 0_deg}, cutDrive(20), false, 6_in, 1.7, PID(0.3, 0.001, 0.8, 3.0, 0.5, 0.00001, 1_ms), PID(0.07, 0.02, 0.20, 1, 0.25, 0.01, 1_ms), Slew(0.05, 0.5)); // reverse
         Drivetrain::straightToPoint({27_in, -10_in, 0_deg}, cutDrive(3));                                                                                                                              // turn towards right neutral goal
         Drivetrain::turnToAngle(149_deg, cutDrive(10));                                                                                                                                                // face it
-        if (def::distance_eye_back_center.get() < 600)
+        if (def::distance_eye_back_center.get() < 400)
         {
             seekHolder();
         }
