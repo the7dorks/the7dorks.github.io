@@ -4,11 +4,7 @@ title: "Testing Motors for the Drivetrain"
 date: 2021-12-17
 author: "Noah"
 categories: Test
-<<<<<<< HEAD
 tags:
-=======
-tags: Research Create
->>>>>>> 350c79ed473b3b089925dc59a98fea70d6c2f308
 ---
 
 ##### Testing Motors

@@ -4,11 +4,7 @@ title: "Build Day: Updating Conveyor Backboard"
 date: 2021-12-13
 author: "Noah and Porter"
 categories: Create Test
-<<<<<<< HEAD
 tags: Conveyor-2.1.5
-=======
-tags: Create Test
->>>>>>> 350c79ed473b3b089925dc59a98fea70d6c2f308
 ---
 
 ##### Conveyor-2.1.5
