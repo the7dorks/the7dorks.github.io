@@ -23,12 +23,16 @@ This is more clunky than something like this, which better represents the real w
 LiftStateMachine::update() // this runs the same code as above, but directly through the static function of the class.
 {% endhighlight %}
 
+<br class="print-only"><br class="print-only"><br class="print-only">
+
 ###### Create
 This design change was fairly easy in implement. Here are the primary changes screenshotted from the GitHub repository:
 
 <img class="responsive-img" width="500" src="/assets/pics/motion_profiling/static changes.PNG">
 
-Addittionally, instead of having a separate function from outside the thread that actually runs the state machine in a thread, we can have a function contained within the class, because of how multitasking is handled on the brain. This is what is changed to make this happen in main.cpp:
+<br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only">
+
+Additionally, instead of having a separate function from outside the thread that actually runs the state machine in a thread, we can have a function contained within the class, because of how multitasking is handled on the brain. This is what is changed to make this happen in main.cpp:
 
 <img class="responsive-img" width="500" src="/assets/pics/motion_profiling/maincpp_static_changes.PNG">
 

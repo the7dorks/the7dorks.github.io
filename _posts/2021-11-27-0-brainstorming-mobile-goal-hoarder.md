@@ -15,15 +15,16 @@ tags: Holder-2.0.0
 
 - Initial and final positions of the mobile goal in a possible holder configuration, with the mobile goal rotating about a standoff shown by the red dot.
 
-<img class="responsive-img" width="49%" src="/assets/pics/building/robot-2/HolderConfig.png">
+<img class="responsive-img" width="400px" src="/assets/pics/building/robot-2/HolderConfig.png">
 
 
-- Actually implementing pneumatics to make this happen:
+<br class='print-only'><br class='print-only'><br class='print-only'>
 
+Actually implementing pneumatics to make this happen:
+- Lever: overly complicated
 
-    - Lever: overly complicated
-    <img class="responsive-img" width="49%" src="/assets/pics/building/robot-2/OverlyComp.png">
+<img class="responsive-img" width="250px" src="/assets/pics/building/robot-2/OverlyComp.png">
 
-    - Pulling hook: easier to build, and easier to make follow the path we want it to. One issue: it might be difficult to make the pneumatic hook release the goal, because it would somehow need to go up.
+- Pulling hook: easier to build, and easier to make follow the path we want it to. One issue: it might be difficult to make the pneumatic hook release the goal, because it would somehow need to go up.
 
-     <img class="responsive-img" width="49%" src="/assets/pics/building/robot-2/Hook.png">
+<img class="responsive-img" width="250px" src="/assets/pics/building/robot-2/Hook.png">

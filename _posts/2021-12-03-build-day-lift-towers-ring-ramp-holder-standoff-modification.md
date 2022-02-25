@@ -6,27 +6,29 @@ author: "Noah"
 categories: Create
 tags: Holder-2.0.1 Conveyor-2.0.0 Lift-2.0.1 
 ---
+
 ##### Lift-2.0.1
 ###### Create
 
 We added towers to the c-channel under the motors, but had to shave them down so that they could fit under the motors.
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211203_220101.jpg">
+<img class="responsive-img" width="500px" src="/assets/pics/Photos-001/20211203_220101.jpg">
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211203_220111.jpg">
+<br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'>
+
+<img class="responsive-img" width="500px" src="/assets/pics/Photos-001/20211203_220111.jpg">
 
 ##### Conveyor-2.0.0
 ###### Create
 
-We added lexan for our ring intake so that they could move smoothly through the bot, which we had to pull taut so it didn't bend. We tried c-channels in the past but the rings weren't feeding through smoothly which caused a lot of jams.
+We added lexan for our ring intake so that they could move smoothly through the bot, which we had to pull taut so it didn't bend. We tried c-channels in the past but the rings weren't feeding through smoothly which caused a lot of jams.<br>
+<img class="responsive-img" width="300px" src="/assets/pics/Photos-001/20211203_220145.jpg">
 
-<img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211203_220145.jpg">
+<br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'>
 
 ##### Holder-2.0.1
 ###### Create
 
-The Mobile Goal holder standoff was too high, so we moved it down a hole. Testing it with a goal, the mobile goal looked like it was also too far back, so we moved it a hole forward as well. This would put the standoff in a hole that was supposed to have a shoulder screw for the drivetrain to keep the wheel bearing centered, but with the standoff here, it wouldn’t be possible. To make sure the bearing would still be centered extremely well, we put the screw through another bearing, which centers the screw like shoulder screws:
-
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-3/drivetrain-bearing.jpeg">
-
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-3/standoff-bearing.jpeg">
+The Mobile Goal holder standoff was too high, so we moved it down a hole. Testing it with a goal, the mobile goal looked like it was also too far back, so we moved it a hole forward as well. This would put the standoff in a hole that was supposed to have a shoulder screw for the drivetrain to keep the wheel bearing centered, but with the standoff here, it wouldn’t be possible. To make sure the bearing would still be centered extremely well, we put the screw through another bearing, which centers the screw like shoulder screws:<br>
+<img class="responsive-img" width="350px" src="/assets/pics/building/robot-3/drivetrain-bearing.jpeg"><br>
+<img class="responsive-img" width="350px" src="/assets/pics/building/robot-3/standoff-bearing.jpeg">

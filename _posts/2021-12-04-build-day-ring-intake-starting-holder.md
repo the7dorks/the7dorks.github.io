@@ -13,6 +13,8 @@ Today we put on flaps to help move the rings through the robot.
 
 <img class="responsive-img" width="500" src="/assets/pics/Photos-001/20211204_181221.jpg">
 
+<br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'><br class='print-only'>
+
 ##### Holder-2.0.1
 ###### Create
 

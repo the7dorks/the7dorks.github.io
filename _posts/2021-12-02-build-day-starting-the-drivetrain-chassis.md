@@ -6,10 +6,7 @@ author: "Noah"
 categories: Create
 tags: Drivetrain-2.0.0
 ---
-We started building the drivetrain chassis which we copied from the CAD for our new robot: 
-
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-3/drivetrain-chassis.jpg">
-
-We also used shaved down bearings on the drive train to fit them to the c-channel:
-
-<img class="responsive-img" width="500" src="/assets/pics/building/robot-3/shavdbreaing.jpeg">
+We started building the drivetrain chassis which we exactly copied from the CAD for our new robot:<br>
+<img class="responsive-img" width="350" src="/assets/pics/building/robot-3/drivetrain-chassis.jpg"><br>
+We also used shaved down bearings on the drive train to fit them to the c-channel:<br>
+<img class="responsive-img" width="350" src="/assets/pics/building/robot-3/shavdbreaing.jpeg">
